@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import SignInForm from "./SignInForm";
-import { RegistrationProps } from "./types";
+import { RegistrationProps } from "./Types";
 
 const Registration: React.FC<RegistrationProps> = ({ type }) => {
   return (

@@ -3,14 +3,12 @@ import { useFormik } from "formik";
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import validations from "./validations";
-import { SignInFormValues } from "./types";
+import { SignInFormValues } from "./Types";
 import { useNavigate } from "react-router-dom";
 import { useCustomSnackbar } from "../../hooks/useCustomSnackbar.hook";
 
-
 const SignInForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-
 
   const { setSnackbarProps } = useCustomSnackbar();
   const navigate = useNavigate();
@@ -25,11 +23,15 @@ const SignInForm: React.FC = () => {
     onSubmit: async (values) => {
       // Handle Token and Navigation
 
-      setIsLoading(true)
+      setIsLoading(true);
       setTimeout(() => {
-        setIsLoading(false)
-        setSnackbarProps({ message: "User Logged In Successfully !", type: "success", position: { vertical: "bottom", horizontal: "center" }, })
-      }, 3000)
+        setIsLoading(false);
+        setSnackbarProps({
+          message: "User Logged In Successfully !",
+          type: "success",
+          position: { vertical: "bottom", horizontal: "center" },
+        });
+      }, 3000);
 
       formik.resetForm();
     },
@@ -38,9 +40,26 @@ const SignInForm: React.FC = () => {
   return (
     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
       <Stack direction={"column"} spacing={3}>
-        <Stack direction={"row"} justifyContent={"center"} alignItems={"end"} paddingBottom={3} gap={2}>
-          <Typography variant="h1" fontWeight={600} fontSize={30} color={theme.palette.primary.main}>Sign In</Typography>
-          <Typography variant="caption" fontWeight={600} fontSize={10} color={theme.palette.secondary.main}>Hello there!</Typography>
+        <Stack
+          direction={"row"}
+          justifyContent={"center"}
+          alignItems={"end"}
+          paddingBottom={3}
+          gap={2}>
+          <Typography
+            variant="h1"
+            fontWeight={600}
+            fontSize={30}
+            color={theme.palette.primary.main}>
+            Sign In
+          </Typography>
+          <Typography
+            variant="caption"
+            fontWeight={600}
+            fontSize={10}
+            color={theme.palette.secondary.main}>
+            Hello there!
+          </Typography>
         </Stack>
         <TextField
           fullWidth
@@ -70,8 +89,7 @@ const SignInForm: React.FC = () => {
           disabled={isLoading || !formik.isValid}
           loadingPosition="center"
           variant="contained"
-          type="submit"
-        >
+          type="submit">
           Log In
         </LoadingButton>
       </Stack>
