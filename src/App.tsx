@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-
+import { FormContainer } from './pages/Registration';
+import { FormContainerType } from './pages/Registration/Types';
 function App() {
   return (
     <div className="App">
-      Hello World !
+      <FormContainer type={FormContainerType.SignIn}/>
     </div>
   );
 }
