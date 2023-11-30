@@ -1,33 +1,81 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import { SignInFormValues } from "./Types";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { Stack, TextField, Typography, useTheme } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import validations from "./validations";
+import { SignInFormValues } from "./types";
+import { useNavigate } from "react-router-dom";
+import { useCustomSnackbar } from "../../hooks/useCustomSnackbar.hook";
 
-const initialValues: SignInFormValues = {
-  email: "",
-  password: "",
-};
 
 const SignInForm: React.FC = () => {
-  const onSubmit = (values: SignInFormValues) => {
-    console.log("Form submitted with values:", values);
-  };
+  const [isLoading, setIsLoading] = React.useState(false);
+
+
+  const { setSnackbarProps } = useCustomSnackbar();
+  const navigate = useNavigate();
+  const theme = useTheme();
+
+  const formik = useFormik<SignInFormValues>({
+    initialValues: {
+      userName: "",
+      password: "",
+    },
+    validationSchema: validations.signinValidationSchema,
+    onSubmit: async (values) => {
+      // Handle Token and Navigation
+
+      setIsLoading(true)
+      setTimeout(() => {
+        setIsLoading(false)
+        setSnackbarProps({ message: "User Logged In Successfully !", type: "success", position: { vertical: "bottom", horizontal: "center" }, })
+      }, 3000)
+
+      formik.resetForm();
+    },
+  });
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      <Form>
-        <Stack direction={"column"} spacing={3}>
-          <TextField
-            name="email"
-            type="email"
-            fullWidth
-            label="Email"
-          />
+    <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
+      <Stack direction={"column"} spacing={3}>
+        <Stack direction={"row"} justifyContent={"center"} alignItems={"end"} paddingBottom={3} gap={2}>
+          <Typography variant="h1" fontWeight={600} fontSize={30} color={theme.palette.primary.main}>Sign In</Typography>
+          <Typography variant="caption" fontWeight={600} fontSize={10} color={theme.palette.secondary.main}>Hello there!</Typography>
         </Stack>
-
-        <Button type="submit">Log In</Button>
-      </Form>
-    </Formik>
+        <TextField
+          fullWidth
+          id="userName"
+          name="userName"
+          label="Username"
+          value={formik.values.userName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.userName && Boolean(formik.errors.userName)}
+          helperText={formik.touched.userName && formik.errors.userName}
+        />
+        <TextField
+          fullWidth
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <LoadingButton
+          loading={isLoading}
+          disabled={isLoading || !formik.isValid}
+          loadingPosition="center"
+          variant="contained"
+          type="submit"
+        >
+          Log In
+        </LoadingButton>
+      </Stack>
+    </form>
   );
 };
 

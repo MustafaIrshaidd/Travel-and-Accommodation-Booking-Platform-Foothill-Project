@@ -1,2 +1,2 @@
-export {default as FormContainer} from "./FormContainer"
+export {default as Registration} from "./Registration"
 export {default as SignInForm} from "./SignInForm"

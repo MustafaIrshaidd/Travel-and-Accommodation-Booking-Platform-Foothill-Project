@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import React from "react";
 import SignInForm from "./SignInForm";
-import { FormContainerProps } from "./Types";
+import { RegistrationProps } from "./types";
 
-const FormContainer: React.FC<FormContainerProps> = ({ type }) => {
+const Registration: React.FC<RegistrationProps> = ({ type }) => {
   return (
     <Grid
       container
@@ -19,4 +19,4 @@ const FormContainer: React.FC<FormContainerProps> = ({ type }) => {
   );
 };
 
-export default FormContainer;
+export default Registration;

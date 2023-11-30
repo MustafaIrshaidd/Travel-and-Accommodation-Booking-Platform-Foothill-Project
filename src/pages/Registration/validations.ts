@@ -2,10 +2,9 @@ import * as yup from "yup";
 
 const validations = {
   signinValidationSchema: yup.object({
-    email: yup
+    userName: yup
       .string()
-      .email("Enter a valid email")
-      .required("Email is required"),
+      .required("Username is required"),
     password: yup
       .string()
       .min(8, "Password should be of a minimum 8 characters length")

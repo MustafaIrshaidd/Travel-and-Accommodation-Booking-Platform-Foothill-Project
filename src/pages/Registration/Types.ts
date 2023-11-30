@@ -1,12 +1,12 @@
-export enum FormContainerType {
+export enum RegistrationType {
   SignIn,
 }
 
-export interface FormContainerProps {
-  type: FormContainerType;
+export interface RegistrationProps {
+  type: RegistrationType;
 }
 
 export interface SignInFormValues {
-  email: string;
+  userName: string;
   password: string;
 }

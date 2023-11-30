@@ -1,12 +1,22 @@
 import React from 'react';
-import './App.css';
-import { FormContainer } from './pages/Registration';
-import { FormContainerType } from './pages/Registration/Types';
+import { Registration } from './pages/Registration';
+import { RegistrationType } from './pages/Registration/types';
+import { AppThemeProvider } from './contexts/AppTheme.context';
+import { CustomSnackbar } from './components/CustomSnackbar';
+import { useCustomSnackbar } from './hooks/useCustomSnackbar.hook';
+
 function App() {
+  const { snackbarProps } = useCustomSnackbar();
+
   return (
-    <div className="App">
-      <FormContainer type={FormContainerType.SignIn}/>
-    </div>
+    <AppThemeProvider>
+      <Registration type={RegistrationType.SignIn} />
+      <CustomSnackbar
+        message={snackbarProps.message}
+        position={{ vertical: snackbarProps.position.vertical, horizontal: snackbarProps.position.horizontal }}
+        type={snackbarProps.type}
+      />
+    </AppThemeProvider>
   );
 }
 
