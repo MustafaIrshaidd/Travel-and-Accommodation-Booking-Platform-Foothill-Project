@@ -1,11 +1,15 @@
-import { Grid } from "@mui/material";
+import { Grid, useTheme } from "@mui/material";
 import React from "react";
 import SignInForm from "./SignInForm";
 import { RegistrationProps } from "./Types";
+import { styles } from "./style";
 
 const Registration: React.FC<RegistrationProps> = ({ type }) => {
+  const theme = useTheme();
+  const { registrationContainer } = styles(theme);
   return (
     <Grid
+      sx={registrationContainer}
       container
       width={"100%"}
       height={"100vh"}

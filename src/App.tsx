@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Registration } from "./pages/Registration";
-import { RegistrationType } from "./pages/Registration/Types";
-import { AppThemeProvider } from "./contexts/AppTheme.context";
+
 import { CustomSnackbar } from "./components/CustomSnackbar";
 import { useCustomSnackbar } from "./hooks/useCustomSnackbar.hook";
+import { useThemeContext } from "./contexts/AppTheme.context";
 
 function App() {
   const { snackbarProps } = useCustomSnackbar();
+  
 
   return (
-    <AppThemeProvider>
-      <Registration type={RegistrationType.SignIn} />
+    <>
+      <Registration type={"SignIn"} />
       <CustomSnackbar
         message={snackbarProps.message}
         position={{
@@ -19,7 +20,7 @@ function App() {
         }}
         type={snackbarProps.type}
       />
-    </AppThemeProvider>
+    </>
   );
 }
 

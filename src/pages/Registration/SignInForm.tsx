@@ -6,13 +6,15 @@ import validations from "./validations";
 import { SignInFormValues } from "./Types";
 import { useNavigate } from "react-router-dom";
 import { useCustomSnackbar } from "../../hooks/useCustomSnackbar.hook";
-
+import { useThemeContext } from "../../contexts/AppTheme.context";
+import { styles } from "./style";
 const SignInForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { setSnackbarProps } = useCustomSnackbar();
   const navigate = useNavigate();
   const theme = useTheme();
+  const { textFieldStyle, submitButtonStyle } = styles(theme);
 
   const formik = useFormik<SignInFormValues>({
     initialValues: {
@@ -22,7 +24,6 @@ const SignInForm: React.FC = () => {
     validationSchema: validations.signinValidationSchema,
     onSubmit: async (values) => {
       // Handle Token and Navigation
-
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
@@ -50,18 +51,19 @@ const SignInForm: React.FC = () => {
             variant="h1"
             fontWeight={600}
             fontSize={30}
-            color={theme.palette.primary.main}>
+            color={theme.palette.text.primary}>
             Sign In
           </Typography>
           <Typography
             variant="caption"
             fontWeight={600}
             fontSize={10}
-            color={theme.palette.secondary.main}>
+            color={theme.palette.text.secondary}>
             Hello there!
           </Typography>
         </Stack>
         <TextField
+          sx={textFieldStyle}
           fullWidth
           id="userName"
           name="userName"
@@ -73,6 +75,7 @@ const SignInForm: React.FC = () => {
           helperText={formik.touched.userName && formik.errors.userName}
         />
         <TextField
+          sx={textFieldStyle}
           fullWidth
           id="password"
           name="password"
@@ -85,6 +88,7 @@ const SignInForm: React.FC = () => {
           helperText={formik.touched.password && formik.errors.password}
         />
         <LoadingButton
+          sx={submitButtonStyle}
           loading={isLoading}
           disabled={isLoading || !formik.isValid}
           loadingPosition="center"

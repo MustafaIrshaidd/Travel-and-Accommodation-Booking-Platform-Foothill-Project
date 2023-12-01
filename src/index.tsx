@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { CustomSnackbarProvider } from "./contexts/CustomSnackbar.context";
+import { AppThemeProvider } from "./contexts/AppTheme.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,9 +13,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <BrowserRouter>
-    <CustomSnackbarProvider>
-      <App />
-    </CustomSnackbarProvider>
+    <AppThemeProvider>
+      <CustomSnackbarProvider>
+        <App />
+      </CustomSnackbarProvider>
+    </AppThemeProvider>
   </BrowserRouter>
 );
 

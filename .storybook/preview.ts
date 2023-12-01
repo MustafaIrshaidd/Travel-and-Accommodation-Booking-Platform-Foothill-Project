@@ -1,3 +1,4 @@
+// .storybook/preview.ts
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
@@ -13,3 +14,4 @@ const preview: Preview = {
 };
 
 export default preview;
+

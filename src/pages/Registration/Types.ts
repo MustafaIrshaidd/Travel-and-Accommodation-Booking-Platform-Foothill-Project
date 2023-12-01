@@ -1,9 +1,5 @@
-export enum RegistrationType {
-  SignIn,
-}
-
 export interface RegistrationProps {
-  type: RegistrationType;
+  type: "SignIn";
 }
 
 export interface SignInFormValues {
