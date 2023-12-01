@@ -4,8 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { CustomSnackbarProvider } from "./contexts/CustomSnackbar.context";
-import { AppThemeProvider } from "./contexts/AppTheme.context";
+import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
+import { AppThemeProvider } from "@contexts/AppTheme.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

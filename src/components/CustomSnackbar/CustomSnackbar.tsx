@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Snackbar, Box, Alert,useTheme } from '@mui/material';
 import { CustomSnackbarProps } from './types';
-import { useCustomSnackbar } from '../../hooks/useCustomSnackbar.hook';
+import { useCustomSnackbar } from '@hooks/useCustomSnackbar.hook';
 
 
 const CustomSnackbar: React.FC<CustomSnackbarProps> = ({

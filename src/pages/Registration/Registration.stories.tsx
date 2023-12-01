@@ -4,9 +4,9 @@ import { Meta, Story } from "@storybook/react";
 import { Registration } from ".";
 import { RegistrationProps } from "./Types";
 import { BrowserRouter } from "react-router-dom";
-import { CustomSnackbarProvider } from "../../contexts/CustomSnackbar.context";
-import { AppThemeProvider } from "../../contexts/AppTheme.context";
-import { CustomSnackbar } from "../../components/CustomSnackbar";
+import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
+import { AppThemeProvider } from "@contexts/AppTheme.context";
+import { CustomSnackbar } from "@components/CustomSnackbar";
 
 export default {
   title: "Registration",

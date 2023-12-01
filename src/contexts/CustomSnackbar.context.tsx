@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useState, Dispatch, SetStateAction } from 'react';
-import { CustomSnackbarProps } from '../components/CustomSnackbar/types';
+import { CustomSnackbarProps } from '@components/CustomSnackbar/types';
 
 interface CustomSnackbarContextProps {
     snackbarProps: CustomSnackbarProps;
