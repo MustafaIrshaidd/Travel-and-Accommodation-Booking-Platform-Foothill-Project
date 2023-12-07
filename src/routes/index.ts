@@ -1,0 +1,1 @@
+export {default as RegistrationRoute} from "./Registration.route"

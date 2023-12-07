@@ -1,13 +1,12 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import validations from "./validations";
-import { SignInFormValues } from "./Types";
+import { SignInFormValues } from "./types";
 import { useNavigate } from "react-router-dom";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-import { styles } from "./style";
-
+import { styles } from "./styles";
+import { DefaultButton } from "@components/Buttons";
 
 const SignInForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -88,15 +87,14 @@ const SignInForm: React.FC = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <LoadingButton
-          sx={submitButtonStyle}
-          loading={isLoading}
-          disabled={isLoading || !formik.isValid}
+        <DefaultButton
+          isLoading={isLoading}
+          isDisabled={isLoading || !formik.isValid}
           loadingPosition="center"
           variant="contained"
-          type="submit">
-          Log In
-        </LoadingButton>
+          type="submit"
+          text="Log In"
+        />
       </Stack>
     </form>
   );

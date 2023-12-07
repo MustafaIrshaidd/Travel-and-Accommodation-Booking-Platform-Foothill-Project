@@ -10,6 +10,7 @@ module.exports = {
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@contexts": path.resolve(__dirname, "src/contexts"),
       "@__mocks__": path.resolve(__dirname, "src/__mocks__"),
+      "@routes": path.resolve(__dirname, "src/routes"),
     },
   },
   jest: {

@@ -29,7 +29,4 @@ export const styles = (theme: any) => ({
       backgroundColor: theme.palette.action.active,
     },
   },
-  registrationContainer: {
-    backgroundColor: theme.palette.background.default,
-  },
 });

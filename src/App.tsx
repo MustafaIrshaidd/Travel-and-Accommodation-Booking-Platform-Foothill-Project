@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
-import { Registration } from "@pages/Registration";
+import React from "react";
 import { CustomSnackbar } from "@components/CustomSnackbar";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-
+import { RegistrationRoute } from "@routes";
 
 function App() {
   const { snackbarProps } = useCustomSnackbar();
-  
+
   return (
     <>
-      <Registration type={"SignIn"} />
+      <RegistrationRoute />
       <CustomSnackbar
         message={snackbarProps.message}
         position={{

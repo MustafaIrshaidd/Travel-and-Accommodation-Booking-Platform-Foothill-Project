@@ -1,8 +1,8 @@
 import { Grid, useTheme } from "@mui/material";
 import React from "react";
-import SignInForm from "./SignInForm";
+import SignInForm from "./forms/SignInForm";
 import { RegistrationProps } from "./Types";
-import { styles } from "./style";
+import { styles } from "./styles";
 
 const Registration: React.FC<RegistrationProps> = ({ type }) => {
   const theme = useTheme();

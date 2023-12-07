@@ -1,8 +1,8 @@
 // Your stories file
 import React from "react";
 import { Meta, Story } from "@storybook/react";
-import { Registration } from ".";
-import { RegistrationProps } from "./Types";
+import { Registration } from "..";
+import { RegistrationProps } from "../Types";
 import { BrowserRouter } from "react-router-dom";
 import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
 import { AppThemeProvider } from "@contexts/AppTheme.context";

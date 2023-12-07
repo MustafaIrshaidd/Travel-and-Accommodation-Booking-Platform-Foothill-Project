@@ -6,19 +6,23 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
 import { AppThemeProvider } from "@contexts/AppTheme.context";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 root.render(
-  <BrowserRouter>
-    <AppThemeProvider>
-      <CustomSnackbarProvider>
-        <App />
-      </CustomSnackbarProvider>
-    </AppThemeProvider>
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <AppThemeProvider>
+        <CustomSnackbarProvider>
+          <App />
+        </CustomSnackbarProvider>
+      </AppThemeProvider>
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

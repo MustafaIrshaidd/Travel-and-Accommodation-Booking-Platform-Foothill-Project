@@ -26,28 +26,32 @@ type AppThemeProviderProps = {
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
   children,
 }) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
+  const setThemeMode = (mode: "dark" | "light") => {
+    mode === "dark" ? setIsDarkMode(true) : setIsDarkMode(false);
+  };
+
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? "dark" : "light",
-      text:{
-        primary:isDarkMode? "#ffffff": "#222222",
-        secondary:  "#e83e8c",
+      text: {
+        primary: isDarkMode ? "#ffffff" : "#222222",
+        secondary: "#e83e8c",
       },
-      background:{
-        default:isDarkMode?"#222222":"#ffffff",
-        paper:isDarkMode ? "#fcfcfc":"#444444"
+      background: {
+        default: isDarkMode ? "#222222" : "#ffffff",
+        paper: isDarkMode ? "#333333" : "#f9f9f9",
       },
-      action:{
-        active:isDarkMode?"#aaaaaa":"#444444",
-        selected:isDarkMode?"#aaaaaa":"#444444"
+      action: {
+        active: isDarkMode ? "#aaaaaa" : "#444444",
+        selected: isDarkMode ? "#aaaaaa" : "#444444",
       },
-      
+
       success: {
         main: "#e83e8c",
       },
@@ -56,7 +60,6 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
       fontFamily: "Roboto, sans-serif",
       fontSize: 16,
     },
-    
   });
 
   if (!theme) {
