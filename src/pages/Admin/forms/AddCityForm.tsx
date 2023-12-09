@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
 import { AddCityFormValues } from "./types";
@@ -7,12 +7,22 @@ import { styles } from "../../Registration/forms/styles";
 import { DefaultButton } from "@components/Buttons";
 import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
+import { cityAdded } from "../../../store/features/cities/citiesSlice";
+import { selectCities } from "@store/selectors/cities";
 
 const AddCityForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { toggleAdminDrawer } = React.useContext(AdminDrawerContext);
   const { setSnackbarProps } = useCustomSnackbar();
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const citiesState = useAppSelector(selectCities);
+
+  useEffect(() => {
+    console.log(citiesState);
+  }, [citiesState]);
+
   const { textFieldStyle } = styles(theme);
 
   const formik = useFormik<AddCityFormValues>({
@@ -27,6 +37,9 @@ const AddCityForm: React.FC = () => {
       setTimeout(() => {
         setIsLoading(false);
         toggleAdminDrawer();
+        dispatch(
+          cityAdded({ name: values.name, description: values.description })
+        );
         setSnackbarProps({
           message: "City is added Successfully !",
           type: "success",

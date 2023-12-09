@@ -9,7 +9,9 @@
       "@hooks/*": ["hooks/*"],
       "@contexts/*": ["contexts/*"],
       "@__mocks__/*": ["__mocks__/*"],
-      "@routes": ["routes"]
+      "@routes": ["routes"],
+      "@store/*": ["store/*"],
+      "@store": ["store"]
     }
   }
 }
