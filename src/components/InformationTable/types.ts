@@ -1,3 +1,5 @@
+import { City } from "@store/types/cities";
+
 export interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
@@ -8,6 +10,7 @@ export interface EnhancedTableProps {
   order: Order;
   orderBy: string;
   rowCount: number;
+  headcells: HeadCell[]
 }
 
 export type Order = "asc" | "desc";
@@ -20,16 +23,19 @@ export interface HeadCell {
 }
 
 export interface Data {
-  id: number;
-  calories: number;
-  carbs: number;
-  fat: number;
+  id : number;
   name: string;
-  protein: number;
+  description: string;
+
 }
 
 export interface EnhancedTableToolbarProps {
-    numSelected: number;
-  }
+  numSelected: number;
+  title: string
+}
 
-
+export interface InformationTableProps {
+  headcells: HeadCell[];
+  title: string;
+  rows: City[]|undefined;
+}

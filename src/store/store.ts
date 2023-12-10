@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
-import { citiesReducer } from "./reducers/cities";
+import citiesSlice from "./features/cities/citiesSlice";
 
 const store = configureStore({
   reducer: {
-    cities: citiesReducer,
+    cities: citiesSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

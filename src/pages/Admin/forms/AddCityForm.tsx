@@ -17,11 +17,6 @@ const AddCityForm: React.FC = () => {
   const { setSnackbarProps } = useCustomSnackbar();
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const citiesState = useAppSelector(selectCities);
-
-  useEffect(() => {
-    console.log(citiesState);
-  }, [citiesState]);
 
   const { textFieldStyle } = styles(theme);
 
