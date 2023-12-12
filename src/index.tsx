@@ -7,8 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
 import { AppThemeProvider } from "@contexts/AppTheme.context";
 import { Provider } from "react-redux";
-import {store} from "@store";
-
+import { store } from "@store";
+import { FormsStepperProvider } from "@contexts/FormsStepper.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,7 +19,9 @@ root.render(
     <BrowserRouter>
       <AppThemeProvider>
         <CustomSnackbarProvider>
-          <App />
+          <FormsStepperProvider>
+            <App />
+          </FormsStepperProvider>
         </CustomSnackbarProvider>
       </AppThemeProvider>
     </BrowserRouter>

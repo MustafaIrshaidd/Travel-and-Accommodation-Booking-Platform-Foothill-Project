@@ -9,12 +9,17 @@ import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { selectCities } from "@store/selectors/cities";
 import { fetchCities } from "@store/features/cities/citiesthunks";
 import { HeadCell } from "@components/InformationTable/types";
+import { cityDeleted } from "@store/features/cities/citiesSlice";
+import { selectCitiesLoading } from "@store/selectors/cities";
+import { FormsStepperContext } from "@contexts/FormsStepper.context";
+import AddCityForm from "../forms/AddCityForm";
+import AddCityImage from "../forms/AddCityImage";
 
 const headCells: HeadCell[] = [
   {
     id: "id",
     numeric: true,
-    disablePadding: true,
+    disablePadding: false,
     label: "Id",
   },
   {
@@ -38,15 +43,34 @@ const ManageCities = () => {
   const cities = useAppSelector(selectCities);
 
   React.useEffect(() => {
-    dispatch(fetchCities({pageNumber:1,pageSize:10}));
-  }, [])
+    dispatch(fetchCities({ pageNumber: 1, pageSize: 10 }));
+  }, []);
+
+  const handleRemoveCityById = (id: number) => {
+    dispatch(cityDeleted(id));
+  };
+  const handleUpdateCityById = (id: number) => {};
 
   // COMPONENT STATE MANAGMENT
+  const { setForms, handleNext, activeStep, stepsCompleted, handleReset } =
+    useContext(FormsStepperContext)!;
   const { toggleAdminDrawer } = useContext(AdminDrawerContext);
+
   const handleAddCity = () => {
-    console.log("Add City Please !");
+    setForms([
+      <AddCityForm onSubmitInformer={handleNext} />,
+      <AddCityImage onSubmitInformer={handleNext} />,
+      <AddCityForm onSubmitInformer={handleNext} />,
+    ]);
     toggleAdminDrawer();
   };
+
+  React.useEffect(() => {
+    if (stepsCompleted) {
+      toggleAdminDrawer();
+      handleReset();
+    }
+  }, [stepsCompleted]);
 
   const handleSearchChange = (searchValue: string) => {
     console.log(searchValue);
@@ -70,7 +94,12 @@ const ManageCities = () => {
           </Grid>
         </Grid>
         {/* Representational Component */}
-        <InformationTable headcells={headCells} title="Manage Cities" rows={cities}></InformationTable>
+        <InformationTable
+          headcells={headCells}
+          title="Manage Cities"
+          rows={cities}
+          handleDeleteRow={handleRemoveCityById}
+          handleUpdateRow={handleUpdateCityById}></InformationTable>
       </Stack>
     </>
   );

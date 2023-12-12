@@ -11,7 +11,8 @@
       "@__mocks__/*": ["__mocks__/*"],
       "@routes": ["routes"],
       "@store/*": ["store/*"],
-      "@store": ["store"]
+      "@store": ["store"],
+      "@services/*": ["services/*"]
     }
   }
 }

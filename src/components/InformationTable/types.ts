@@ -10,7 +10,7 @@ export interface EnhancedTableProps {
   order: Order;
   orderBy: string;
   rowCount: number;
-  headcells: HeadCell[]
+  headcells: HeadCell[];
 }
 
 export type Order = "asc" | "desc";
@@ -23,19 +23,22 @@ export interface HeadCell {
 }
 
 export interface Data {
-  id : number;
+  id: number;
   name: string;
   description: string;
-
 }
 
 export interface EnhancedTableToolbarProps {
   numSelected: number;
-  title: string
+  title: string;
+  handleRowActions?: (event: React.MouseEvent<HTMLElement>) => void;
+  handleRemoveSelection?: () => void;
 }
 
 export interface InformationTableProps {
   headcells: HeadCell[];
   title: string;
-  rows: City[]|undefined;
+  rows: City[] | undefined;
+  handleDeleteRow?: (id:number) => void;
+  handleUpdateRow?: (id:number) => void;
 }

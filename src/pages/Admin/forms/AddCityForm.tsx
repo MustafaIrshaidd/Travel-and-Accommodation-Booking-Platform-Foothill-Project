@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
-import { AddCityFormValues } from "./types";
+import { AddCityFormProps, AddCityFormValues } from "./types";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-import { styles } from "../../Registration/forms/styles";
+import { styles } from "@pages/Registration/forms/styles";
 import { DefaultButton } from "@components/Buttons";
 import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
-import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { cityAdded } from "../../../store/features/cities/citiesSlice";
-import { selectCities } from "@store/selectors/cities";
+import { useAppDispatch } from "@hooks/redux.hook";
+import { cityAdded } from "@store/features/cities/citiesSlice";
 
-const AddCityForm: React.FC = () => {
+const AddCityForm: React.FC<AddCityFormProps> = ({ onSubmitInformer }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { toggleAdminDrawer } = React.useContext(AdminDrawerContext);
   const { setSnackbarProps } = useCustomSnackbar();
@@ -31,10 +30,10 @@ const AddCityForm: React.FC = () => {
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-        toggleAdminDrawer();
         dispatch(
           cityAdded({ name: values.name, description: values.description })
         );
+        onSubmitInformer && onSubmitInformer();
         setSnackbarProps({
           message: "City is added Successfully !",
           type: "success",

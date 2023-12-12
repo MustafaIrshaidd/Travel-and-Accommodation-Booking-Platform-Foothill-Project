@@ -1,6 +1,6 @@
 import React from "react";
 import { render, waitFor, screen } from "@testing-library/react";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
 import { BrowserRouter } from "react-router-dom";
 import { AppThemeProvider } from "@contexts/AppTheme.context";

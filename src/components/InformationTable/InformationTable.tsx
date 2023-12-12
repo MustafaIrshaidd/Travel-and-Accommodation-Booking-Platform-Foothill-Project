@@ -18,27 +18,17 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Data,
   EnhancedTableProps,
   Order,
   EnhancedTableToolbarProps,
   InformationTableProps,
-  HeadCell
+  HeadCell,
 } from "./types";
-
-// function createData(
-//   id: number,
-//   name: string,
-//   description: string,
-// ): Data {
-//   return {
-//     id,
-//     name,
-//     description,
-//   };
-// }
-
+import { Stack } from "@mui/material";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -99,7 +89,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -109,7 +99,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               "aria-label": "select all desserts",
             }}
           />
-        </TableCell>
+        </TableCell> */}
         {headcells.map((headCell: HeadCell) => (
           <TableCell
             key={headCell.id}
@@ -135,11 +125,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected,title } = props;
+  const { numSelected, title, handleRowActions, handleRemoveSelection } = props;
 
   return (
     <Toolbar
       sx={{
+        justifyContent: "space-between",
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
@@ -151,13 +142,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         }),
       }}>
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div">
-          {numSelected} selected
-        </Typography>
+        <Tooltip title="Cancel">
+          <IconButton onClick={handleRemoveSelection}>
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
       ) : (
         <Typography
           sx={{ flex: "1 1 100%" }}
@@ -168,11 +157,18 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       )}
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        <Stack direction={"row"} gap={1} onClick={handleRowActions}>
+          <Tooltip title="Update">
+            <IconButton defaultValue={"update"}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton defaultValue={"delete"}>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
@@ -183,26 +179,19 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     </Toolbar>
   );
 }
-const InformationTable: React.FC<InformationTableProps> = ({ headcells,title ,rows = []}) => {
+const InformationTable: React.FC<InformationTableProps> = ({
+  headcells,
+  title,
+  rows = [],
+  handleDeleteRow,
+  handleUpdateRow,
+}) => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  // const rows = [
-  //   data.map((dataObject)=>{
-  //     createData(1, "ds", ""),
-  //   })
-  //   createData(1, "ds", ""),
-  //   createData(2, "fs", ""),
-  //   createData(3, "fs", ""),
-  //   createData(4, "", ""),
-  //   createData(5, "", ""),
-  // ];
-
-  
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -222,27 +211,59 @@ const InformationTable: React.FC<InformationTableProps> = ({ headcells,title ,ro
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+  // const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+  //   const selectedIndex = selected.indexOf(id);
+  //   let newSelected: readonly number[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, id);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
+  //   setSelected(newSelected);
+  // };
+
+  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+    const isSelected = selected.includes(id);
+    let newSelected: readonly number[] = [];
+    if (isSelected) {
+      newSelected = [];
+    } else {
+      newSelected = [id];
     }
     setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+  };
+
+  const handleRemoveSelection = () => {
+    setSelected([]);
+  };
+
+  const handleRowActions = (event: React.MouseEvent<HTMLElement>) => {
+    const actionButton = (event.target as HTMLElement).closest("BUTTON");
+    if (actionButton) {
+      switch (actionButton.ariaLabel) {
+        case "Delete": {
+          handleDeleteRow && handleDeleteRow(selected[0]);
+          break;
+        }
+        case "Update": {
+          handleUpdateRow && handleUpdateRow(selected[0]);
+          break;
+        }
+      }
+      setSelected([]);
+    }
   };
 
   const handleChangeRowsPerPage = (
@@ -270,7 +291,12 @@ const InformationTable: React.FC<InformationTableProps> = ({ headcells,title ,ro
   return (
     <Box sx={{ width: "100%" }} overflow={"hidden"}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title} />
+        <EnhancedTableToolbar
+          handleRemoveSelection={handleRemoveSelection}
+          numSelected={selected.length}
+          title={title}
+          handleRowActions={handleRowActions}
+        />
         <TableContainer sx={{ height: { xs: "45vh", md: "40vh", lg: "60vh" } }}>
           <Table sx={{ minWidth: "100%" }} stickyHeader size={"medium"}>
             <EnhancedTableHead
@@ -290,14 +316,14 @@ const InformationTable: React.FC<InformationTableProps> = ({ headcells,title ,ro
                 return (
                   <TableRow
                     hover
-                    onClick={(event) =>handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}>
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
@@ -305,13 +331,12 @@ const InformationTable: React.FC<InformationTableProps> = ({ headcells,title ,ro
                           "aria-labelledby": labelId,
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell
                       component="th"
                       id={labelId}
                       scope="row"
-                      padding="none"
-                    >
+                      padding="normal">
                       {row.id}
                     </TableCell>
                     <TableCell align="left">{row.name}</TableCell>

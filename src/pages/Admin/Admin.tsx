@@ -5,11 +5,16 @@ import { Route, Routes } from "react-router-dom";
 import ManageCities from "./components/ManageCities";
 import { AdminDrawerContext } from "./contexts/AdminAsideDrawer";
 import CloseIcon from "@mui/icons-material/Close";
-import { AddCityForm } from "./forms";
+import { FormsStepper } from "@components/FormsStepper";
+import { FormsStepperContext } from "@contexts/FormsStepper.context";
 
 const Admin = () => {
   const { isAdminDrawerOpen, toggleAdminDrawer } =
     useContext(AdminDrawerContext);
+
+  const { forms, activeStep } = React.useContext(FormsStepperContext)!;
+
+  
 
   return (
     <>
@@ -49,7 +54,7 @@ const Admin = () => {
                   transitionDelay: isAdminDrawerOpen ? "300ms" : "0ms",
                 }}>
                 <div>
-                  <AddCityForm />
+                  <FormsStepper />
                 </div>
               </Zoom>
             </Grid>

@@ -5,6 +5,7 @@ const validations = {
     name: yup.string().required("City Name is required"),
     description: yup.string().required("Description is required"),
   }),
+  AddCityImageValidationSchema: yup.object({}),
 };
 
 export default validations;
