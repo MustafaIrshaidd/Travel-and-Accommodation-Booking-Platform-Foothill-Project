@@ -24,13 +24,20 @@ const AddCityImage: React.FC<AddCityImageProps> = ({ onSubmitInformer }) => {
     },
     validationSchema: validations.AddCityImageValidationSchema,
     onSubmit: async (values) => {
-      // Handle Token and Navigation
-      console.log(values);
-      const { image, previewImage } = formik.values;
+      try {
+        const { image,previewImage } = formik.values;
+        console.log(previewImage)
+          
+        console.log(image)
+        const formData = FileUploadService.createFormData(image);
+        // Clear the form or perform any other necessary actions
+        onSubmitInformer && onSubmitInformer();
 
-      const formData = FileUploadService.createFormData(image);
-
-      formik.resetForm();
+        formik.resetForm();
+      } catch (error) {
+        // Handle errors (e.g., display an error message)
+        console.error('Error uploading image:', error);
+      }
     },
   });
 
@@ -72,7 +79,7 @@ const AddCityImage: React.FC<AddCityImageProps> = ({ onSubmitInformer }) => {
           image={formik.values.image}
           onImageChange={handleImageChange}
           onBlur={formik.handleBlur}
-          initialPreviewImage={formik.values.previewImage}
+          initialPreviewImage={""}
           error={formik.touched.image && Boolean(formik.errors.image)}
           helperText={formik.touched.image && formik.errors.image}></FileField>
         <DefaultButton

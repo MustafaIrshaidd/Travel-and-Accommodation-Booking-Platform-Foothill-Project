@@ -10,3 +10,21 @@ export const fetchCities = createAsyncThunk('cities/fetchCities', async (args:{p
         throw err;
     }
 });
+
+export const addCityAsync = createAsyncThunk("cities/addCity", async (cityData: Omit<City, "id">) => {
+    try {
+      const response = await axios.post(`https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api/cities/`, cityData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  });
+
+  export const deleteCityAsync = createAsyncThunk("cities/deleteCity", async (id:number) => {
+    try {
+      const response = await axios.delete(`https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api/cities/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  });

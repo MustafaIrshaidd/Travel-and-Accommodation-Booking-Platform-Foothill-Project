@@ -185,7 +185,9 @@ const InformationTable: React.FC<InformationTableProps> = ({
   rows = [],
   handleDeleteRow,
   handleUpdateRow,
+  loading
 }) => {
+  
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -211,24 +213,8 @@ const InformationTable: React.FC<InformationTableProps> = ({
     setSelected([]);
   };
 
-  // const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
-  //   const selectedIndex = selected.indexOf(id);
-  //   let newSelected: readonly number[] = [];
 
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, id);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-  //   setSelected(newSelected);
-  // };
+ 
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
     const isSelected = selected.includes(id);
@@ -278,15 +264,19 @@ const InformationTable: React.FC<InformationTableProps> = ({
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
+    
   const visibleRows = React.useMemo(
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage, rows]
+    [order, orderBy, page, rowsPerPage, rows,loading]
   );
+
+  if(loading){
+    return <>loading</>
+  }
 
   return (
     <Box sx={{ width: "100%" }} overflow={"hidden"}>

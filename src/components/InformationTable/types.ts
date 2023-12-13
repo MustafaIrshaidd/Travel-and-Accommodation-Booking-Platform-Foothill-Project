@@ -39,6 +39,7 @@ export interface InformationTableProps {
   headcells: HeadCell[];
   title: string;
   rows: City[] | undefined;
-  handleDeleteRow?: (id:number) => void;
-  handleUpdateRow?: (id:number) => void;
+  loading?: boolean;
+  handleDeleteRow?: (id: number) => void;
+  handleUpdateRow?: (id: number) => void;
 }

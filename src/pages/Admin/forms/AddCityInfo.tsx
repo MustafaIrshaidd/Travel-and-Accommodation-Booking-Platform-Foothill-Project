@@ -1,25 +1,28 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Stack, TextField, Typography, useTheme } from "@mui/material";
-import { AddCityFormProps, AddCityFormValues } from "./types";
+import { AddCityInfoProps, AddCityInfoValues } from "./types";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { styles } from "@pages/Registration/forms/styles";
 import { DefaultButton } from "@components/Buttons";
 import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
-import { useAppDispatch } from "@hooks/redux.hook";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { cityAdded } from "@store/features/cities/citiesSlice";
+import { selectCities, selectCitiesError } from "@store/selectors/cities";
+import { addCityAsync } from "@store/features/cities/citiesthunks";
 
-const AddCityForm: React.FC<AddCityFormProps> = ({ onSubmitInformer }) => {
+const AddCityInfo: React.FC<AddCityInfoProps> = ({ onSubmitInformer }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { toggleAdminDrawer } = React.useContext(AdminDrawerContext);
   const { setSnackbarProps } = useCustomSnackbar();
   const theme = useTheme();
   const dispatch = useAppDispatch();
+  const stateError = useAppSelector(selectCitiesError);
 
   const { textFieldStyle } = styles(theme);
 
-  const formik = useFormik<AddCityFormValues>({
+  const formik = useFormik<AddCityInfoValues>({
     initialValues: {
       name: "",
       description: "",
@@ -28,22 +31,45 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onSubmitInformer }) => {
     onSubmit: async (values) => {
       // Handle Token and Navigation
       setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        dispatch(
-          cityAdded({ name: values.name, description: values.description })
+      try {
+        await dispatch(
+          addCityAsync({ name: values.name, description: values.description })
         );
+        
         onSubmitInformer && onSubmitInformer();
+        
+      }
+      catch (error) {
         setSnackbarProps({
-          message: "City is added Successfully !",
-          type: "success",
+          message: stateError,
+          type: "error",
           position: { vertical: "bottom", horizontal: "center" },
         });
-      }, 3000);
-
-      formik.resetForm();
+      }
+      finally {
+        setIsLoading(false);
+        formik.resetForm();
+      }
     },
   });
+
+  React.useEffect(() => {
+    if (stateError && typeof stateError !== "undefined") {
+      setSnackbarProps({
+        message: stateError,
+        type: "error",
+        position: { vertical: "bottom", horizontal: "center" },
+      });
+      toggleAdminDrawer();
+    }
+    // else if(){
+    //   setSnackbarProps({
+    //         message: "City is added Successfully!",
+    //         type: "success",
+    //         position: { vertical: "bottom", horizontal: "center" },
+    //       });
+    // }
+  }, [cityAdded]);
 
   return (
     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
@@ -109,4 +135,4 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onSubmitInformer }) => {
   );
 };
 
-export default AddCityForm;
+export default AddCityInfo;

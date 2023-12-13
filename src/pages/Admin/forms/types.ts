@@ -1,9 +1,9 @@
-export interface AddCityFormValues {
+export interface AddCityInfoValues {
   name: string;
   description: string;
 }
 
-export interface AddCityFormProps {
+export interface AddCityInfoProps {
   namePlaceholder?: string;
   descriptionPlaceholder?: string;
   onSubmitInformer?: () => void;

@@ -7,12 +7,12 @@ import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { InformationTable } from "@components/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { selectCities } from "@store/selectors/cities";
-import { fetchCities } from "@store/features/cities/citiesthunks";
+import { deleteCityAsync, fetchCities } from "@store/features/cities/citiesthunks";
 import { HeadCell } from "@components/InformationTable/types";
 import { cityDeleted } from "@store/features/cities/citiesSlice";
 import { selectCitiesLoading } from "@store/selectors/cities";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
-import AddCityForm from "../forms/AddCityForm";
+import AddCityForm from "../forms/AddCityInfo";
 import AddCityImage from "../forms/AddCityImage";
 
 const headCells: HeadCell[] = [
@@ -41,15 +41,18 @@ const ManageCities = () => {
   const dispatch = useAppDispatch();
 
   const cities = useAppSelector(selectCities);
+  const loading =useAppSelector(selectCitiesLoading)
 
   React.useEffect(() => {
     dispatch(fetchCities({ pageNumber: 1, pageSize: 10 }));
   }, []);
 
   const handleRemoveCityById = (id: number) => {
-    dispatch(cityDeleted(id));
+    dispatch(deleteCityAsync(id));
   };
-  const handleUpdateCityById = (id: number) => {};
+  const handleUpdateCityById = (id: number) => {
+    console.log(id)
+  };
 
   // COMPONENT STATE MANAGMENT
   const { setForms, handleNext, activeStep, stepsCompleted, handleReset } =
@@ -95,6 +98,7 @@ const ManageCities = () => {
         </Grid>
         {/* Representational Component */}
         <InformationTable
+          loading={loading}
           headcells={headCells}
           title="Manage Cities"
           rows={cities}
