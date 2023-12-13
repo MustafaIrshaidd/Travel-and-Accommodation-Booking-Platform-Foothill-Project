@@ -10,7 +10,7 @@ export const CustomSnackbarContext = createContext<CustomSnackbarContextProps | 
 
 export const CustomSnackbarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [snackbarProps, setSnackbarProps] = useState<CustomSnackbarProps>({
-        message: '',
+        message: "",
         type: 'info',
         position: { vertical: 'top', horizontal: 'center' },
         autoHideDuration: 3000,

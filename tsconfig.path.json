@@ -12,7 +12,9 @@
       "@routes": ["routes"],
       "@store/*": ["store/*"],
       "@store": ["store"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@constants/*": ["constants/*"]
     }
   }
 }

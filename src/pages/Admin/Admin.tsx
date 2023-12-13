@@ -7,14 +7,13 @@ import { AdminDrawerContext } from "./contexts/AdminAsideDrawer";
 import CloseIcon from "@mui/icons-material/Close";
 import { FormsStepper } from "@components/FormsStepper";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
+import ManageHotels from "./components/ManageHotels";
 
 const Admin = () => {
   const { isAdminDrawerOpen, toggleAdminDrawer } =
     useContext(AdminDrawerContext);
 
   const { forms, activeStep } = React.useContext(FormsStepperContext)!;
-
-  
 
   return (
     <>
@@ -23,7 +22,7 @@ const Admin = () => {
           <DrawerHeader />
           <Routes>
             <Route path="/cities" element={<ManageCities />} />
-            <Route path="/hotels" element={<>hello hotels</>} />
+            <Route path="/hotels" element={<ManageHotels />} />
             <Route path="/rooms" element={<>hello rooms</>} />
             <Route path="*" element={<ManageCities />} />
           </Routes>

@@ -1,4 +1,5 @@
 import { City } from "@store/types/cities";
+import { Hotel } from "@store/types/hotels";
 
 export interface EnhancedTableProps {
   numSelected: number;
@@ -38,7 +39,7 @@ export interface EnhancedTableToolbarProps {
 export interface InformationTableProps {
   headcells: HeadCell[];
   title: string;
-  rows: City[] | undefined;
+  rows: City[] | Hotel[] | undefined;
   loading?: boolean;
   handleDeleteRow?: (id: number) => void;
   handleUpdateRow?: (id: number) => void;

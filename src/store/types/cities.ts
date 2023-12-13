@@ -4,10 +4,6 @@ export interface City {
   name: string;
 }
 
-export interface Error {
-  message: string;
-}
-
 
 
 export interface CitiesState {

@@ -6,10 +6,9 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { InformationTable } from "@components/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { selectCities, selectCitiesError } from "@store/selectors/cities";
+import { selectHotels } from "@store/selectors/hotels";
 import {
   deleteCityAsync,
-  fetchCities,
 } from "@store/features/cities/citiesThunks";
 import { HeadCell } from "@components/InformationTable/types";
 import { selectCitiesLoading } from "@store/selectors/cities";
@@ -18,6 +17,7 @@ import AddCityImage from "../forms/AddCityImage";
 import { unwrapResult } from "@reduxjs/toolkit";
 import AddCityInfo from "../forms/AddCityInfo";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
+import { fetchHotels } from "@store/features/hotels/hotelsThunks";
 
 const headCells: HeadCell[] = [
   {
@@ -40,20 +40,19 @@ const headCells: HeadCell[] = [
   },
 ];
 
-const ManageCities = () => {
+const ManageHotels = () => {
   const { setSnackbarProps } = useCustomSnackbar();
   // APP STATE MANAGMENT
   const dispatch = useAppDispatch();
 
-  const cities = useAppSelector(selectCities);
+  const hotels = useAppSelector(selectHotels);
   const loading = useAppSelector(selectCitiesLoading);
-  const error = useAppSelector(selectCitiesError);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const resultAction = await dispatch(
-          fetchCities({ pageNumber: 1, pageSize: 10 })
+          fetchHotels({ pageNumber: 1, pageSize: 10 })
         );
         const originalPromiseResult = unwrapResult(resultAction);
       } catch (rejectedValueOrSerializedError:any) {
@@ -128,8 +127,8 @@ const ManageCities = () => {
         <InformationTable
           loading={loading}
           headcells={headCells}
-          title="Manage Cities"
-          rows={cities}
+          title="Manage Hotels"
+          rows={hotels}
           handleDeleteRow={handleRemoveCityById}
           handleUpdateRow={handleUpdateCityById}></InformationTable>
       </Stack>
@@ -137,4 +136,4 @@ const ManageCities = () => {
   );
 };
 
-export default ManageCities;
+export default ManageHotels;

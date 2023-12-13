@@ -29,6 +29,8 @@ import {
   HeadCell,
 } from "./types";
 import { Stack } from "@mui/material";
+import { City } from "@store/types/cities";
+import { Hotel } from "@store/types/hotels";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -185,9 +187,8 @@ const InformationTable: React.FC<InformationTableProps> = ({
   rows = [],
   handleDeleteRow,
   handleUpdateRow,
-  loading
+  loading,
 }) => {
-  
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("id");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -212,9 +213,6 @@ const InformationTable: React.FC<InformationTableProps> = ({
     }
     setSelected([]);
   };
-
-
- 
 
   const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
     const isSelected = selected.includes(id);
@@ -264,18 +262,20 @@ const InformationTable: React.FC<InformationTableProps> = ({
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage, rows,loading]
-  );
 
-  if(loading){
-    return <>loading</>
+  const visibleRows = React.useMemo(() => {
+    const sortedRows = stableSort(
+      rows as readonly (City | Hotel)[],
+      getComparator(order, orderBy)
+    );
+    return sortedRows.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  }, [order, orderBy, page, rowsPerPage, rows, loading]);
+
+  if (loading) {
+    return <>loading</>;
   }
 
   return (

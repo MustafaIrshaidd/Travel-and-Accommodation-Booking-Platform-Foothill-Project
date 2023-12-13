@@ -13,6 +13,8 @@ module.exports = {
       "@routes": path.resolve(__dirname, "src/routes"),
       "@store": path.resolve(__dirname, "src/store"),
       "@services": path.resolve(__dirname, "src/services"),
+      "@utils": path.resolve(__dirname, "src/utils"),
+      "@constants": path.resolve(__dirname, "src/constants"),
     },
   },
   jest: {
@@ -22,5 +24,5 @@ module.exports = {
         prefix: "<rootDir>/src/",
       }),
     },
-  }, 
+  },
 };

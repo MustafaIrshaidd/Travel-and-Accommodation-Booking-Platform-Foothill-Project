@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CitiesState, City } from "@store/types/cities";
-import { fetchCities } from "./citiesthunks";
+import { createSlice } from "@reduxjs/toolkit";
+import { CitiesState } from "@store/types/cities";
+import { addCityAsync, deleteCityAsync, fetchCities } from "./citiesThunks";
 
 const initialState = {
   cities: [],
@@ -10,58 +10,74 @@ const initialState = {
 export const citiesSlice = createSlice({
   name: "cities",
   initialState,
-  reducers: {
-    
-    cityAdded(state, action: PayloadAction<Omit<City,"id">>) {
-      const existingCityIndex = state.cities.findIndex((city) => city.name === action.payload.name);
-
-      if (existingCityIndex === -1) {
-        const newCity: City = {
-          ...action.payload,
-          id: state.cities.length + 1,
-        };
-        state.cities.push(newCity);
-        state.error = null;
-      }
-      else {
-        state.error = "You Connot Add Existing City !"
-      }
-    },
-    cityDeleted(state, action: PayloadAction<number>) {
-      const deletedCityId = action.payload;
-      state.cities = state.cities.filter((city) => city.id !== deletedCityId);
-    },
-    cityAddedSuccess(state) {
-      state.error=null;
-    },
-    cityAddedError(state, action: PayloadAction<string>) {
-      state.error = action.payload;
-    },
-    // cityUpdated(state, action: PayloadAction<number>) {
-    //   const deletedCityId = action.payload;
-    //   state.cities = state.cities.filter((city) => city.id !== deletedCityId);
-    // },
-  },
-  
+  reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchCities.pending, (state) => ({
-        ...state,
-        loading: true,
-      }))
-      .addCase(fetchCities.fulfilled, (state, action) => ({
-        ...state,
-        loading: false,
-        cities: action.payload,
-      }))
+      .addCase(fetchCities.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(fetchCities.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          cities: action.payload || [],
+          error: null,
+        };
+      })
       .addCase(fetchCities.rejected, (state, action) => {
-        state.error && (state.error = action.payload);
-        state.loading = false;
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
+      })
+      .addCase(addCityAsync.pending, (state) => {
+        return {
+          ...state,
+          error: null,
+        };
+      })
+      .addCase(addCityAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          cities: [...state.cities, action.payload],
+          error: null,
+        };
+      })
+      .addCase(addCityAsync.rejected, (state, action) => {
+        return {
+          ...state,
+          error: action.payload,
+        };
+      })
+      .addCase(deleteCityAsync.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(deleteCityAsync.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          cities: state.cities.filter(
+            (city) => city.id !== action.payload.deletedCityId
+          ),
+          error: null,
+        };
+      })
+      .addCase(deleteCityAsync.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
       });
   },
-  
 });
-
-export const { cityAdded, cityDeleted } = citiesSlice.actions;
 
 export default citiesSlice.reducer;

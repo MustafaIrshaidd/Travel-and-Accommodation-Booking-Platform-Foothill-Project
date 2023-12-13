@@ -8,9 +8,10 @@ import { DefaultButton } from "@components/Buttons";
 import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { cityAdded } from "@store/features/cities/citiesSlice";
+
 import { selectCities, selectCitiesError } from "@store/selectors/cities";
-import { addCityAsync } from "@store/features/cities/citiesthunks";
+import { addCityAsync } from "@store/features/cities/citiesThunks";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const AddCityInfo: React.FC<AddCityInfoProps> = ({ onSubmitInformer }) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -30,46 +31,27 @@ const AddCityInfo: React.FC<AddCityInfoProps> = ({ onSubmitInformer }) => {
     validationSchema: validations.AddCityValidationSchema,
     onSubmit: async (values) => {
       // Handle Token and Navigation
+      console.log(values);
       setIsLoading(true);
       try {
-        await dispatch(
-          addCityAsync({ name: values.name, description: values.description })
-        );
-        
-        onSubmitInformer && onSubmitInformer();
-        
-      }
-      catch (error) {
+        const resultAction = await dispatch(addCityAsync(values));
+        const originalPromiseResult = unwrapResult(resultAction);
         setSnackbarProps({
-          message: stateError,
+          message: "City is added Successfully!",
+          type: "success",
+          position: { vertical: "bottom", horizontal: "center" },
+        });
+        onSubmitInformer && onSubmitInformer();
+      } catch (rejectedValueOrSerializedError: any) {
+        setSnackbarProps({
+          message: rejectedValueOrSerializedError,
           type: "error",
           position: { vertical: "bottom", horizontal: "center" },
         });
       }
-      finally {
-        setIsLoading(false);
-        formik.resetForm();
-      }
+      setIsLoading(false);
     },
   });
-
-  React.useEffect(() => {
-    if (stateError && typeof stateError !== "undefined") {
-      setSnackbarProps({
-        message: stateError,
-        type: "error",
-        position: { vertical: "bottom", horizontal: "center" },
-      });
-      toggleAdminDrawer();
-    }
-    // else if(){
-    //   setSnackbarProps({
-    //         message: "City is added Successfully!",
-    //         type: "success",
-    //         position: { vertical: "bottom", horizontal: "center" },
-    //       });
-    // }
-  }, [cityAdded]);
 
   return (
     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>

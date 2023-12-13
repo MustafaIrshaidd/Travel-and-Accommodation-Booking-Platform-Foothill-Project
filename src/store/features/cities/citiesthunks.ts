@@ -1,30 +1,48 @@
-import axios from 'axios'
+import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { City } from '@store/types/cities';
+import { City } from "@store/types/cities";
+import axiosInstance from "@utils/axiosUtil";
 
-export const fetchCities = createAsyncThunk('cities/fetchCities', async (args:{pageNumber?:number,pageSize?:number}) => {
+export const fetchCities = createAsyncThunk(
+  "cities/fetchCities",
+  async (
+    args: { pageNumber?: number; pageSize?: number },
+    { rejectWithValue }
+  ) => {
     try {
-        const res = await axios.get(`https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api/cities?pageSize=${args.pageSize||5}&pageNumber=${args.pageNumber||1}`);
-        return res.data as City[];
-    } catch (err) {
-        throw err;
-    }
-});
-
-export const addCityAsync = createAsyncThunk("cities/addCity", async (cityData: Omit<City, "id">) => {
-    try {
-      const response = await axios.post(`https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api/cities/`, cityData);
+      const response = await axiosInstance.get(
+        `/cities?pageSize=${args.pageSize || 5}&pageNumber=${
+          args.pageNumber || 1
+        }`
+      );
       return response.data;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
     }
-  });
+  }
+);
 
-  export const deleteCityAsync = createAsyncThunk("cities/deleteCity", async (id:number) => {
+export const addCityAsync = createAsyncThunk(
+  "cities/addCity",
+  async (cityData: Omit<City, "id">, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api/cities/${id}`);
+      const response = await axiosInstance.post("/cities/", cityData);
       return response.data;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      
+      return rejectWithValue(error.message||"");
     }
-  });
+  }
+);
+
+export const deleteCityAsync = createAsyncThunk(
+  "cities/deleteCity",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`/cities/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
