@@ -17,17 +17,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-      <BrowserRouter>
-        <AppThemeProvider>
-          <CustomSnackbarProvider>
+    <BrowserRouter>
+      <AppThemeProvider>
+        <CustomSnackbarProvider>
           <AuthProvider>
             <FormsStepperProvider>
               <App />
             </FormsStepperProvider>
-            </AuthProvider>
-          </CustomSnackbarProvider>
-        </AppThemeProvider>
-      </BrowserRouter>
+          </AuthProvider>
+        </CustomSnackbarProvider>
+      </AppThemeProvider>
+    </BrowserRouter>
   </Provider>
 );
 

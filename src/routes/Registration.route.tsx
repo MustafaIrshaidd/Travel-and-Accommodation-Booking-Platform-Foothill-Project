@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Registration } from "@pages/Registration";
 import { Routes, Route } from "react-router-dom";
 import AdminRoute from "./Admin.route";
+import { AuthContext } from "@contexts/Auth.context";
 
 const RegistrationRoute = () => {
+  const { user } = useContext(AuthContext)!;
+
+
+
   return (
     <Routes>
-      <Route path="" element={<Registration type="SignIn" />} />  
+      {user?.authorization ? (
+        <>
           <Route path="/admin/*" element={<AdminRoute />} />
           <Route path="/user" element={<>hello user</>} />
+        </>
+      ) : (
+        <Route path="" element={<Registration type="SignIn" />} />
+      )}
       <Route path="*" element={<>not found</>} />
     </Routes>
   );
