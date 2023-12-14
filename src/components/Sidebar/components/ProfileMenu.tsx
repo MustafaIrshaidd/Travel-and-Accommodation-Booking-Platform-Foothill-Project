@@ -9,18 +9,22 @@ import {
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { Cookie } from "@mui/icons-material";
+import { useCookies } from "react-cookie";
 
 const ProfileMenuItems = [["Logout", <LogoutIcon />]];
 
 const ProfileMenu: React.FC<any> = ({ transitionProps }) => {
+ 
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleButtonsClick = (event: any) => {
-    if (event.target.tagName == "BUTTON") {
+  const handleButtonsClick = (event: React.MouseEvent) => {
+    if (event.target instanceof HTMLButtonElement) {
       switch (event.target.innerText) {
         case "Logout": {
-          navigate("/");
+          console.log("hello")
+          break;
         }
       }
     }
@@ -39,7 +43,7 @@ const ProfileMenu: React.FC<any> = ({ transitionProps }) => {
           onClick={handleButtonsClick}>
           {ProfileMenuItems.map((item, index) => {
             return (
-              <>
+              <React.Fragment>
                 <IconButton
                   key={index}
                   value={`${item[0]}`}
@@ -57,7 +61,7 @@ const ProfileMenu: React.FC<any> = ({ transitionProps }) => {
                   {item[0]}
                 </IconButton>
                 <Divider />
-              </>
+              </React.Fragment>
             );
           })}
         </Stack>

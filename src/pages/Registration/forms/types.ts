@@ -1,5 +1,5 @@
 export interface SignInFormValues {
-    userName: string;
+    username: string;
     password: string;
 }
 

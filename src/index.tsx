@@ -9,6 +9,7 @@ import { AppThemeProvider } from "@contexts/AppTheme.context";
 import { Provider } from "react-redux";
 import { store } from "@store";
 import { FormsStepperProvider } from "@contexts/FormsStepper.context";
+import { AuthProvider } from "@contexts/Auth.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,15 +17,17 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <AppThemeProvider>
-        <CustomSnackbarProvider>
-          <FormsStepperProvider>
-            <App />
-          </FormsStepperProvider>
-        </CustomSnackbarProvider>
-      </AppThemeProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppThemeProvider>
+          <CustomSnackbarProvider>
+            <FormsStepperProvider>
+              <App />
+            </FormsStepperProvider>
+          </CustomSnackbarProvider>
+        </AppThemeProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </Provider>
 );
 

@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 const validations = {
   signinValidationSchema: yup.object({
-    userName: yup
+    username: yup
       .string()
       .required("Username is required"),
     password: yup

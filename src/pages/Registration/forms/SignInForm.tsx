@@ -7,33 +7,36 @@ import { useNavigate } from "react-router-dom";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { styles } from "./styles";
 import { DefaultButton } from "@components/Buttons";
+import { AuthContext } from "@contexts/Auth.context";
 
 const SignInForm: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { setSnackbarProps } = useCustomSnackbar();
   const navigate = useNavigate();
+  const { loginUser } = React.useContext(AuthContext)!;
+
+  const { setSnackbarProps } = useCustomSnackbar();
   const theme = useTheme();
-  const { textFieldStyle, submitButtonStyle } = styles(theme);
+  const { textFieldStyle } = styles(theme);
 
   const formik = useFormik<SignInFormValues>({
     initialValues: {
-      userName: "",
+      username: "",
       password: "",
     },
     validationSchema: validations.signinValidationSchema,
     onSubmit: async (values) => {
-      // Handle Token and Navigation
       setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setSnackbarProps({
-          message: "User Logged In Successfully !",
-          type: "success",
-          position: { vertical: "bottom", horizontal: "center" },
-        });
-      }, 3000);
 
+      const message = loginUser(values);
+
+      setSnackbarProps({
+        message: message,
+        type: "success",
+        position: { vertical: "bottom", horizontal: "center" },
+      });
+
+      setIsLoading(false);
       formik.resetForm();
     },
   });
@@ -65,14 +68,14 @@ const SignInForm: React.FC = () => {
         <TextField
           sx={textFieldStyle}
           fullWidth
-          id="userName"
-          name="userName"
+          id="username"
+          name="username"
           label="Username"
-          value={formik.values.userName}
+          value={formik.values.username}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.userName && Boolean(formik.errors.userName)}
-          helperText={formik.touched.userName && formik.errors.userName}
+          error={formik.touched.username && Boolean(formik.errors.username)}
+          helperText={formik.touched.username && formik.errors.username}
         />
         <TextField
           sx={textFieldStyle}
