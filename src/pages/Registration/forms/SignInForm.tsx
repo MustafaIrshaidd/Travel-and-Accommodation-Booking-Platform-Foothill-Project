@@ -27,17 +27,15 @@ const SignInForm: React.FC = () => {
     validationSchema: validations.signinValidationSchema,
     onSubmit: async (values) => {
       setIsLoading(true);
-
-      const message = loginUser(values);
-
+      const result = await loginUser(values);
       setSnackbarProps({
-        message: message,
-        type: "success",
+        message: result.message,
+        type: result.messageType,
         position: { vertical: "bottom", horizontal: "center" },
       });
-
       setIsLoading(false);
       formik.resetForm();
+      navigate(result.path)
     },
   });
 

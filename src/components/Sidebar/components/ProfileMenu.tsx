@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Divider,
   Paper,
@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
-import { Cookie } from "@mui/icons-material";
-import { useCookies } from "react-cookie";
+import { AuthContext } from "@contexts/Auth.context";
 
 const ProfileMenuItems = [["Logout", <LogoutIcon />]];
 
 const ProfileMenu: React.FC<any> = ({ transitionProps }) => {
+  const { logoutUser } = useContext(AuthContext)!;
  
   const theme = useTheme();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const ProfileMenu: React.FC<any> = ({ transitionProps }) => {
     if (event.target instanceof HTMLButtonElement) {
       switch (event.target.innerText) {
         case "Logout": {
-          console.log("hello")
+          logoutUser();
           break;
         }
       }

@@ -1,5 +1,4 @@
 import { useAppDispatch } from "@hooks/redux.hook";
-import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { loginUserAcync } from "@store/features/user/userThunks";
 import React, {
@@ -9,7 +8,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { useCookies } from "react-cookie";
+import {useCookies} from "react-cookie"
 
 // Define the types for user data
 interface UserData {
@@ -18,11 +17,12 @@ interface UserData {
   authorization: string;
 }
 
+type messageType ="success"|"error"
 // Define the types for the authentication context
 interface AuthContextProps {
   user: UserData | null;
   isAuthenticated: boolean;
-  loginUser: (user: { username: string; password: string }) => void;
+  loginUser: (user: { username: string; password: string }) => Promise<{path:string,message:string,messageType:any}>;
   logoutUser: () => void;
 }
 
@@ -48,39 +48,42 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["authData"]);
   const dispatch = useAppDispatch();
-  const { setSnackbarProps } = useCustomSnackbar();
   const [user, setUser] = useState<UserData | null>(
     cookies["authData"] || null
   );
   const isAuthenticated = !!user;
 
-  // Function to set the user and update the cookie
   const loginUser = async (user: { username: string; password: string }) => {
+    
     try {
       const resultAction = await dispatch(loginUserAcync(user));
       const originalPromiseResult = unwrapResult(resultAction);
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 1);
-      
+
       const userData = { ...originalPromiseResult, username: user.username };
       setUser(userData);
-      setCookie("authData", userData, { path: "/" });
+      setCookie("authData", userData, { path: `/${user.username}` });
+      return {
+        path:`/${userData.username}`,
+        message:"Logged In Successfully !",
+        messageType:"success"
+      };
     } catch (rejectedValueOrSerializedError: any) {
-      setSnackbarProps({
-        message: rejectedValueOrSerializedError,
-        type: "error",
-        position: { vertical: "bottom", horizontal: "center" },
-      });
+      return {
+        path:``,
+        message:rejectedValueOrSerializedError,
+        messageType:"error"
+      }
     }
+
   };
 
-  // Function to log out the user and remove the cookie
   const logoutUser = () => {
     setUser(null);
     removeCookie("authData", { path: "/" });
   };
 
-  // UseEffect to update the user state when the cookie changes
   useEffect(() => {
     setUser(cookies["authData"] || null);
   }, [cookies]);
