@@ -21,7 +21,7 @@ const SignInForm: React.FC = () => {
 
   const formik = useFormik<SignInFormValues>({
     initialValues: {
-      username: "",
+      userName: "",
       password: "",
     },
     validationSchema: validations.signinValidationSchema,
@@ -35,7 +35,7 @@ const SignInForm: React.FC = () => {
       });
       setIsLoading(false);
       formik.resetForm();
-      navigate(result.path)
+      navigate(result.path);
     },
   });
 
@@ -66,21 +66,21 @@ const SignInForm: React.FC = () => {
         <TextField
           sx={textFieldStyle}
           fullWidth
-          id="username"
-          name="username"
+          id="userName"
+          name="userName"
           label="Username"
-          value={formik.values.username}
+          value={formik.values.userName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={formik.touched.username && formik.errors.username}
+          error={formik.touched.userName && Boolean(formik.errors.userName)}
+          helperText={formik.touched.userName && formik.errors.userName}
         />
         <TextField
           sx={textFieldStyle}
           fullWidth
           id="password"
           name="password"
-          label="Password"
+          label="password"
           type="password"
           value={formik.values.password}
           onChange={formik.handleChange}

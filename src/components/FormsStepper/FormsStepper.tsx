@@ -73,12 +73,12 @@ function QontoStepIcon(props: StepIconProps) {
 }
 
 const FormsStepper: React.FC = () => {
-  const { forms, activeStep, handleReset,setStepsCompleted } =
+  const { forms, activeStep, handleReset, setStepsCompleted } =
     React.useContext(FormsStepperContext)!;
 
   React.useEffect(() => {
     if (forms.length !== 0 && activeStep === forms.length) {
-      setStepsCompleted(true)
+      setStepsCompleted(true);
     }
   }, [activeStep, forms]);
 

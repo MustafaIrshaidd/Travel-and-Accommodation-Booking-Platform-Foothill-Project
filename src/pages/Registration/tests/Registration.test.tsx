@@ -7,8 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { AppThemeProvider } from "@contexts/AppTheme.context";
 import MockCustomSnackbar from "@__mocks__/CustomSnackbar";
 
-
-
 describe("Registration", () => {
   test("renders the form and displays custom snackbar after login", async () => {
     render(

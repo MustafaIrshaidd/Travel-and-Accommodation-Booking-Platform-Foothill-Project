@@ -1,44 +1,58 @@
-// Axios Util Factory
-
+import axios, { AxiosInstance } from "axios";
 import { HTTP_STATUS_MESSAGES } from "@constants/httpStatus";
-import axios from "axios";
 
 const baseURL =
   "https://app-hotel-reservation-webapi-uae-dev-001.azurewebsites.net/api";
 
-const axiosInstance = axios.create({
-  baseURL,
-  timeout: 5000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export class AxiosSingleton {
+  private static instance: AxiosInstance;
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+  private constructor() {
+    AxiosSingleton.instance = axios.create({
+      baseURL,
+      timeout: 5000,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    AxiosSingleton.instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const { response } = error;
+
+        if (response) {
+          const { status } = response;
+
+          const errorMessage = HTTP_STATUS_MESSAGES[status] || "Unknown error";
+          return Promise.reject(
+            new Error(`HTTP Error ${status}: ${errorMessage}`)
+          );
+        } else {
+          return Promise.reject(new Error("Network Error"));
+        }
+      }
+    );
   }
-);
 
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    const { response } = error;
+  public static getInstance(): AxiosInstance {
+    if (!AxiosSingleton.instance) {
+      new AxiosSingleton();
+    }
+    return AxiosSingleton.instance;
+  }
 
-    if (response) {
-      const { status, data } = response;
-
-      const errorMessage = HTTP_STATUS_MESSAGES[status] || "Unknown error";
-      return Promise.reject(new Error(`HTTP Error ${status}: ${errorMessage}`));
-    } else {
-      return Promise.reject(new Error("Network Error"));
+  public static setToken(token: string): void {
+    if (AxiosSingleton.instance) {
+      AxiosSingleton.instance.defaults.headers.Authorization = `Bearer ${token}`;
     }
   }
-);
 
-export default axiosInstance;
+  public static removeToken(): void {
+    if (AxiosSingleton.instance) {
+      AxiosSingleton.instance.defaults.headers.Authorization = `Bearer`;
+    }
+  }
+}
+
+export default AxiosSingleton;

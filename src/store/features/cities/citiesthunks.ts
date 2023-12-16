@@ -1,7 +1,6 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { City } from "@store/types/cities";
-import axiosInstance from "@utils/axiosUtil";
+import { axiosInstance } from "@store/store";
 
 export const fetchCities = createAsyncThunk(
   "cities/fetchCities",
@@ -29,8 +28,7 @@ export const addCityAsync = createAsyncThunk(
       const response = await axiosInstance.post("/cities/", cityData);
       return response.data;
     } catch (error: any) {
-      
-      return rejectWithValue(error.message||"");
+      return rejectWithValue(error.message || "");
     }
   }
 );
