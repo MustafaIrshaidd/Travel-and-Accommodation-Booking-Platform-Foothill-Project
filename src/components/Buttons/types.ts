@@ -12,6 +12,11 @@ export interface DefaultButtonProps {
   disableRipple?: boolean;
   caption?: string;
   alignItems?: "center" | "start" | "end";
+  border?: string;
+  height?: string;
+  padding?: string;
   children?: React.ReactNode;
-  handleOnClick?: () => void;
+  borderRadius?: string;
+  justifyContent?: string;
+  handleOnClick?: (event?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }

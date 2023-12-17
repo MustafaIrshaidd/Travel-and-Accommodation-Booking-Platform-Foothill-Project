@@ -3,13 +3,14 @@ import { Variant } from "@mui/material/styles/createTypography";
 import React from "react";
 
 interface TextProps {
-  fontSize?: number;
+  fontSize?: string;
   letterSpacing?: number;
   type: "primary" | "secondary";
   textShadow?: boolean;
   variant?: Variant;
   text?: string;
   fontWeight?: number;
+  padding?:string;
 }
 
 const CustomText = styled(Typography, {
@@ -29,9 +30,11 @@ const Text: React.FC<TextProps> = ({
   variant,
   text,
   fontWeight,
+  padding,
 }) => {
   return (
     <CustomText
+    padding={padding||""}
       noWrap
       variant={variant || "body1"}
       letterSpacing={letterSpacing || 1}

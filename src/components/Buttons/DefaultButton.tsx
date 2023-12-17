@@ -1,24 +1,25 @@
 import React from "react";
 import { DefaultButtonProps } from "./types";
-import { Stack, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Text } from "@components/Text";
+
 
 // Updated CustomButton to handle both contained and outlined variants
 const CustomButton = styled(LoadingButton)<DefaultButtonProps>(
-  ({ theme, width, variant, boxShadow }) => ({
+  ({ theme, width, variant, boxShadow, justifyContent, height, padding, borderRadius }) => ({
+    padding: padding,
     width: width,
-    height: "100%",
+    height: height,
     alignContent: "center",
+    justifyContent: justifyContent,
     textTransform: "none",
+    borderRadius: borderRadius,
     backgroundColor:
       variant === "outlined" ? "transparent" : theme.palette.background.default,
-    border:
-      variant === "outlined"
-        ? `1px solid ${theme.palette.text.primary}`
-        : "none",
+    border: "none",
     color: theme.palette.text.primary,
     "&:hover": {
+      border: "none",
       backgroundColor:
         variant === "outlined"
           ? theme.palette.background.paper
@@ -36,18 +37,27 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
   endIcon,
   variant,
   width,
-  text,
   isDisabled,
   isLoading,
   loadingPosition,
   type,
   boxShadow,
   alignItems,
+  border,
+  justifyContent,
+  borderRadius,
+  height,
+  padding,
   children,
   handleOnClick,
 }) => {
   return (
     <CustomButton
+      borderRadius={borderRadius || ""}
+      padding={padding || ""}
+      height={height || ""}
+      justifyContent={justifyContent || "center"}
+      border={border}
       boxShadow={boxShadow || ""}
       disableRipple={disableRipple || false}
       width={width || "100%"}
