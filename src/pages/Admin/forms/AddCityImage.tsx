@@ -88,8 +88,7 @@ const AddCityImage: React.FC<AddCityImageProps> = ({ onSubmitInformer }) => {
           loadingPosition="center"
           variant="contained"
           type="submit"
-          text="Add City"
-        />
+        >Add City</DefaultButton>
       </Stack>
     </form>
   );

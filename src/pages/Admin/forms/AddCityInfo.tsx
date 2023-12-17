@@ -109,9 +109,9 @@ const AddCityInfo: React.FC<AddCityInfoProps> = ({ onSubmitInformer }) => {
           isDisabled={isLoading || !formik.isValid}
           loadingPosition="center"
           variant="contained"
-          type="submit"
-          text="Add City"
-        />
+          type="submit">
+          Add City
+        </DefaultButton>
       </Stack>
     </form>
   );

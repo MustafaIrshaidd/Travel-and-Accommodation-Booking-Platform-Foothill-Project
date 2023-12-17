@@ -8,5 +8,10 @@ export interface DefaultButtonProps {
   isDisabled?: boolean;
   type?: "submit";
   loadingPosition?: "center" | "end" | "start";
+  boxShadow?: string;
+  disableRipple?: boolean;
+  caption?: string;
+  alignItems?: "center" | "start" | "end";
+  children?: React.ReactNode;
   handleOnClick?: () => void;
 }

@@ -119,9 +119,8 @@ const ManageCities = () => {
             <DefaultButton
               startIcon={<AddCircleOutlineIcon />}
               variant="contained"
-              text="Add City"
               handleOnClick={handleAddCity}
-            />
+            >Add City</DefaultButton>
           </Grid>
         </Grid>
         {/* Representational Component */}

@@ -93,9 +93,9 @@ const SignInForm: React.FC = () => {
           isDisabled={isLoading || !formik.isValid}
           loadingPosition="center"
           variant="contained"
-          type="submit"
-          text="Log In"
-        />
+          type="submit">
+          Log In
+        </DefaultButton>
       </Stack>
     </form>
   );

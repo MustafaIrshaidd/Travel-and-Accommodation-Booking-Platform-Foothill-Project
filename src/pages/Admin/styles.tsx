@@ -45,7 +45,6 @@ export const AdminMain = styled("main", {
   [theme.breakpoints.up("lg")]: {
     width: "100%",
   },
-
   backgroundColor: theme.palette.background.paper,
   overflow: "hidden",
   transition: "width 0.3s ease",

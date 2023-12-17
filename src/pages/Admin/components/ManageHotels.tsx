@@ -7,9 +7,7 @@ import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { InformationTable } from "@components/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { selectHotels } from "@store/selectors/hotels";
-import {
-  deleteCityAsync,
-} from "@store/features/cities/citiesThunks";
+import { deleteCityAsync } from "@store/features/cities/citiesThunks";
 import { HeadCell } from "@components/InformationTable/types";
 import { selectCitiesLoading } from "@store/selectors/cities";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
@@ -55,7 +53,7 @@ const ManageHotels = () => {
           fetchHotels({ pageNumber: 1, pageSize: 10 })
         );
         const originalPromiseResult = unwrapResult(resultAction);
-      } catch (rejectedValueOrSerializedError:any) {
+      } catch (rejectedValueOrSerializedError: any) {
         setSnackbarProps({
           message: rejectedValueOrSerializedError,
           type: "error",
@@ -118,9 +116,9 @@ const ManageHotels = () => {
             <DefaultButton
               startIcon={<AddCircleOutlineIcon />}
               variant="contained"
-              text="Add City"
-              handleOnClick={handleAddCity}
-            />
+              handleOnClick={handleAddCity}>
+              Add Hotel
+            </DefaultButton>
           </Grid>
         </Grid>
         {/* Representational Component */}
