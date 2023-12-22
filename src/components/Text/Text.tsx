@@ -13,6 +13,7 @@ interface TextProps {
   padding?: string;
   textAlign?: "center" | "end" | "start";
   width?: string;
+  textWrap?: boolean;
   onChange?: (text: string) => void;
 }
 
@@ -36,13 +37,14 @@ const Text: React.FC<TextProps> = ({
   fontWeight,
   padding,
   textAlign,
+  textWrap = true,
   onChange,
 }) => {
   return (
     <CustomText
       onChange={(text: any) => (onChange ? onChange(text) : {})}
       padding={padding || ""}
-      noWrap
+      noWrap={textWrap}
       variant={variant || "body1"}
       letterSpacing={letterSpacing || 1}
       fontSize={fontSize || "16px"}

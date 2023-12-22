@@ -68,7 +68,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Stack direction={"column"} position={"sticky"} top={0}>
+    <Stack direction={"column"} position={"sticky"} zIndex={10} top={0}>
       <NavAppBar isOpen={isRotating} position="static">
         <NavToolbar>
           {/* Logo */}
