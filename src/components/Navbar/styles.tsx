@@ -15,9 +15,11 @@ export const NavToolbar = styled(Toolbar)(({ theme }) => ({
   boxShadow: "none",
 }));
 
-export const NavAppBar = styled(AppBar)(({ theme }) => ({
-  boxShadow: "none",
-}));
+export const NavAppBar = styled(AppBar)<{ isOpen?: boolean }>(
+  ({ theme, isOpen = false }) => ({
+    boxShadow: "none",
+  })
+);
 
 export const NavAnimatedContainer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isActivated",
@@ -42,8 +44,9 @@ export const NavAnimatedItem = styled(Box, {
     top: isTop ? "0px" : "none",
     bottom: isTop ? "none" : "70px",
     height: "50px",
-    width: "50vw",
+    width: "100%",
     display: "flex",
+    
     justifyContent: "center",
     alignItems: "center",
   })
