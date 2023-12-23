@@ -7,6 +7,8 @@ import {
   Grid,
   TextField,
   Box,
+  Collapse,
+  ListItemButton,
 } from "@mui/material";
 import { Text } from "@components/Text";
 import { DatePicker } from "@components/DatePicker";
@@ -130,20 +132,14 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
     },
     onSubmit: async (values) => {
       console.log(values);
-      formik.resetForm();
+      // formik.resetForm();
     },
   });
-
-  const handleDateChange = (
-    formattedDate: string | null,
-    type: "checkInDate" | "checkOutDate"
-  ) => {
-    formik.setFieldValue(type, formattedDate);
-  };
 
   return (
     <form onSubmit={formik.handleSubmit} onReset={formik.handleReset}>
       <Stack
+        padding={"20px"}
         height={"100%"}
         justifyContent={"center"}
         alignItems={"center"}
@@ -180,11 +176,10 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                 />
               </Stack>
             </CustomSearchInputs>
-            <InputDrawer isOpen={1 === activeInputIndex}>
+            <Collapse in={1 === activeInputIndex} timeout="auto" unmountOnExit>
               <Box></Box>
-            </InputDrawer>
+            </Collapse>
           </Grid>
-
           <Grid key={2} item xs={12} md={5.9}>
             <CustomSearchInputs
               disableRipple
@@ -209,7 +204,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                 />
               </Stack>
             </CustomSearchInputs>
-            <InputDrawer isOpen={2 === activeInputIndex}>
+            <Collapse in={2 === activeInputIndex} timeout="auto" unmountOnExit>
               <Stack
                 direction={"column"}
                 justifyContent={"center"}
@@ -279,7 +274,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                   />
                 </Stack>
               </Stack>
-            </InputDrawer>
+            </Collapse>
           </Grid>
 
           <Grid key={3} item xs={12} md={5.9}>
@@ -298,8 +293,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                   id={"checkInDate"}
                   name={"checkInDate"}
                   value={formik.values.checkInDate}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
                   fullWidth={false}
                   disabled={true}
                   variant="standard"
@@ -308,15 +301,20 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                 />
               </Stack>
             </CustomSearchInputs>
-            <InputDrawer isOpen={3 === activeInputIndex}>
+            <Collapse in={3 === activeInputIndex} timeout="auto" unmountOnExit>
               <DatePicker
                 onDateChange={(date) => {
                   formik.setFieldValue("checkInDate", date);
+                  dayjs(date).isAfter(dayjs(formik.values.checkOutDate)) &&
+                    formik.setFieldValue(
+                      "checkOutDate",
+                      dayjs(date).add(1, "d").format("YYYY-MM-DD")
+                    );
                 }}
                 value={dayjs(formik.values.checkInDate)}
                 dateFormat="YYYY-MM-DD"
               />
-            </InputDrawer>
+            </Collapse>
           </Grid>
 
           <Grid key={4} item xs={12} md={5.9}>
@@ -335,7 +333,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                   id={"checkOutDate"}
                   name={"checkOutDate"}
                   value={formik.values.checkOutDate}
-                  onBlur={formik.handleBlur}
                   fullWidth={false}
                   disabled={true}
                   variant="standard"
@@ -344,7 +341,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                 />
               </Stack>
             </CustomSearchInputs>
-            <InputDrawer isOpen={4 === activeInputIndex}>
+            <Collapse in={4 === activeInputIndex} timeout="auto" unmountOnExit>
               <DatePicker
                 onDateChange={(date) => {
                   formik.setFieldValue("checkOutDate", date);
@@ -353,7 +350,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                 value={dayjs(formik.values.checkOutDate)}
                 dateFormat="YYYY-MM-DD"
               />
-            </InputDrawer>
+            </Collapse>
           </Grid>
 
           <DefaultButton

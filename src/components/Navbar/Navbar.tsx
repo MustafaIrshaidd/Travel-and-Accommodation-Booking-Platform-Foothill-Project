@@ -3,7 +3,15 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, Divider, Drawer, Stack, styled, useTheme } from "@mui/material";
+import {
+  Box,
+  Collapse,
+  Divider,
+  Drawer,
+  Stack,
+  styled,
+  useTheme,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   NavAppBar,
@@ -24,16 +32,6 @@ const SearchButton = styled(IconButton)<{ isRotating?: boolean }>(
       : "translateY(0) rotate(0deg)",
     transition: "transform 0.5s ease-in-out",
     padding: "0",
-  })
-);
-
-export const SearchDrawer = styled(Box)<{ isOpen?: boolean }>(
-  ({ theme, isOpen = false }) => ({
-    transition: "0.5s height ease-in-out",
-    height: isOpen ? "fit-content" : "0",
-    padding: isOpen?"30px":"0",
-    overflow: "hidden",
-    backgroundColor: theme.palette.background.default,
   })
 );
 
@@ -74,29 +72,28 @@ const Navbar = () => {
           {/* Logo */}
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
 
-          {/* Animated Container */}
-          <NavAnimatedContainer isActivated={isAnimationActivated}>
-            <NavAnimatedItem isActivated={isAnimationActivated} isTop={false}>
-              <Text
-                type="secondary"
-                letterSpacing={2}
-                text="Search Any Hotel You Like"
-                fontWeight={700}
-                fontSize="16px"
-                textShadow={true}
-              />
-            </NavAnimatedItem>
-            <NavAnimatedItem isActivated={isAnimationActivated} isTop={true}>
-              <Box justifyContent={"center"}>
-                <SearchButton
-                  onClick={handleSearchBarOpen}
-                  isRotating={isRotating}
-                  color="inherit">
-                  {isRotating ? <ClearIcon /> : <SearchIcon />}
-                </SearchButton>
-              </Box>
-            </NavAnimatedItem>
-          </NavAnimatedContainer>
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            padding={"10px 10px"}
+            borderRadius={"30px"}
+            sx={{ backgroundColor: theme.palette.background.paper }}>
+            <SearchButton
+              onClick={handleSearchBarOpen}
+              isRotating={isRotating}
+              color="inherit">
+              {isRotating ? <ClearIcon /> : <SearchIcon />}
+            </SearchButton>
+            <Text
+              type="secondary"
+              letterSpacing={2}
+              text="Search Any Hotel You Like"
+              fontWeight={700}
+              fontSize="12px"
+              textShadow={true}
+            />
+          </Box>
 
           {/* Menu */}
           <IconButton
@@ -132,9 +129,9 @@ const Navbar = () => {
           </NavMenu>
         </NavToolbar>
       </NavAppBar>
-      <SearchDrawer isOpen={isRotating}>
+      <Collapse in={isRotating} timeout="auto" unmountOnExit>
         <HomeSearch isOpen={isRotating}></HomeSearch>
-      </SearchDrawer>
+      </Collapse>
       <Divider />
     </Stack>
   );
