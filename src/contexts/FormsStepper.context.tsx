@@ -40,8 +40,6 @@ export const FormsStepperProvider: React.FC<{ children: ReactNode }> = ({
     setStepsCompleted(false);
   };
 
-  
-
   const contextValue: FormsStepperContextProps = {
     forms,
     setForms,

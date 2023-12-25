@@ -5,6 +5,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Collapse, Divider, Stack, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Text } from "@components/Text";
 import {
   NavAppBar,
   NavToolbar,
@@ -13,8 +15,6 @@ import {
   SearchButton,
 } from "./styles";
 import { HomeSearch } from "@components/HomeSearch";
-import ClearIcon from "@mui/icons-material/Clear";
-import { Text } from "@components/Text";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -66,11 +66,11 @@ const Navbar = () => {
               transition: "transform 0.3s ease-in-out",
               "&:hover": { cursor: "pointer", transform: "scale(0.9)" },
             }}>
-            <SearchButton isRotating={isRotating} color="inherit">
+            <SearchButton isRotating={isRotating}>
               {isRotating ? <ClearIcon /> : <SearchIcon />}
             </SearchButton>
             <Text
-              type="primary"
+              type="light"
               letterSpacing={2}
               text="Search Any Hotel You Like"
               fontWeight={700}

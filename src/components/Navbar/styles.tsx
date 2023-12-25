@@ -30,6 +30,7 @@ export const SearchButton = styled(IconButton)<{ isRotating?: boolean }>(
       : "translateY(0) rotate(0deg)",
     transition: "transform 0.5s ease-in-out",
     padding: "0",
+    color:"white"
   })
 );
 
