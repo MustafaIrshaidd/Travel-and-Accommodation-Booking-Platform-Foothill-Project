@@ -1,13 +1,10 @@
-import React from "react";
-import { Box, Grid, Link, styled, useTheme } from "@mui/material";
+import { Box, Grid, Link, Typography, styled, useTheme } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import React from "react";
 import { Text } from "@components/Text";
 import { Slider } from "@components/Slider";
 import { HotelCard } from "@components/HotelCard";
-import { useAppDispatch } from "@hooks/redux.hook";
-import { fetchFeaturedDealsAsync } from "@store/features/content/contentThunks";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
+
 
 const HeaderContent = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isCentered",
@@ -79,28 +76,8 @@ const components = [
   />,
 ];
 
-const FeaturedDeals = () => {
+const RecentlyVisited = () => {
   const theme = useTheme();
-  const dispatch = useAppDispatch();
-  const { setSnackbarProps } = useCustomSnackbar();
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resultAction = await dispatch(fetchFeaturedDealsAsync());
-        const originalPromiseResult = unwrapResult(resultAction);
-        console.log(originalPromiseResult);
-      } catch (rejectedValueOrSerializedError: any) {
-        setSnackbarProps({
-          message: rejectedValueOrSerializedError,
-          type: "error",
-          position: { vertical: "bottom", horizontal: "center" },
-        });
-      }
-    };
-    fetchData();
-  }, [dispatch]);
-
   return (
     <Grid container justifyContent={"space-between"} padding={"40px 0"}>
       <Grid
@@ -117,7 +94,7 @@ const FeaturedDeals = () => {
               variant="body1"
               fontSize="12px"
               fontWeight={700}
-              text="Last minute deals"
+              text="STAY AND EAT LIKE A LOCAL"
               textAlign="start"
               textWrap={false}
             />
@@ -126,7 +103,7 @@ const FeaturedDeals = () => {
               variant="h2"
               fontSize="25px"
               fontWeight={700}
-              text="HURRY UP, THESE ARE EXPIRING SOON."
+              text="Trending Destintations"
               textWrap={false}
             />
           </Box>
@@ -158,4 +135,4 @@ const FeaturedDeals = () => {
   );
 };
 
-export default FeaturedDeals;
+export default RecentlyVisited;

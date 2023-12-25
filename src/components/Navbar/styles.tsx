@@ -2,6 +2,7 @@ import {
   AppBar,
   Box,
   Divider,
+  IconButton,
   Menu,
   MenuItem,
   Toolbar,
@@ -13,6 +14,7 @@ export const NavToolbar = styled(Toolbar)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
   boxShadow: "none",
+  padding: "0",
 }));
 
 export const NavAppBar = styled(AppBar)<{ isOpen?: boolean }>(
@@ -21,34 +23,13 @@ export const NavAppBar = styled(AppBar)<{ isOpen?: boolean }>(
   })
 );
 
-export const NavAnimatedContainer = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isActivated",
-})<{ isActivated: boolean }>(({ theme, isActivated }) => ({
-  transform: isActivated ? "translateY(70px)" : "translateY(0px)",
-  transition: "transform 0.3s ease-in-out",
-  flexDirection: "column",
-}));
-
-export const NavAnimatedItem = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isActivated" && prop !== "isTop",
-})<{ isActivated: boolean; isTop: boolean }>(
-  ({ theme, isActivated, isTop }) => ({
-    position: isActivated
-      ? isTop
-        ? "absolute"
-        : "relative"
-      : isTop
-      ? "relative"
-      : "absolute",
-
-    top: isTop ? "0px" : "none",
-    bottom: isTop ? "none" : "70px",
-    height: "50px",
-    width: "100%",
-    display: "flex",
-    
-    justifyContent: "center",
-    alignItems: "center",
+export const SearchButton = styled(IconButton)<{ isRotating?: boolean }>(
+  ({ theme, isRotating = false }) => ({
+    transform: isRotating
+      ? "translateY(0px) rotate(360deg)"
+      : "translateY(0) rotate(0deg)",
+    transition: "transform 0.5s ease-in-out",
+    padding: "0",
   })
 );
 

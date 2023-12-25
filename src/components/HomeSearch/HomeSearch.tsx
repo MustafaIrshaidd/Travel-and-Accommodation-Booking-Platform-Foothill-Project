@@ -18,6 +18,10 @@ import { DefaultButton } from "@components/Buttons";
 import SearchIcon from "@mui/icons-material/Search";
 import * as yup from "yup";
 import { NumberInput } from "@components/NumberInput";
+import { searchHotelsAsync } from "@store/features/search/searchThunks";
+import { useDispatch } from "react-redux";
+import { useAppDispatch } from "@hooks/redux.hook";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const InputsInformationArray = [
   {
@@ -103,13 +107,15 @@ interface HomeSearchProps {
 export interface HomeSearchFormValues {
   checkInDate: string;
   checkOutDate: string;
-  city: string;
-  numberOfRooms: string;
-  children: string;
-  adults: string;
+  numberOfRooms: number;
+  children: number;
+  adults: number;
+  city?: string;
+  starRate?: number;
 }
 
 const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -125,14 +131,18 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
     initialValues: {
       checkInDate: dayjs().format("YYYY-MM-DD"),
       checkOutDate: dayjs().add(1, "day").format("YYYY-MM-DD"),
-      city: "",
-      numberOfRooms: "1",
-      children: "0",
-      adults: "2",
+      numberOfRooms: 1,
+      children: 0,
+      adults: 2,
     },
     onSubmit: async (values) => {
-      console.log(values);
-      // formik.resetForm();
+      try {
+        setIsLoading(true);
+        const resultAction = await dispatch(searchHotelsAsync(values));
+        const originalPromiseResult = unwrapResult(resultAction);
+        console.log(originalPromiseResult);
+        setIsLoading(false);
+      } catch (rejectedValueOrSerializedError: any) {}
     },
   });
 

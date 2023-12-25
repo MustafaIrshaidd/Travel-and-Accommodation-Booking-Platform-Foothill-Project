@@ -4,11 +4,9 @@ export interface City {
   name: string;
 }
 
-
-
 export interface CitiesState {
   cities: City[];
   loading: boolean;
   error?: any;
-  success?:any;
+  success?: any;
 }

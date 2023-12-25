@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
+import AxiosSingleton from "@utils/axiosUtil";
 import citiesSlice from "./features/cities/citiesSlice";
 import hotelsSlice from "./features/hotels/hotelsSlice";
-import AxiosSingleton from "@utils/axiosUtil";
+import searchSlice from "./features/search/searchSlice";
+import contentSlice from "./features/content/contentSlice";
 
 const store = configureStore({
   reducer: {
     cities: citiesSlice,
     hotels: hotelsSlice,
+    search: searchSlice,
+    content: contentSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

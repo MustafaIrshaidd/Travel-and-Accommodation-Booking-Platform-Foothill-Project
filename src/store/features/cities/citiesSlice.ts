@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CitiesState } from "@store/types/cities";
+import { CitiesState } from "@store/features/cities/types";
 import { addCityAsync, deleteCityAsync, fetchCities } from "./citiesThunks";
-
-
-
 
 const initialState = {
   cities: [],

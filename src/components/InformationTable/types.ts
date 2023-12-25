@@ -1,5 +1,5 @@
-import { City } from "@store/types/cities";
-import { Hotel } from "@store/types/hotels";
+import { City } from "@store/features/cities/types";
+import { Hotel } from "@store/features/hotels/types";
 
 export interface EnhancedTableProps {
   numSelected: number;

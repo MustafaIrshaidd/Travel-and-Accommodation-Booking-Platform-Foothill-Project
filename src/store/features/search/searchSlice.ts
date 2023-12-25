@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HotelsState } from "@store/features/hotels/types";
-import { fetchHotels } from "./hotelsThunks";
+import { searchHotelsAsync } from "./searchThunks";
+import { SearchState } from "@store/features/search/types";
 
 const initialState = {
   hotels: [],
   loading: false,
-} as HotelsState;
+} as SearchState;
 
-export const hotelsSlice = createSlice({
-  name: "hotels",
+export const searchSlice = createSlice({
+  name: "search",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchHotels.pending, (state, action) => {
+      .addCase(searchHotelsAsync.pending, (state, action) => {
         return {
           ...state,
           loading: true,
         };
       })
-      .addCase(fetchHotels.fulfilled, (state, action) => {
+      .addCase(searchHotelsAsync.fulfilled, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -27,7 +27,7 @@ export const hotelsSlice = createSlice({
           error: null,
         };
       })
-      .addCase(fetchHotels.rejected, (state, action) => {
+      .addCase(searchHotelsAsync.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -37,4 +37,4 @@ export const hotelsSlice = createSlice({
   },
 });
 
-export default hotelsSlice.reducer;
+export default searchSlice.reducer;

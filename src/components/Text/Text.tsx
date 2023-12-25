@@ -5,7 +5,7 @@ import React from "react";
 interface TextProps {
   fontSize?: string;
   letterSpacing?: number;
-  type: "primary" | "secondary";
+  type: "primary" | "secondary" | "light";
   textShadow?: boolean;
   variant?: Variant;
   text?: string;
@@ -19,11 +19,13 @@ interface TextProps {
 
 const CustomText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "type",
-})<{ type: "primary" | "secondary" }>(({ theme, type }) => ({
+})<{ type: "primary" | "secondary" | "light" }>(({ theme, type }) => ({
   color:
     type === "primary"
       ? theme.palette.text.primary
-      : theme.palette.text.secondary,
+      : type === "secondary"
+      ? theme.palette.text.secondary
+      : "white",
 }));
 
 const Text: React.FC<TextProps> = ({
@@ -38,11 +40,9 @@ const Text: React.FC<TextProps> = ({
   padding,
   textAlign,
   textWrap = true,
-  onChange,
 }) => {
   return (
     <CustomText
-      onChange={(text: any) => (onChange ? onChange(text) : {})}
       padding={padding || ""}
       noWrap={textWrap}
       variant={variant || "body1"}

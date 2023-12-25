@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { City } from "@store/types/cities";
+import { City } from "@store/features/cities/types";
 import { axiosInstance } from "@store/store";
 
 export const fetchCities = createAsyncThunk(

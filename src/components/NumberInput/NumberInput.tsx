@@ -2,7 +2,6 @@ import { IconButton, Stack, TextField, styled } from "@mui/material";
 import React from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { stat } from "fs";
 import { Text } from "@components/Text";
 
 const NumberField = styled(TextField)(({ theme }) => ({}));
@@ -36,6 +35,11 @@ const NumberInput: React.FC<NumberInputProps> = ({
   const [state, dispatch] = React.useReducer(reducerfunc, {
     count: initialValue,
   });
+
+  React.useEffect(() => {
+    onChange && onChange(state.count);
+  }, [state.count]);
+
   return (
     <Stack
       width={"100%"}
@@ -47,12 +51,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
         onClick={() => dispatch({ type: "DECREMENT" })}>
         <RemoveIcon />
       </IconButton>
-      <Text
-        onChange={onChange && onChange}
-        text={state.count}
-        type="primary"
-        textAlign="center"></Text>
-
+      <Text text={state.count} type="primary" textAlign="center" />
       <IconButton
         disabled={state.count == maxValue}
         onClick={() => dispatch({ type: "INCREMENT" })}>

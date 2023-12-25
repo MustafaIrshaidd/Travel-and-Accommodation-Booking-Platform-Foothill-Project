@@ -29,8 +29,8 @@ import {
   HeadCell,
 } from "./types";
 import { Stack } from "@mui/material";
-import { City } from "@store/types/cities";
-import { Hotel } from "@store/types/hotels";
+import { City } from "@store/features/cities/types";
+import { Hotel } from "@store/features/hotels/types";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {

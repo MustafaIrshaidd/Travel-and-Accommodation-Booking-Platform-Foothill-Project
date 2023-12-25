@@ -3,37 +3,18 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  Box,
-  Collapse,
-  Divider,
-  Drawer,
-  Stack,
-  styled,
-  useTheme,
-} from "@mui/material";
+import { Box, Collapse, Divider, Stack, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   NavAppBar,
   NavToolbar,
   NavMenu,
   NavMenuItem,
-  NavAnimatedContainer,
-  NavAnimatedItem,
+  SearchButton,
 } from "./styles";
 import { HomeSearch } from "@components/HomeSearch";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Text } from "@components/Text";
-
-const SearchButton = styled(IconButton)<{ isRotating?: boolean }>(
-  ({ theme, isRotating = false }) => ({
-    transform: isRotating
-      ? "translateY(0px) rotate(360deg)"
-      : "translateY(0) rotate(0deg)",
-    transition: "transform 0.5s ease-in-out",
-    padding: "0",
-  })
-);
 
 const Navbar = () => {
   const theme = useTheme();
@@ -66,7 +47,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Stack direction={"column"} position={"sticky"} zIndex={10} top={0}>
+    <Stack direction={"column"} position={"sticky"} zIndex={999} top={0}>
       <NavAppBar isOpen={isRotating} position="static">
         <NavToolbar>
           {/* Logo */}
@@ -76,17 +57,20 @@ const Navbar = () => {
             display={"flex"}
             justifyContent={"center"}
             alignItems={"center"}
-            padding={"10px 10px"}
+            gap={"10px"}
+            padding={"5px 10px"}
             borderRadius={"30px"}
-            sx={{ backgroundColor: theme.palette.background.paper }}>
-            <SearchButton
-              onClick={handleSearchBarOpen}
-              isRotating={isRotating}
-              color="inherit">
+            onClick={handleSearchBarOpen}
+            sx={{
+              backgroundColor: theme.palette.text.secondary,
+              transition: "transform 0.3s ease-in-out",
+              "&:hover": { cursor: "pointer", transform: "scale(0.9)" },
+            }}>
+            <SearchButton isRotating={isRotating} color="inherit">
               {isRotating ? <ClearIcon /> : <SearchIcon />}
             </SearchButton>
             <Text
-              type="secondary"
+              type="primary"
               letterSpacing={2}
               text="Search Any Hotel You Like"
               fontWeight={700}
@@ -108,6 +92,7 @@ const Navbar = () => {
             <MenuIcon sx={{ fontSize: "20px" }} />
             <AccountCircle />
           </IconButton>
+
           <NavMenu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -129,8 +114,12 @@ const Navbar = () => {
           </NavMenu>
         </NavToolbar>
       </NavAppBar>
-      <Collapse in={isRotating} timeout="auto" unmountOnExit>
-        <HomeSearch isOpen={isRotating}></HomeSearch>
+      <Collapse
+        sx={{ backgroundColor: theme.palette.background.default }}
+        in={isRotating}
+        timeout="auto"
+        unmountOnExit>
+        <HomeSearch isOpen={isRotating} />
       </Collapse>
       <Divider />
     </Stack>
