@@ -13,15 +13,10 @@ const Home = () => {
   const theme = useTheme();
   return (
     <>
-      <Box sx={{ backgroundColor: theme.palette.background.default }}>
-        <Container sx={{ minWidth: "80%" }}>
-          <Navbar />
-          <HeroSection />
-          <TrendingDestinations />
-          <FeaturedDeals />
-          <RecentlyVisited />
-        </Container>
-      </Box>
+      <HeroSection />
+      <TrendingDestinations />
+      <FeaturedDeals />
+      <RecentlyVisited />
     </>
   );
 };

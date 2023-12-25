@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Registration } from "@pages/Registration";
 import { Routes, Route } from "react-router-dom";
 import AdminRoute from "./Admin.route";
+import HomeRoute from "./Home.route";
+
 import { AuthContext } from "@contexts/Auth.context";
-import { Home } from "@pages/Home";
 
 const RegistrationRoute = () => {
   const { user } = useContext(AuthContext)!;
@@ -13,7 +14,7 @@ const RegistrationRoute = () => {
       {user?.authorization ? (
         <>
           <Route path="/admin/*" element={<AdminRoute />} />
-          <Route path="/user" element={<Home />} />
+          <Route path="/user/*" element={<HomeRoute />} />
         </>
       ) : (
         <Route path="" element={<Registration type="SignIn" />} />

@@ -22,6 +22,7 @@ import { searchHotelsAsync } from "@store/features/search/searchThunks";
 import { useDispatch } from "react-redux";
 import { useAppDispatch } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 
 const InputsInformationArray = [
   {
@@ -117,6 +118,7 @@ export interface HomeSearchFormValues {
 const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const navigate = useNavigate();
   const [activeInputIndex, setActiveInputIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const handleInputActivation = (index: number) => {
@@ -141,6 +143,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
         const resultAction = await dispatch(searchHotelsAsync(values));
         const originalPromiseResult = unwrapResult(resultAction);
         console.log(originalPromiseResult);
+        navigate("/user/search");
         setIsLoading(false);
       } catch (rejectedValueOrSerializedError: any) {}
     },
