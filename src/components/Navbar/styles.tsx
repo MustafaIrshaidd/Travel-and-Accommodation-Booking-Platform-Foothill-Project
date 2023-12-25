@@ -11,9 +11,10 @@ import {
 
 export const NavToolbar = styled(Toolbar)(({ theme }) => ({
   justifyContent: "space-between",
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.paper,
+
   color: theme.palette.text.primary,
-  boxShadow: "none",
+ boxShadow:theme.shadows[15],
   padding: "0",
 }));
 

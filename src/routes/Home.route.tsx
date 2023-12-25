@@ -8,8 +8,8 @@ const HomeRoute = () => {
   const theme = useTheme();
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default }}>
+      <Navbar />
       <Container sx={{ minWidth: "80%" }}>
-        <Navbar />
         <Routes>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/search" element={<Search />}></Route>

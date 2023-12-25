@@ -26,7 +26,7 @@ type AppThemeProviderProps = {
 export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
   children,
 }) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -50,8 +50,8 @@ export const AppThemeProvider: React.FC<AppThemeProviderProps> = ({
       action: {
         active: isDarkMode ? "#aaaaaa" : "#444444",
         selected: isDarkMode ? "#aaaaaa" : "#444444",
+        focus: "#e83e8c",
       },
-
       success: {
         main: "#e83e8c",
       },

@@ -121,7 +121,7 @@ const Navbar = () => {
         unmountOnExit>
         <HomeSearch isOpen={isRotating} />
       </Collapse>
-      <Divider />
+      {/* <Divider /> */}
     </Stack>
   );
 };
