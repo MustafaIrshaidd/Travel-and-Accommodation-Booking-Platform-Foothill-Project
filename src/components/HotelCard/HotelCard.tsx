@@ -42,13 +42,18 @@ const HotelCards: React.FC<HotelCardsProps> = ({
   id,
   city,
   title,
-  roomPictures = [],
+  roomPictures = ["photo.webp"],
   price,
   discount,
   hotelStarRating,
   isLoading = false,
 }) => {
   const theme = useTheme();
+
+  const roomsPictureArrayComponents = roomPictures.map((picture: any) => (
+    <Image key={picture.id} src={picture.url} />
+  ));
+
   return (
     <>
       {isLoading ? (
@@ -60,7 +65,13 @@ const HotelCards: React.FC<HotelCardsProps> = ({
       ) : (
         <Card sx={{ maxWidth: 345 }}>
           <CardMedia>
-            <Slider height="200px" components={imagesArray} slidePerPage={1} />
+            {roomsPictureArrayComponents && roomPictures.length !== 0 && (
+              <Slider
+                height="200px"
+                components={roomsPictureArrayComponents}
+                slidePerPage={1}
+              />
+            )}
           </CardMedia>
           <CardActionArea>
             <CardContent
@@ -86,7 +97,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
                   </Stack>
                   <Rating
                     name="read-only"
-                    value={3}
+                    value={hotelStarRating}
                     sx={{
                       "& .MuiRating-iconFilled": {
                         color: theme.palette.text.secondary,
@@ -124,7 +135,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
                       fontWeight={700}
                       type="primary"
                       fontSize="20px"
-                      text={`${discount * price}`}
+                      text={`${discount}`}
                       width="fit-content"
                     />
                     <Text
