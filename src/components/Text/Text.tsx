@@ -14,19 +14,23 @@ interface TextProps {
   textAlign?: "center" | "end" | "start";
   width?: string;
   textWrap?: boolean;
+  textDecorationLine?: string;
   onChange?: (text: string) => void;
 }
 
 const CustomText = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "type",
-})<{ type: "primary" | "secondary" | "light" }>(({ theme, type }) => ({
-  color:
-    type === "primary"
-      ? theme.palette.text.primary
-      : type === "secondary"
-      ? theme.palette.text.secondary
-      : "white",
-}));
+  shouldForwardProp: (prop) => prop !== "type" && prop !== "textDecorationLine",
+})<{ type: "primary" | "secondary" | "light"; textDecorationLine: string }>(
+  ({ theme, type, textDecorationLine }) => ({
+    color:
+      type === "primary"
+        ? theme.palette.text.primary
+        : type === "secondary"
+        ? theme.palette.text.secondary
+        : "white",
+    textDecorationLine: textDecorationLine,
+  })
+);
 
 const Text: React.FC<TextProps> = ({
   fontSize,
@@ -40,6 +44,7 @@ const Text: React.FC<TextProps> = ({
   padding,
   textAlign,
   textWrap = true,
+  textDecorationLine = "none",
 }) => {
   return (
     <CustomText
@@ -52,7 +57,8 @@ const Text: React.FC<TextProps> = ({
       sx={{ textShadow: textShadow ? "2px 2px 2px rgba(0,0,0,.1)" : "" }}
       type={type}
       textAlign={textAlign || "start"}
-      width={width || "100%"}>
+      width={width || "100%"}
+      textDecorationLine={textDecorationLine}>
       {text}
     </CustomText>
   );

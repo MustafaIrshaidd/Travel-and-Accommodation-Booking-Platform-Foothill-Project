@@ -99,14 +99,9 @@ const HotelCards: React.FC<HotelCardsProps> = ({
                   fontWeight={500}
                   type="light"
                   fontSize="20px"
-                  text={`${price}`}
+                  text={`${price}$`}
                   width="fit-content"
-                />
-                <Text
-                  fontWeight={500}
-                  type="light"
-                  text={"$"}
-                  width="fit-content"
+                  textDecorationLine="line-through"
                 />
               </Stack>
               <Stack
