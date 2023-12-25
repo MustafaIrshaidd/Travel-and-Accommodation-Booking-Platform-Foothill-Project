@@ -11,6 +11,7 @@ import {
   StyledSlider,
 } from "./styles";
 import { Box, Stack } from "@mui/material";
+import { round } from "lodash";
 
 interface SliderProps {
   components?: React.ReactNode[];
@@ -36,12 +37,27 @@ const Slider: React.FC<SliderProps> = ({
     created() {
       setLoaded(true);
     },
-
     selector: isCarousel ? ".keen-slider__carousel" : ".keen-slider__card",
     slides: {
       perView: slidePerPage,
       spacing: 15,
     },
+    ...(isCarousel && {
+      breakpoints: {
+        "(max-width: 1000px)": {
+          slides: {
+            perView: 2,
+            spacing: 10,
+          },
+        },
+        "(max-width: 500px)": {
+          slides: {
+            perView: 1,
+            spacing: 0,
+          },
+        },
+      },
+    }),
   });
 
   React.useEffect(() => {
@@ -60,6 +76,22 @@ const Slider: React.FC<SliderProps> = ({
           perView: slidePerPage,
           spacing: 15,
         },
+        ...(isCarousel && {
+          breakpoints: {
+            "(max-width: 1000px)": {
+              slides: {
+                perView: 2,
+                spacing: 10,
+              },
+            },
+            "(max-width: 500px)": {
+              slides: {
+                perView: 1,
+                spacing: 0,
+              },
+            },
+          },
+        }),
       },
       0
     );
@@ -110,7 +142,11 @@ const Slider: React.FC<SliderProps> = ({
         {loaded && instanceRef.current && (
           <StyledDots isCarousel={isCarousel}>
             {Array.from(
-              { length: instanceRef.current.track.details.slides.length },
+              {
+                length: Math.ceil(
+                  instanceRef.current.track.details.slides.length / slidePerPage
+                ),
+              },
               (_, idx) => (
                 <StyledDot
                   key={idx}

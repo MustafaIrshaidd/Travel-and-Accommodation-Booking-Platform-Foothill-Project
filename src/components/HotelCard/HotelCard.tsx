@@ -52,9 +52,8 @@ const HotelCards: React.FC<HotelCardsProps> = ({
       {isLoading ? (
         <Skeleton height={"200px"} width={"345px"} />
       ) : (
-        <Slider height="200px" components={imagesArray} />
+        <Slider height="200px" components={imagesArray} slidePerPage={1} />
       )}
-
       <CardActionArea>
         <CardContent sx={{ backgroundColor: theme.palette.background.paper }}>
           <Stack gap={"10px"}>

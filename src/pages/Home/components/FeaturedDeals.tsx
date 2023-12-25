@@ -153,7 +153,11 @@ const FeaturedDeals = () => {
         />
       </Grid>
 
-      <Slider height="400px" isCarousel={true} components={components}></Slider>
+      <Slider
+        height="400px"
+        isCarousel={true}
+        components={components}
+        slidePerPage={4}></Slider>
     </Grid>
   );
 };
