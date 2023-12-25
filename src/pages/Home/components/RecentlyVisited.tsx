@@ -5,7 +5,6 @@ import { Text } from "@components/Text";
 import { Slider } from "@components/Slider";
 import { HotelCard } from "@components/HotelCard";
 
-
 const HeaderContent = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isCentered",
 })<{ isCentered: boolean }>(({ theme, isCentered }) => ({
@@ -94,7 +93,7 @@ const RecentlyVisited = () => {
               variant="body1"
               fontSize="12px"
               fontWeight={700}
-              text="STAY AND EAT LIKE A LOCAL"
+              text="STORIES FROM AROUND YOUR GLOBE"
               textAlign="start"
               textWrap={false}
             />
@@ -103,7 +102,7 @@ const RecentlyVisited = () => {
               variant="h2"
               fontSize="25px"
               fontWeight={700}
-              text="Trending Destintations"
+              text="Recently Visited"
               textWrap={false}
             />
           </Box>
@@ -130,7 +129,11 @@ const RecentlyVisited = () => {
         />
       </Grid>
 
-      <Slider height="400px" isCarousel={true} components={components}></Slider>
+      <Slider
+        height="400px"
+        isCarousel={true}
+        components={components}
+        slidePerPage={4}></Slider>
     </Grid>
   );
 };

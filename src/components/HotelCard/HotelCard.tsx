@@ -2,6 +2,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  CardMedia,
   Rating,
   Skeleton,
   Stack,
@@ -12,6 +13,7 @@ import { Slider } from "@components/Slider";
 import React from "react";
 import { Text } from "@components/Text";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import LoadingCard from "@components/LoadingCard/LoadingCard";
 
 const Image = styled("img")({
   objectFit: "cover",
@@ -48,85 +50,97 @@ const HotelCards: React.FC<HotelCardsProps> = ({
 }) => {
   const theme = useTheme();
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <>
       {isLoading ? (
-        <Skeleton height={"200px"} width={"345px"} />
+        <LoadingCard
+          height="400px"
+          width="200px"
+          imageHeight="300px"
+          rows={3}></LoadingCard>
       ) : (
-        <Slider height="200px" components={imagesArray} slidePerPage={1} />
+        <Card sx={{ maxWidth: 345 }}>
+          <CardMedia>
+            <Slider height="200px" components={imagesArray} slidePerPage={1} />
+          </CardMedia>
+          <CardActionArea>
+            <CardContent
+              sx={{ backgroundColor: theme.palette.background.paper }}>
+              <Stack gap={"10px"}>
+                <Text type="primary" fontSize="25px" text={title} />
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}>
+                  <Stack
+                    gap={"5px"}
+                    direction={"row"}
+                    alignItems={"center"}
+                    justifyContent={"start"}>
+                    <FmdGoodIcon
+                      sx={{
+                        fontSize: "15px",
+                        color: theme.palette.text.secondary,
+                      }}
+                    />
+                    <Text type="primary" fontSize="15px" text={city} />
+                  </Stack>
+                  <Rating
+                    name="read-only"
+                    value={3}
+                    sx={{
+                      "& .MuiRating-iconFilled": {
+                        color: theme.palette.text.secondary,
+                      },
+                      "& .MuiRating-iconHover": {
+                        color: theme.palette.text.secondary,
+                      },
+                    }}
+                    readOnly
+                    size="small"
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent={"start"} gap={1}>
+                  <Stack
+                    sx={{ backgroundColor: theme.palette.text.secondary }}
+                    borderRadius={"10px"}
+                    padding={"2px 5px"}
+                    direction={"row"}
+                    justifyContent={"start"}
+                    alignItems={"end"}>
+                    <Text
+                      fontWeight={500}
+                      type="light"
+                      fontSize="20px"
+                      text={`${price}$`}
+                      width="fit-content"
+                      textDecorationLine="line-through"
+                    />
+                  </Stack>
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"start"}
+                    alignItems={"end"}>
+                    <Text
+                      fontWeight={700}
+                      type="primary"
+                      fontSize="20px"
+                      text={`${discount * price}`}
+                      width="fit-content"
+                    />
+                    <Text
+                      fontWeight={700}
+                      type="primary"
+                      text={"$"}
+                      width="fit-content"
+                    />
+                  </Stack>
+                </Stack>
+              </Stack>
+            </CardContent>
+          </CardActionArea>
+        </Card>
       )}
-      <CardActionArea>
-        <CardContent sx={{ backgroundColor: theme.palette.background.paper }}>
-          <Stack gap={"10px"}>
-            <Text type="primary" fontSize="25px" text={title} />
-            <Stack
-              direction={"row"}
-              alignItems={"center"}
-              justifyContent={"space-between"}>
-              <Stack
-                gap={"5px"}
-                direction={"row"}
-                alignItems={"center"}
-                justifyContent={"start"}>
-                <FmdGoodIcon
-                  sx={{ fontSize: "15px", color: theme.palette.text.secondary }}
-                />
-                <Text type="primary" fontSize="15px" text={city} />
-              </Stack>
-              <Rating
-                name="read-only"
-                value={3}
-                sx={{
-                  "& .MuiRating-iconFilled": {
-                    color: theme.palette.text.secondary,
-                  },
-                  "& .MuiRating-iconHover": {
-                    color: theme.palette.text.secondary,
-                  },
-                }}
-                readOnly
-                size="small"
-              />
-            </Stack>
-            <Stack direction={"row"} justifyContent={"start"} gap={1}>
-              <Stack
-                sx={{ backgroundColor: theme.palette.text.secondary }}
-                borderRadius={"10px"}
-                padding={"2px 5px"}
-                direction={"row"}
-                justifyContent={"start"}
-                alignItems={"end"}>
-                <Text
-                  fontWeight={500}
-                  type="light"
-                  fontSize="20px"
-                  text={`${price}$`}
-                  width="fit-content"
-                  textDecorationLine="line-through"
-                />
-              </Stack>
-              <Stack
-                direction={"row"}
-                justifyContent={"start"}
-                alignItems={"end"}>
-                <Text
-                  fontWeight={700}
-                  type="primary"
-                  fontSize="20px"
-                  text={`${discount * price}`}
-                  width="fit-content"
-                />
-                <Text
-                  fontWeight={700}
-                  type="primary"
-                  text={"$"}
-                  width="fit-content"
-                />
-              </Stack>
-            </Stack>
-          </Stack>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    </>
   );
 };
 

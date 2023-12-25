@@ -1,3 +1,4 @@
+import LoadingCard from "@components/LoadingCard/LoadingCard";
 import { Text } from "@components/Text";
 import {
   Card,
@@ -14,6 +15,7 @@ interface CityCardProps {
   countryName: string;
   description: string;
   thumbnailUrl: string;
+  isLoading?: boolean;
 }
 
 const CityCardContent = styled(CardContent)(({ theme }) => ({
@@ -42,23 +44,30 @@ const CityCard: React.FC<CityCardProps> = ({
   countryName,
   description,
   thumbnailUrl,
+  isLoading = false,
 }) => {
   return (
-    <Card sx={{ minWidth: 300, position: "relative" }}>
-      <CardActionArea>
-        <CityCardMedia image={thumbnailUrl} title="green iguana" />
-        <CityCardContent>
-          <Text
-            type="light"
-            textShadow={true}
-            fontWeight={700}
-            letterSpacing={3}
-            text={countryName.toLocaleUpperCase()}
-          />
-          <Text type="light" text={cityName} />
-        </CityCardContent>
-      </CardActionArea>
-    </Card>
+    <>
+      {isLoading ? (
+        <LoadingCard width="250px" height="500px"></LoadingCard>
+      ) : (
+        <Card sx={{ minWidth: 300, position: "relative" }}>
+          <CardActionArea>
+            <CityCardMedia image={thumbnailUrl} title="green iguana" />
+            <CityCardContent>
+              <Text
+                type="light"
+                textShadow={true}
+                fontWeight={700}
+                letterSpacing={3}
+                text={countryName.toLocaleUpperCase()}
+              />
+              <Text type="light" text={cityName} />
+            </CityCardContent>
+          </CardActionArea>
+        </Card>
+      )}
+    </>
   );
 };
 
