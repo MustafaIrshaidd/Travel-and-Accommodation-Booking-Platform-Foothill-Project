@@ -1,17 +1,63 @@
-import { Card, CardContent, CardMedia } from "@mui/material";
+import { Text } from "@components/Text";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  styled,
+} from "@mui/material";
 import React from "react";
 
-const CityCard = () => {
-  return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image="photo.webp"
-        title="green iguana"
-      />
-      <CardContent>
+interface CityCardProps {
+  cityId: number;
+  cityName: string;
+  countryName: string;
+  description: string;
+  thumbnailUrl: string;
+}
 
-      </CardContent>
+const CityCardContent = styled(CardContent)(({ theme }) => ({
+  position: "absolute",
+  bottom: "10px",
+  left: "10px",
+  zIndex: 2,
+}));
+
+const CityCardMedia = styled(CardMedia)(({ theme }) => ({
+  height: 350,
+  width: "100%",
+  "&:after": {
+    content: "''",
+    position: "absolute",
+    inset: 0,
+    background:
+      "linear-gradient(180deg, transparent 0, transparent 78%, rgba(0, 0, 0, 0.65))",
+    zIndex: 1,
+  },
+}));
+
+const CityCard: React.FC<CityCardProps> = ({
+  cityId,
+  cityName,
+  countryName,
+  description,
+  thumbnailUrl,
+}) => {
+  return (
+    <Card sx={{ minWidth: 300, position: "relative" }}>
+      <CardActionArea>
+        <CityCardMedia image={thumbnailUrl} title="green iguana" />
+        <CityCardContent>
+          <Text
+            type="light"
+            textShadow={true}
+            fontWeight={700}
+            letterSpacing={3}
+            text={countryName.toLocaleUpperCase()}
+          />
+          <Text type="light" text={cityName} />
+        </CityCardContent>
+      </CardActionArea>
     </Card>
   );
 };

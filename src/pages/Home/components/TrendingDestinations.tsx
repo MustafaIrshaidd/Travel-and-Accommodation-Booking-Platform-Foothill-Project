@@ -10,6 +10,7 @@ import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { fetchTrendingDestintations } from "@store/features/content/contentThunks";
 import { selectFeaturedDeals } from "@store/selectors/content";
 import Skeleton from "@mui/material";
+import { CityCard } from "@components/CityCard";
 
 interface HeaderContentProps {
   isCentered: boolean;
@@ -35,53 +36,40 @@ const HeaderContent = styled(Box, {
 }));
 
 const components = [
-  <HotelCard
-    id={1}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
+  <CityCard
+    cityId={1}
+    cityName={"Nablus"}
+    countryName={"Palestine"}
+    description={"hello this is nablus"}
+    thumbnailUrl={"photo.webp"}
   />,
-  <HotelCard
-    id={1}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
+  <CityCard
+    cityId={2}
+    cityName={"Nablus"}
+    countryName={"Palestine"}
+    description={"hello this is nablus"}
+    thumbnailUrl={"photo.webp"}
   />,
-  <HotelCard
-    id={2}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
+  <CityCard
+    cityId={3}
+    cityName={"Nablus"}
+    countryName={"Palestine"}
+    description={"hello this is nablus"}
+    thumbnailUrl={"photo.webp"}
   />,
-  <HotelCard
-    id={3}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
+  <CityCard
+    cityId={4}
+    cityName={"Nablus"}
+    countryName={"Palestine"}
+    description={"hello this is nablus"}
+    thumbnailUrl={"photo.webp"}
   />,
-  <HotelCard
-    id={4}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
-  />,
-  <HotelCard
-    id={5}
-    city="Nablus"
-    title="Plaza Hotel"
-    price={150}
-    discount={0.5}
-    hotelStarRating={3}
+  <CityCard
+    cityId={5}
+    cityName={"Nablus"}
+    countryName={"Palestine"}
+    description={"hello this is nablus"}
+    thumbnailUrl={"photo.webp"}
   />,
 ];
 
@@ -158,7 +146,11 @@ const TrendingDestinations = () => {
           sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
         />
       </Grid>
-      <Slider height="400px" isCarousel={true} components={components}></Slider>
+      <Slider
+        height="400px"
+        isCarousel={true}
+        components={components}
+        slidePerPage={4}></Slider>
     </Grid>
   );
 };

@@ -126,6 +126,7 @@ const Slider: React.FC<SliderProps> = ({
                     e.stopPropagation() || instanceRef.current?.prev()
                   }
                   isDisabled={currentSlide === 0}
+                  isCarousel={isCarousel}
                 />
                 <StyledArrowRight
                   onClick={(e: any) =>
@@ -135,6 +136,7 @@ const Slider: React.FC<SliderProps> = ({
                     currentSlide ===
                     instanceRef.current.track.details.slides.length
                   }
+                  isCarousel={isCarousel}
                 />
               </>
             )}
