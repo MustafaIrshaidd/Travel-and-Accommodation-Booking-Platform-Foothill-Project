@@ -7,7 +7,7 @@ import { DefaultButton } from "@components/Buttons";
 import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { useAppDispatch } from "@hooks/redux.hook";
-import FileField from "@components/FileField/FileField";
+import FileField from "@components/inputs/FileField/FileField";
 import FileUploadService from "@services/FileUploadService";
 
 const AddCityImage: React.FC<AddCityImageProps> = ({ onSubmitInformer }) => {

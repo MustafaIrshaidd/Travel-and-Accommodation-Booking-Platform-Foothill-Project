@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, useTheme, styled } from "@mui/material";
+import Filter from "./components/Filter";
 
 const FilterDrawer = styled("aside", {
   shouldForwardProp: (prop) => prop !== "isOpen",
@@ -11,7 +12,7 @@ const FilterDrawer = styled("aside", {
   zIndex: 9,
   overflow: "hidden",
   [theme.breakpoints.up("lg")]: {
-    width: isOpen ? "50%" : "0%",
+    width: isOpen ? "20%" : "0%",
     paddingTop: 64,
     left: 0,
     top: 0,
@@ -32,8 +33,10 @@ const Search = () => {
   return (
     <Grid container height={"100vh"} position={"relative"}>
       <FilterDrawer
-        isOpen={false}
-        sx={{ backgroundColor: theme.palette.background.paper }}></FilterDrawer>
+        isOpen={true}
+        sx={{ backgroundColor: theme.palette.background.paper }}>
+        <Filter></Filter>
+      </FilterDrawer>
       <Grid
         item
         lg={12}

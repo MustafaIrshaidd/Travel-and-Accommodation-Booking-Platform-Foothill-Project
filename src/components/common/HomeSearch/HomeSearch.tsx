@@ -10,14 +10,14 @@ import {
   Collapse,
   ListItemButton,
 } from "@mui/material";
-import { Text } from "@components/Text";
-import { DatePicker } from "@components/DatePicker";
+import { Text } from "@components/common/Text";
+import { DatePicker } from "@components/inputs/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useFormik } from "formik";
 import { DefaultButton } from "@components/Buttons";
 import SearchIcon from "@mui/icons-material/Search";
 import * as yup from "yup";
-import { NumberInput } from "@components/NumberInput";
+import { NumberInput } from "@components/inputs/NumberInput";
 import { searchHotelsAsync } from "@store/features/search/searchThunks";
 import { useDispatch } from "react-redux";
 import { useAppDispatch } from "@hooks/redux.hook";

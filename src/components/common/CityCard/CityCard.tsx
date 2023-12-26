@@ -1,5 +1,5 @@
-import LoadingCard from "@components/LoadingCard/LoadingCard";
-import { Text } from "@components/Text";
+import LoadingCard from "@components/common/LoadingCard/LoadingCard";
+import { Text } from "@components/common/Text";
 import {
   Card,
   CardActionArea,

@@ -1,4 +1,4 @@
-import { Navbar } from "@components/Navbar";
+import { Navbar } from "@components/common/Navbar";
 import { Box, Container, useTheme } from "@mui/material";
 import { Home } from "@pages/Home";
 import { Search } from "@pages/Search";
@@ -9,13 +9,11 @@ const HomeRoute = () => {
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default }}>
       <Navbar />
-      <Container sx={{ minWidth: "80%" }}>
-        <Routes>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/search" element={<Search />}></Route>
-          <Route path="*" element={<Home />}></Route>
-        </Routes>
-      </Container>
+      <Routes>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/search" element={<Search />}></Route>
+        <Route path="*" element={<Home />}></Route>
+      </Routes>
     </Box>
   );
 };

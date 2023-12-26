@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import ManageCities from "./components/ManageCities";
 import { AdminDrawerContext } from "./contexts/AdminAsideDrawer";
 import CloseIcon from "@mui/icons-material/Close";
-import { FormsStepper } from "@components/FormsStepper";
+import { FormsStepper } from "@components/adhocs/FormsStepper";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
 import ManageHotels from "./components/ManageHotels";
 

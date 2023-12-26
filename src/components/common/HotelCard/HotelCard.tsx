@@ -9,11 +9,11 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
-import { Slider } from "@components/Slider";
+import { Slider } from "@components/common/Slider";
 import React from "react";
-import { Text } from "@components/Text";
+import { Text } from "@components/common/Text";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
-import LoadingCard from "@components/LoadingCard/LoadingCard";
+import LoadingCard from "@components/common/LoadingCard/LoadingCard";
 
 const Image = styled("img")({
   objectFit: "cover",

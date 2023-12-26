@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomSnackbar } from "@components/CustomSnackbar";
+import { CustomSnackbar } from "@components/adhocs/CustomSnackbar";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { RegistrationRoute } from "@routes";
 

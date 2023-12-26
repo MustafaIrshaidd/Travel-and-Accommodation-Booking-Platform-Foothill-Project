@@ -14,7 +14,7 @@ export const fetchFeaturedDealsAsync = createAsyncThunk(
 );
 
 export const fetchTrendingDestintations = createAsyncThunk(
-  "content/fetchTrendingDestinations",
+  "/content/fetchTrendingDestinations",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/destinations/trending`);

@@ -6,7 +6,7 @@ import { RegistrationProps } from "../Types";
 import { BrowserRouter } from "react-router-dom";
 import { CustomSnackbarProvider } from "@contexts/CustomSnackbar.context";
 import { AppThemeProvider } from "@contexts/AppTheme.context";
-import { CustomSnackbar } from "@components/CustomSnackbar";
+import { CustomSnackbar } from "@components/adhocs/CustomSnackbar";
 
 export default {
   title: "Registration",

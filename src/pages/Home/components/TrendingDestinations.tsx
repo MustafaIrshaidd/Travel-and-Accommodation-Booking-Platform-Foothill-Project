@@ -1,16 +1,24 @@
-import { Box, Grid, Link, Typography, styled, useTheme } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Link,
+  Typography,
+  styled,
+  useTheme,
+} from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import React from "react";
-import { Text } from "@components/Text";
-import { Slider } from "@components/Slider";
-import { HotelCard } from "@components/HotelCard";
+import { Text } from "@components/common/Text";
+import { Slider } from "@components/common/Slider";
+import { HotelCard } from "@components/common/HotelCard";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { fetchTrendingDestintations } from "@store/features/content/contentThunks";
 import { selectFeaturedDeals } from "@store/selectors/content";
 import Skeleton from "@mui/material";
-import { CityCard } from "@components/CityCard";
+import { CityCard } from "@components/common/CityCard";
 
 interface HeaderContentProps {
   isCentered: boolean;
@@ -96,62 +104,64 @@ const TrendingDestinations = () => {
     fetchData();
   }, [dispatch]);
   return (
-    <Grid container justifyContent={"space-between"} padding={"40px 0"}>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}>
-        <HeaderContent isCentered={true}>
-          <Box>
-            <Text
-              type="secondary"
-              variant="body1"
-              fontSize="12px"
-              fontWeight={700}
-              text="STAY AND EAT LIKE A LOCAL"
-              textAlign="start"
-              textWrap={false}
-            />
-            <Text
-              type="primary"
-              variant="h2"
-              fontSize="25px"
-              fontWeight={700}
-              text="Trending Destintations"
-              textWrap={false}
-            />
-          </Box>
-        </HeaderContent>
+    <Container sx={{ minWidth: "80%" }}>
+      <Grid container justifyContent={"space-between"} padding={"40px 0"}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}>
+          <HeaderContent isCentered={true}>
+            <Box>
+              <Text
+                type="secondary"
+                variant="body1"
+                fontSize="12px"
+                fontWeight={700}
+                text="STAY AND EAT LIKE A LOCAL"
+                textAlign="start"
+                textWrap={false}
+              />
+              <Text
+                type="primary"
+                variant="h2"
+                fontSize="25px"
+                fontWeight={700}
+                text="Trending Destintations"
+                textWrap={false}
+              />
+            </Box>
+          </HeaderContent>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          display={"flex"}
+          justifyContent={{ xs: "center", md: "end" }}
+          alignItems={"center"}
+          marginY={{ xs: "20px" }}>
+          <Link
+            href="#"
+            underline="hover"
+            color={"inherit"}
+            fontSize={"1.2rem"}
+            sx={{ color: theme.palette.text.primary }}>
+            See All Deals
+          </Link>
+          <KeyboardDoubleArrowRightIcon
+            sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
+          />
+        </Grid>
+        <Slider
+          height="400px"
+          isCarousel={true}
+          components={components}
+          slidePerPage={4}></Slider>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        display={"flex"}
-        justifyContent={{ xs: "center", md: "end" }}
-        alignItems={"center"}
-        marginY={{ xs: "20px" }}>
-        <Link
-          href="#"
-          underline="hover"
-          color={"inherit"}
-          fontSize={"1.2rem"}
-          sx={{ color: theme.palette.text.primary }}>
-          See All Deals
-        </Link>
-        <KeyboardDoubleArrowRightIcon
-          sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
-        />
-      </Grid>
-      <Slider
-        height="400px"
-        isCarousel={true}
-        components={components}
-        slidePerPage={4}></Slider>
-    </Grid>
+    </Container>
   );
 };
 

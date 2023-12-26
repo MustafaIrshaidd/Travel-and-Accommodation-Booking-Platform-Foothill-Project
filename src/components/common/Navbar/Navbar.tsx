@@ -6,7 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Collapse, Divider, Stack, useTheme } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import { Text } from "@components/Text";
+import { Text } from "@components/common/Text";
 import {
   NavAppBar,
   NavToolbar,
@@ -14,7 +14,7 @@ import {
   NavMenuItem,
   SearchButton,
 } from "./styles";
-import { HomeSearch } from "@components/HomeSearch";
+import { HomeSearch } from "@components/common/HomeSearch";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -121,7 +121,7 @@ const Navbar = () => {
         unmountOnExit>
         <HomeSearch isOpen={isRotating} />
       </Collapse>
-      {/* <Divider /> */}
+      <Divider />
     </Stack>
   );
 };

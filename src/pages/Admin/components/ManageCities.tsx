@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
-import { Searchbar } from "@components/Searchbar";
+import { Searchbar } from "@components/common/Searchbar";
 import { Grid, Stack } from "@mui/material";
 import DefaultButton from "@components/Buttons/DefaultButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
-import { InformationTable } from "@components/InformationTable";
+import { InformationTable } from "@components/common/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { selectCities, selectCitiesError } from "@store/selectors/cities";
 import {
   deleteCityAsync,
   fetchCities,
 } from "@store/features/cities/citiesThunks";
-import { HeadCell } from "@components/InformationTable/types";
+import { HeadCell } from "@components/common/InformationTable/types";
 import { selectCitiesLoading } from "@store/selectors/cities";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
 import AddCityImage from "../forms/AddCityImage";
@@ -56,7 +56,7 @@ const ManageCities = () => {
           fetchCities({ pageNumber: 1, pageSize: 10 })
         );
         const originalPromiseResult = unwrapResult(resultAction);
-      } catch (rejectedValueOrSerializedError:any) {
+      } catch (rejectedValueOrSerializedError: any) {
         setSnackbarProps({
           message: rejectedValueOrSerializedError,
           type: "error",
@@ -119,8 +119,9 @@ const ManageCities = () => {
             <DefaultButton
               startIcon={<AddCircleOutlineIcon />}
               variant="contained"
-              handleOnClick={handleAddCity}
-            >Add City</DefaultButton>
+              handleOnClick={handleAddCity}>
+              Add City
+            </DefaultButton>
           </Grid>
         </Grid>
         {/* Representational Component */}
