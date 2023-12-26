@@ -1,45 +1,29 @@
 import React from "react";
-import { Grid, useTheme, styled, Box, IconButton } from "@mui/material";
+import { Grid, useTheme, styled, Box, IconButton, Stack } from "@mui/material";
 import Filter from "./components/Filter";
 import CloseIcon from "@mui/icons-material/Close";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Text } from "@components/common/Text";
-
-const FilterDrawer = styled("aside", {
-  shouldForwardProp: (prop) => prop !== "isOpen",
-})<{ isOpen?: boolean }>(({ theme, isOpen }) => ({
-  transition: "width 0.3s ease ,height 0.3s ease",
-  position: "absolute",
-  backgroundColor: theme.palette.background.default,
-  bottom: 0,
-  zIndex: 9,
-  overflow: "hidden",
-  [theme.breakpoints.up("lg")]: {
-    width: isOpen ? "30%" : "0%",
-    left: 0,
-    top: 0,
-  },
-  [theme.breakpoints.down("lg")]: {
-    width: "88vw",
-    inset: 0,
-    height: isOpen ? "calc(100vh - 64px)" : "0",
-    padding: theme.spacing(0, 3),
-  },
-  boxShadow: theme.shadows[5],
-}));
-
-const DrawerHeader = styled(Box)(({ theme }) => ({
-  paddingTop: 64,
-}));
+import { DrawerHeader, FilterDrawer } from "./styles";
+import { useAppSelector } from "@hooks/redux.hook";
+import { searchHotels } from "@store/selectors/search";
+import { HotelCard } from "@components/common/HotelCard";
 
 const Search = () => {
   const theme = useTheme();
+
+  const hotelsSearchResult = useAppSelector(searchHotels);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const handleDrawer = (drawerState: boolean) => {
     setIsDrawerOpen(drawerState);
   };
+
   return (
-    <Grid container height={"calc(100vh - 58px)"} position={"relative"}>
+    <Grid
+      container
+      height={"calc(100vh - 58px)"}
+      overflow={"scroll"}
+      position={"relative"}>
       <Grid item xs={1}>
         <DrawerHeader />
         <IconButton
@@ -67,6 +51,23 @@ const Search = () => {
           fontWeight={700}
           textAlign="start"
           padding="0 0 30px 0"></Text>
+        <Stack
+          direction={"row"}
+          flexWrap={"wrap"}
+          justifyContent={"start"}
+          gap={3}>
+          {hotelsSearchResult.hotels.map((hotel) => {
+            return (
+              <HotelCard
+                id={hotel.hotelId}
+                city={hotel.cityName}
+                discount={hotel.discount}
+                hotelStarRating={hotel.starRating}
+                price={hotel.roomPrice}
+                title={hotel.hotelName}></HotelCard>
+            );
+          })}
+        </Stack>
       </Grid>
       <FilterDrawer
         isOpen={isDrawerOpen}
@@ -91,7 +92,7 @@ const Search = () => {
           fontWeight={700}
           textAlign="center"
           padding="0 0 30px 0"></Text>
-        <Filter/>
+        <Filter />
       </FilterDrawer>
     </Grid>
   );
