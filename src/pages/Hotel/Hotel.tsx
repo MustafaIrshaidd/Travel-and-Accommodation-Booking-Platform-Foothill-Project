@@ -4,6 +4,10 @@ import { Slider } from "@components/common/Slider";
 import { CityCard } from "@components/common/CityCard";
 import { Map } from "@components/common/Map";
 import HotelDetails from "./components/HotelDetails";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
+import { fetchHotelsById } from "@store/features/hotelDetails/hotelsDetailsThunks";
+import { selectHotelDetails } from "@store/selectors/hotels";
+
 const components = [
   <CityCard
     cityId={1}
@@ -28,7 +32,15 @@ const components = [
   />,
 ];
 
+
 const Hotel = () => {
+  const dispatch = useAppDispatch();
+  const selector = useAppSelector(selectHotelDetails)
+  console.log(selectHotelDetails)
+  React.useEffect( () => {
+   dispatch(fetchHotelsById({id:2}));
+  }, [])
+
   return (
     <Box minHeight={"calc(100vh - 60px)"}>
       <Grid container>
@@ -43,10 +55,10 @@ const Hotel = () => {
         </Grid>
         <Grid item xs={12} lg={12}>
           <Grid container>
-            <Grid item xs={12} lg={8}>
-              <HotelDetails />
+            <Grid item xs={12} lg={12}>
+              {selector.hotelDetails && <HotelDetails data={selector.hotelDetails} />}
             </Grid>
-            <Grid item xs={12} lg={4} minHeight={"200px"}>
+            <Grid item xs={12} lg={12} minHeight={"200px"}>
               <Map></Map>
             </Grid>
           </Grid>

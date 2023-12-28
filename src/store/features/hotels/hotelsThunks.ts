@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@store/store";
+import { tryCatch } from "@utils/tryCatch";
 
 export const fetchHotels = createAsyncThunk(
   "hotels/fetchHotels",

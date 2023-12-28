@@ -1,39 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HotelsState } from "@store/features/hotels/types";
-import { fetchHotels } from "./hotelsThunks";
+import { fetchHotelsById } from "./hotelsDetailsThunks";
+import { HotelDetailsState } from "./types";
 
 const initialState = {
-  hotels: [],
+  hotelDetails: {},
   loading: false,
-} as HotelsState;
+} as HotelDetailsState;
 
 export const hotelsSlice = createSlice({
-  name: "hotels",
+  name: "hotelDetails",
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchHotels.pending, (state, action) => {
+      .addCase(fetchHotelsById.pending, (state, action) => {
         return {
           ...state,
           loading: true,
         };
       })
-      .addCase(fetchHotels.fulfilled, (state, action) => {
+      .addCase(fetchHotelsById.fulfilled, (state, action:any) => {
         return {
           ...state,
           loading: false,
-          hotels: action.payload || [],
-          error: null,
-        };
+          hotelDetails: action.payload || {},
+        }; debugger
       })
-      .addCase(fetchHotels.rejected, (state, action) => {
+      .addCase(fetchHotelsById.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
-          error: action.payload,
+          error: action.error.message,
         };
-      })
+      });
   },
 });
 

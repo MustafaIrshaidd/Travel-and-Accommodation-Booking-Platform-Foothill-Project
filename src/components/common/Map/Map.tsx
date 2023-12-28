@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { Box } from "@mui/material";
-import { Height } from "@mui/icons-material";
+
 
 interface Location {
   latitude: number;

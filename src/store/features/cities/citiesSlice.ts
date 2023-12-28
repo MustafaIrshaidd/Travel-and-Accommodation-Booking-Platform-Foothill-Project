@@ -3,6 +3,7 @@ import { CitiesState } from "@store/features/cities/types";
 import { addCityAsync, deleteCityAsync, fetchCities } from "./citiesThunks";
 
 
+
 const initialState = {
   cities: [],
   loading: false,
