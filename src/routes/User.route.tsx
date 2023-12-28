@@ -5,7 +5,7 @@ import { Hotel } from "@pages/Hotel";
 import { Search } from "@pages/Search";
 import { Route, Routes } from "react-router-dom";
 
-const HomeRoute = () => {
+const UserRoute = () => {
   const theme = useTheme();
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default }}>
@@ -13,11 +13,11 @@ const HomeRoute = () => {
       <Routes>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/search" element={<Search />}></Route>
-        <Route path="/hotel" element={<Hotel />}></Route>
+        <Route path="/search/hotel/:hotelId" element={<Hotel />}></Route>
         <Route path="*" element={<Home />}></Route>
       </Routes>
     </Box>
   );
 };
 
-export default HomeRoute;
+export default UserRoute;

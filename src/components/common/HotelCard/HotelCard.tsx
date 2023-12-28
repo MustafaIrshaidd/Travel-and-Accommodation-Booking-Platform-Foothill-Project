@@ -30,6 +30,7 @@ interface HotelCardsProps {
   discount: number;
   hotelStarRating: number;
   isLoading?: boolean;
+  onClick?: () => void;
 }
 
 const imagesArray = [
@@ -47,6 +48,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
   discount,
   hotelStarRating,
   isLoading = false,
+  onClick,
 }) => {
   const theme = useTheme();
 
@@ -73,7 +75,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
               />
             )}
           </CardMedia>
-          <CardActionArea>
+          <CardActionArea onClick={onClick}>
             <CardContent
               sx={{ backgroundColor: theme.palette.background.paper }}>
               <Stack gap={"10px"}>

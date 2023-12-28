@@ -17,6 +17,7 @@ import AxiosSingleton from "@utils/axiosUtil";
 // Define the types for user data
 interface UserData {
   authorization: string;
+  userType: string;
 }
 
 // Define the types for the authentication context

@@ -8,9 +8,11 @@ import { DrawerHeader, FilterDrawer } from "./styles";
 import { useAppSelector } from "@hooks/redux.hook";
 import { searchHotels } from "@store/selectors/search";
 import { HotelCard } from "@components/common/HotelCard";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const hotelsSearchResult = useAppSelector(searchHotels);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -18,6 +20,9 @@ const Search = () => {
     setIsDrawerOpen(drawerState);
   };
 
+  const handleClick = (id: number) => {
+    navigate(`/home/search/hotel/${id}`);
+  };
   return (
     <Grid
       container
@@ -59,6 +64,7 @@ const Search = () => {
           {hotelsSearchResult.hotels.map((hotel) => {
             return (
               <HotelCard
+                onClick={() => handleClick(hotel.hotelId)}
                 id={hotel.hotelId}
                 city={hotel.cityName}
                 discount={hotel.discount}

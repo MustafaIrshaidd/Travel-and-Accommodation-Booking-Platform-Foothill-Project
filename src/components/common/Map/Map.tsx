@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
-
 interface Location {
   latitude: number;
   longitude: number;
 }
 
-const Map: React.FC = () => {
+interface MapProps {
+  locations?: Location[];
+}
+
+const Map: React.FC<MapProps> = ({ locations }) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyA6_hjYGVB2AlBkcYjn1-ifDqqsbB6OmLA",
   });
@@ -36,21 +39,26 @@ const Map: React.FC = () => {
   if (!isLoaded || !currentLocation) {
     return <div>loading...</div>;
   }
+
   return (
     <GoogleMap
-      mapContainerStyle={{ height: "100%",zIndex:"1" }}
+      mapContainerStyle={{ height: "100%", zIndex: "1" }}
       zoom={9}
       center={{
         lat: currentLocation.latitude,
         lng: currentLocation.longitude,
       }}
-      mapContainerClassName="map-container">
-      <Marker
-        position={{
-          lat: currentLocation.latitude,
-          lng: currentLocation.longitude,
-        }}
-      />
+      mapContainerClassName="map-container"
+    >
+      {locations && locations.map((location, index) => (
+        <Marker
+          key={index}
+          position={{
+            lat: location.latitude,
+            lng: location.longitude,
+          }}
+        />
+      ))}
     </GoogleMap>
   );
 };

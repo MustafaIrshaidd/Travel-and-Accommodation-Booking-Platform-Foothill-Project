@@ -8,7 +8,6 @@ const HotelDetails: React.FC<{ data: HotelDetailsProps }> = ({ data }) => {
   const [ratingValue, setRatingValue] = useState<number | null>(null);
 
   useEffect(() => {
-    // Set the rating value when the component mounts or when data changes
     setRatingValue(data.starRating);
   }, [data.starRating]);
 
@@ -19,8 +18,7 @@ const HotelDetails: React.FC<{ data: HotelDetailsProps }> = ({ data }) => {
           direction={{ xs: "column", sm: "row" }}
           alignItems={{ xs: "start", sm: "center" }}
           justifyContent={"space-between"}
-          gap={{ xs: 2 }}
-        >
+          gap={{ xs: 2 }}>
           <Stack alignItems={"start"}>
             <Text
               textShadow
@@ -63,10 +61,10 @@ const HotelDetails: React.FC<{ data: HotelDetailsProps }> = ({ data }) => {
           textWrap={false}
           text={`${data.description}`}
         />
-        <Stack direction={"row"} gap={1}>
-          {data.amenities.map((amenitie,index) => {
-            return <Chip key={index} label={amenitie.name} size="small"  />
-          })} 
+        <Stack direction={"row"} gap={1} flexWrap={"wrap"}>
+          {data.amenities?.map((amenity, index) => {
+            return <Chip key={index} label={amenity.name} />;
+          })}
         </Stack>
       </Stack>
     </Container>

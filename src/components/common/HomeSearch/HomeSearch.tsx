@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Text } from "@components/common/Text";
 import { DatePicker } from "@components/inputs/DatePicker";
-import dayjs from "dayjs"
+import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { DefaultButton } from "@components/Buttons";
 import SearchIcon from "@mui/icons-material/Search";
@@ -140,7 +140,7 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
         const resultAction = await dispatch(searchHotelsAsync(values));
         const originalPromiseResult = unwrapResult(resultAction);
         console.log(originalPromiseResult);
-        navigate("/user/search");
+        navigate("/home/search");
         setIsLoading(false);
       } catch (rejectedValueOrSerializedError: any) {}
     },

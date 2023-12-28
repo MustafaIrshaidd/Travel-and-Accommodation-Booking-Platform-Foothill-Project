@@ -7,6 +7,7 @@ import HotelDetails from "./components/HotelDetails";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { fetchHotelsById } from "@store/features/hotelDetails/hotelsDetailsThunks";
 import { selectHotelDetails } from "@store/selectors/hotels";
+import { useParams } from "react-router-dom";
 
 const components = [
   <CityCard
@@ -32,14 +33,14 @@ const components = [
   />,
 ];
 
-
 const Hotel = () => {
   const dispatch = useAppDispatch();
-  const selector = useAppSelector(selectHotelDetails)
-  console.log(selectHotelDetails)
-  React.useEffect( () => {
-   dispatch(fetchHotelsById({id:2}));
-  }, [])
+  const selector = useAppSelector(selectHotelDetails);
+  const { hotelId } = useParams();
+
+  React.useEffect(() => {
+    hotelId && dispatch(fetchHotelsById({ id: parseInt(hotelId) }));
+  }, []);
 
   return (
     <Box minHeight={"calc(100vh - 60px)"}>
@@ -56,10 +57,19 @@ const Hotel = () => {
         <Grid item xs={12} lg={12}>
           <Grid container>
             <Grid item xs={12} lg={12}>
-              {selector.hotelDetails && <HotelDetails data={selector.hotelDetails} />}
+              {selector.hotelDetails && (
+                <HotelDetails data={selector.hotelDetails} />
+              )}
             </Grid>
             <Grid item xs={12} lg={12} minHeight={"200px"}>
-              <Map></Map>
+              <Map
+                locations={[
+                  {
+                    longitude: selector.hotelDetails.longitude,
+                    latitude: selector.hotelDetails.latitude,
+                  },
+                ]}
+              />
             </Grid>
           </Grid>
         </Grid>
