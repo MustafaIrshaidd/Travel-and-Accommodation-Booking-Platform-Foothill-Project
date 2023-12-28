@@ -19,6 +19,8 @@ interface SliderProps {
   height?: string;
   isCarousel?: boolean;
   slidePerPage?: number;
+  spacing?: number;
+  isSliderControllersVisible?: boolean;
 }
 
 const Slider: React.FC<SliderProps> = ({
@@ -26,6 +28,8 @@ const Slider: React.FC<SliderProps> = ({
   height = "300px",
   isCarousel = false,
   slidePerPage = 1,
+  spacing = 15,
+  isSliderControllersVisible = true,
 }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [loaded, setLoaded] = React.useState(false);
@@ -40,7 +44,7 @@ const Slider: React.FC<SliderProps> = ({
     selector: isCarousel ? ".keen-slider__carousel" : ".keen-slider__card",
     slides: {
       perView: slidePerPage,
-      spacing: 15,
+      spacing: spacing,
     },
     ...(isCarousel && {
       breakpoints: {
@@ -118,6 +122,7 @@ const Slider: React.FC<SliderProps> = ({
             })}
           </StyledSlider>
           {loaded &&
+            isSliderControllersVisible &&
             instanceRef.current &&
             instanceRef.current.track.details?.slides && (
               <>
@@ -141,7 +146,7 @@ const Slider: React.FC<SliderProps> = ({
               </>
             )}
         </StyledNavigationWrapper>
-        {loaded && instanceRef.current && (
+        {loaded && isSliderControllersVisible && instanceRef.current && (
           <StyledDots isCarousel={isCarousel}>
             {Array.from(
               {
