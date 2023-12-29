@@ -1,27 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { loginUserAsync } from "./userThunks";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
+import { loginUserAsync } from "./thunks";
 
 const initialState = {
-  //   exp: null,
   family_name: "",
   given_name: "",
-  //   iss: "",
-  //   nbf: null,
-  //   sub: "",
   userType: "",
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    userInformationAdded: (state, action) => {
-      return {
-        ...state,
-        ...action.payload
-      };
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(loginUserAsync.pending, (state, action) => {
@@ -42,6 +31,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const { userInformationAdded } = userSlice.actions;
+const userSlices = combineReducers({
+  user: userSlice.reducer,
+});
 
-export default userSlice.reducer;
+export default userSlices;

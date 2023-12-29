@@ -55,4 +55,7 @@ export class AxiosSingleton {
   }
 }
 
+
+export const axiosInstance = AxiosSingleton.getInstance();
+
 export default AxiosSingleton;

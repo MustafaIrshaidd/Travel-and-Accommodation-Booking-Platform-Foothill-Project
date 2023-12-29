@@ -6,7 +6,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { Text } from "@components/common/Text";
 import { DrawerHeader, FilterDrawer } from "./styles";
 import { useAppSelector } from "@hooks/redux.hook";
-import { searchHotels } from "@store/selectors/search";
+import { searchHotels } from "@store/features/hotels/selectors";
 import { HotelCard } from "@components/common/HotelCard";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const Search = () => {
   };
 
   const handleClick = (id: number) => {
-    navigate(`/home/search/hotel/${id}`);
+    navigate(`/user/search/hotel/${id}`);
   };
   return (
     <Grid
@@ -61,7 +61,7 @@ const Search = () => {
           flexWrap={"wrap"}
           justifyContent={"start"}
           gap={3}>
-          {hotelsSearchResult.hotels.map((hotel) => {
+          {hotelsSearchResult.data.map((hotel) => {
             return (
               <HotelCard
                 onClick={() => handleClick(hotel.hotelId)}

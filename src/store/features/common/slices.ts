@@ -1,19 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-  fetchFeaturedDealsAsync,
-  fetchTrendingDestintations,
-} from "./contentThunks";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
+import { fetchFeaturedDealsAsync, fetchTrendingDestintations } from "./thunks";
 
 const initialState = {
-  content: {
+  common: {
     featuredDeals: { data: [], loading: false },
     trending: { data: [], loading: false },
     // recentHotels: { data: [], loading: false },
   },
 };
 
-export const contentSlice = createSlice({
-  name: "content",
+export const commonSlice = createSlice({
+  name: "common",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -21,10 +18,10 @@ export const contentSlice = createSlice({
       .addCase(fetchFeaturedDealsAsync.pending, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             featuredDeals: {
-              ...state.content.featuredDeals,
+              ...state.common.featuredDeals,
               loading: true,
             },
           },
@@ -33,8 +30,8 @@ export const contentSlice = createSlice({
       .addCase(fetchFeaturedDealsAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             featuredDeals: {
               data: action.payload,
               loading: false,
@@ -45,8 +42,8 @@ export const contentSlice = createSlice({
       .addCase(fetchFeaturedDealsAsync.rejected, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             featuredDeals: {
               data: [],
               loading: false,
@@ -58,10 +55,10 @@ export const contentSlice = createSlice({
       .addCase(fetchTrendingDestintations.pending, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             trending: {
-              ...state.content.trending,
+              ...state.common.trending,
               loading: true,
             },
           },
@@ -70,8 +67,8 @@ export const contentSlice = createSlice({
       .addCase(fetchTrendingDestintations.fulfilled, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             trending: {
               data: action.payload,
               loading: false,
@@ -82,8 +79,8 @@ export const contentSlice = createSlice({
       .addCase(fetchTrendingDestintations.rejected, (state, action) => {
         return {
           ...state,
-          content: {
-            ...state.content,
+          common: {
+            ...state.common,
             trending: {
               data: [],
               loading: false,
@@ -94,4 +91,9 @@ export const contentSlice = createSlice({
       });
   },
 });
-export default contentSlice.reducer;
+
+const commonSlices = combineReducers({
+  common: commonSlice.reducer,
+});
+
+export default commonSlices;

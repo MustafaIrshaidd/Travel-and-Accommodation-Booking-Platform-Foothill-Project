@@ -1,6 +1,3 @@
-import { useAppDispatch } from "@hooks/redux.hook";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { loginUserAsync } from "@store/features/user/userThunks";
 import React, {
   createContext,
   useContext,
@@ -8,11 +5,14 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+
+import AxiosSingleton from "@utils/axiosUtil";
+import { useAppDispatch } from "@hooks/redux.hook";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { loginUserAsync } from "@store/features/user/thunks";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
-import { userInformationAdded } from "@store/features/user/userSlice";
-import AxiosSingleton from "@utils/axiosUtil";
 
 // Define the types for user data
 interface UserData {
@@ -92,9 +92,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     setUser(cookies["authData"] || null);
-    if (decodedToken) {
-      dispatch(userInformationAdded(decodedToken));
-    }
+    // if (decodedToken) {
+    //   dispatch(userInformationAdded(decodedToken));
+    // }
   }, [cookies, decodedToken, dispatch]);
 
   const contextValue: AuthContextProps = {

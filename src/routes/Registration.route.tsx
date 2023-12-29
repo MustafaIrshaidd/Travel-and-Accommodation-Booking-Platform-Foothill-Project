@@ -12,7 +12,7 @@ const RegistrationRoute = () => {
     <Routes>
       {user?.authorization ? (
         <>
-          <Route path="/home/*" element={<UserRoute />} />
+          <Route path="/user/*" element={<UserRoute />} />
           <Route path="/admin/*" element={<AdminRoute />} />
         </>
       ) : (

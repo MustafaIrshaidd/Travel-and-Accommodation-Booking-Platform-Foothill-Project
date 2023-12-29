@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { City } from "@store/features/cities/types";
-import { axiosInstance } from "@store/store";
+import { axiosInstance } from "@utils/axiosUtil";
 import { tryCatch } from "@utils/tryCatch";
 
 export const fetchCities = createAsyncThunk(
@@ -11,7 +11,8 @@ export const fetchCities = createAsyncThunk(
   ) =>
     tryCatch(async () => {
       const response = await axiosInstance.get(
-        `/cities?pageSize=${args.pageSize || 5}&pageNumber=${args.pageNumber || 1
+        `/cities?pageSize=${args.pageSize || 5}&pageNumber=${
+          args.pageNumber || 1
         }`
       );
       return response.data;

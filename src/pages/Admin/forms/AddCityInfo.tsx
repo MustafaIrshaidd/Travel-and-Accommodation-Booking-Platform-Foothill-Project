@@ -9,8 +9,11 @@ import validations from "./validations";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 
-import { selectCities, selectCitiesError } from "@store/selectors/cities";
-import { addCityAsync } from "@store/features/cities/citiesThunks";
+import {
+  selectCities,
+  selectCitiesError,
+} from "@store/features/cities/selectors";
+import { addCityAsync } from "@store/features/cities/thunks";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 const AddCityInfo: React.FC<AddCityInfoProps> = ({ onSubmitInformer }) => {

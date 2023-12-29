@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { combineReducers, createSlice } from "@reduxjs/toolkit";
 import { CitiesState } from "@store/features/cities/types";
-import { addCityAsync, deleteCityAsync, fetchCities } from "./citiesThunks";
+import { addCityAsync, deleteCityAsync, fetchCities } from "./thunks";
 
 const initialState = {
-  cities: [],
+  data: [],
   loading: false,
 } as CitiesState;
 
-export const citiesSlice = createSlice({
-  name: "cities",
+export const allCitiesSlice = createSlice({
+  name: "allCities",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -23,7 +23,7 @@ export const citiesSlice = createSlice({
         return {
           ...state,
           loading: false,
-          cities: action.payload || [],
+          data: action.payload || [],
           error: null,
         };
       })
@@ -33,7 +33,16 @@ export const citiesSlice = createSlice({
           loading: false,
           error: action.payload,
         };
-      })
+      });
+  },
+});
+
+export const addCitySlice = createSlice({
+  name: "addCity",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
       .addCase(addCityAsync.pending, (state) => {
         return {
           ...state,
@@ -43,7 +52,7 @@ export const citiesSlice = createSlice({
       .addCase(addCityAsync.fulfilled, (state, action) => {
         return {
           ...state,
-          cities: [...state.cities, action.payload],
+          data: [...state.data, action.payload],
           error: null,
         };
       })
@@ -52,7 +61,16 @@ export const citiesSlice = createSlice({
           ...state,
           error: action.payload,
         };
-      })
+      });
+  },
+});
+
+export const deleteCitySlice = createSlice({
+  name: "allCities",
+  initialState,
+  reducers: {},
+  extraReducers(builder) {
+    builder
       .addCase(deleteCityAsync.pending, (state) => {
         return {
           ...state,
@@ -64,7 +82,7 @@ export const citiesSlice = createSlice({
         return {
           ...state,
           loading: false,
-          cities: state.cities.filter(
+          data: state.data.filter(
             (city) => city.id !== action.payload.deletedCityId
           ),
           error: null,
@@ -80,4 +98,10 @@ export const citiesSlice = createSlice({
   },
 });
 
-export default citiesSlice.reducer;
+const citiesSlices = combineReducers({
+  allCities: allCitiesSlice.reducer,
+  addCity: allCitiesSlice.reducer,
+  deleteCity: allCitiesSlice.reducer,
+});
+
+export default citiesSlices;

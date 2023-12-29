@@ -15,8 +15,8 @@ import { HotelCard } from "@components/common/HotelCard";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-import { fetchTrendingDestintations } from "@store/features/content/contentThunks";
-import { selectFeaturedDeals } from "@store/selectors/content";
+import { fetchTrendingDestintations } from "@store/features/common/thunks";
+import { selectFeaturedDeals } from "@store/features/common/selectors";
 import Skeleton from "@mui/material";
 import { CityCard } from "@components/common/CityCard";
 

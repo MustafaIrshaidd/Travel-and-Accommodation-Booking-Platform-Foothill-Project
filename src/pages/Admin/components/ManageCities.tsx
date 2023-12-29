@@ -6,13 +6,13 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { InformationTable } from "@components/common/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { selectCities, selectCitiesError } from "@store/selectors/cities";
 import {
-  deleteCityAsync,
-  fetchCities,
-} from "@store/features/cities/citiesThunks";
+  selectCities,
+  selectCitiesError,
+} from "@store/features/cities/selectors";
+import { deleteCityAsync, fetchCities } from "@store/features/cities/thunks";
 import { HeadCell } from "@components/common/InformationTable/types";
-import { selectCitiesLoading } from "@store/selectors/cities";
+import { selectCitiesLoading } from "@store/features/cities/selectors";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
 import AddCityImage from "../forms/AddCityImage";
 import { unwrapResult } from "@reduxjs/toolkit";

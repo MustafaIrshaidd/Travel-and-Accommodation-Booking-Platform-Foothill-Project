@@ -5,7 +5,7 @@ export interface City {
 }
 
 export interface CitiesState {
-  cities: City[];
+  data: City[];
   loading: boolean;
   error?: any;
   success?: any;

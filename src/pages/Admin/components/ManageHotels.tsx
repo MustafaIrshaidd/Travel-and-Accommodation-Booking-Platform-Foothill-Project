@@ -6,16 +6,16 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { AdminDrawerContext } from "../contexts/AdminAsideDrawer";
 import { InformationTable } from "@components/common/InformationTable";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { selectHotels } from "@store/selectors/hotels";
-import { deleteCityAsync } from "@store/features/cities/citiesThunks";
+import { selectHotels } from "@store/features/hotels/selectors";
+import { deleteCityAsync } from "@store/features/cities/thunks";
 import { HeadCell } from "@components/common/InformationTable/types";
-import { selectCitiesLoading } from "@store/selectors/cities";
+import { selectCitiesLoading } from "@store/features/cities/selectors";
 import { FormsStepperContext } from "@contexts/FormsStepper.context";
 import AddCityImage from "../forms/AddCityImage";
 import { unwrapResult } from "@reduxjs/toolkit";
 import AddCityInfo from "../forms/AddCityInfo";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-import { fetchHotels } from "@store/features/hotels/hotelsThunks";
+import { fetchHotels } from "@store/features/hotels/thunks";
 
 const headCells: HeadCell[] = [
   {

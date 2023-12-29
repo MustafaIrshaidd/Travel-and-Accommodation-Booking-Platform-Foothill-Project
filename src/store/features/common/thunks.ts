@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance } from "@store/store";
+import { axiosInstance } from "@utils/axiosUtil";
 
 export const fetchFeaturedDealsAsync = createAsyncThunk(
   "content/fetchFeaturedDeals",
@@ -18,7 +18,6 @@ export const fetchTrendingDestintations = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/destinations/trending`);
-      console.log(response);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);

@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { DefaultButton } from "@components/Buttons";
 import SearchIcon from "@mui/icons-material/Search";
 import { NumberInput } from "@components/inputs/NumberInput";
-import { searchHotelsAsync } from "@store/features/search/searchThunks";
+import { searchHotels } from "@store/features/hotels/thunks";
 import { useAppDispatch } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
@@ -137,10 +137,10 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
     onSubmit: async (values) => {
       try {
         setIsLoading(true);
-        const resultAction = await dispatch(searchHotelsAsync(values));
+        const resultAction = await dispatch(searchHotels(values));
         const originalPromiseResult = unwrapResult(resultAction);
         console.log(originalPromiseResult);
-        navigate("/home/search");
+        navigate("/user/search");
         setIsLoading(false);
       } catch (rejectedValueOrSerializedError: any) {}
     },
@@ -275,7 +275,6 @@ const HomeSearch: React.FC<HomeSearchProps> = ({ isOpen = false }) => {
                   />
                   <NumberInput
                     onChange={(value) => {
-                      console.log("hello");
                       formik.setFieldValue("children", value);
                     }}
                     initialValue={0}

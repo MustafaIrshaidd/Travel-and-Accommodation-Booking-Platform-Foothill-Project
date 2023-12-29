@@ -5,10 +5,10 @@ import { Text } from "@components/common/Text";
 import { Slider } from "@components/common/Slider";
 import { HotelCard } from "@components/common/HotelCard";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-import { fetchFeaturedDealsAsync } from "@store/features/content/contentThunks";
+import { fetchFeaturedDealsAsync } from "@store/features/common/thunks";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
-import { selectFeaturedDeals } from "@store/selectors/content";
+import { selectFeaturedDeals } from "@store/features/common/selectors";
 
 const HeaderContent = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isCentered",
