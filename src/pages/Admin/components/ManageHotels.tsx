@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Searchbar } from "@components/common/Searchbar";
+import { Searchbar } from "@components/inputs/Searchbar";
 import { Grid, Stack } from "@mui/material";
 import DefaultButton from "@components/Buttons/DefaultButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";

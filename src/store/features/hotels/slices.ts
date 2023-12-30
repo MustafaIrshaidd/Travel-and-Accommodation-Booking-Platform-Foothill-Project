@@ -5,6 +5,7 @@ import {
   SearchState,
 } from "@store/features/hotels/types";
 import { fetchHotels, fetchHotelsById, searchHotels } from "./thunks";
+import dayjs from "dayjs";
 
 const initialStates = {
   allHotels: {
@@ -17,7 +18,13 @@ const initialStates = {
   } as HotelDetailsState,
   searchHotels: {
     data: [],
-    searchProps: {},
+    searchProps: {
+      checkInDate: dayjs().format("YYYY-MM-DD"),
+      checkOutDate: dayjs().add(1, "day").format("YYYY-MM-DD"),
+      numberOfRooms: 1,
+      children: 0,
+      adults: 2,
+    },
     loading: false,
   } as SearchState,
 };

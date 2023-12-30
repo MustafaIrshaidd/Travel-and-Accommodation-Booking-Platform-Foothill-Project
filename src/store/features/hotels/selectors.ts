@@ -5,6 +5,9 @@ export const allHotels = (state: RootState) => state.hotels.allHotels;
 export const selectHotelDetails = (state: RootState) =>
   state.hotels.hotelDetails;
 
+export const selectSearchHotelsProps = (state: RootState) =>
+  state.hotels.searchHotels.searchProps;
+
 export const selectHotels = (state: RootState) => state.hotels.allHotels.data;
 export const selectHotelsLoading = (state: RootState) =>
   state.hotels.allHotels.loading;
