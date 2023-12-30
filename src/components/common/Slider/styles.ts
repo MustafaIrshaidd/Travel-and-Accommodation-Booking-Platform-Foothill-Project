@@ -6,20 +6,20 @@ export const StyledSlider = styled(Box)(({ theme }) => ({
   position: "relative",
   display: "flex",
   overflow: "hidden",
+  [theme.breakpoints.down("md")]: {
+    overflow: "visible",
+  },
 }));
 
 export const StyledSlide = styled("div", {
   shouldForwardProp: (prop) => prop !== "height",
-})<{ height: string }>(({ theme, height }) => ({
+})<{ height: string }>(({ theme }) => ({
   background: "grey",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  width: "100%",
+  overflow: "hidden",
   fontSize: "50px",
   color: "#fff",
   fontWeight: 500,
-  height: height,
-  maxHeight: "100vh",
 }));
 
 export const StyledNumberSlide = styled(StyledSlide)({
@@ -41,7 +41,7 @@ export const StyledDots = styled("div")<{ isCarousel: boolean }>(
     }),
     width: "100%",
     display: "flex",
-    padding: "10px 0",
+    padding: "20px 0",
     justifyContent: "center",
   })
 );
@@ -72,16 +72,24 @@ export const StyledArrow = styled(ChevronRightIcon)(({ theme }) => ({
   WebkitTransform: "translateY(-50%)",
   fill: theme.palette.text.primary,
   cursor: "pointer",
+  borderRadius: "50%",
   color: "white",
   zIndex: 10,
+  [theme.breakpoints.down("md")]: {
+    visibility: "hidden",
+  },
 }));
 
 export const StyledArrowLeft = styled(StyledArrow)<{
   isDisabled: boolean;
   isCarousel: boolean;
 }>(({ theme, isDisabled = false, isCarousel = false }) => ({
-  left: isCarousel ? "5px" : "5px",
+  left: isCarousel ? "-50px" : "5px",
   fill: isDisabled ? "rgba(255,255,255,0.5)" : "",
+  backgroundColor: isDisabled
+    ? theme.palette.action.disabled
+    : theme.palette.text.secondary,
+  transform: "rotateY(180deg) translateY(-50%)",
 }));
 
 export const StyledArrowRight = styled(StyledArrow)<{
@@ -89,6 +97,9 @@ export const StyledArrowRight = styled(StyledArrow)<{
   isCarousel: boolean;
 }>(({ theme, isDisabled = false, isCarousel = false }) => ({
   left: "auto",
-  right: isCarousel ? "5px" : "5px",
+  right: isCarousel ? "-50px" : "5px",
   fill: isDisabled ? "rgba(255,255,255,0.5)" : "",
+  backgroundColor: isDisabled
+    ? theme.palette.action.disabled
+    : theme.palette.text.secondary,
 }));

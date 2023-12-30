@@ -16,7 +16,10 @@ import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useCustomSnackbar } from "@hooks/useCustomSnackbar.hook";
 import { fetchTrendingDestintations } from "@store/features/common/thunks";
-import { selectFeaturedDeals } from "@store/features/common/selectors";
+import {
+  selectFeaturedDeals,
+  selectTrendingDestinations,
+} from "@store/features/common/selectors";
 import Skeleton from "@mui/material";
 import { CityCard } from "@components/common/CityCard";
 
@@ -84,7 +87,9 @@ const components = [
 const TrendingDestinations = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const featuredDealsSelector = useAppSelector(selectFeaturedDeals);
+  const trendingDestinationsSelector = useAppSelector(
+    selectTrendingDestinations
+  );
   const { setSnackbarProps } = useCustomSnackbar();
 
   React.useEffect(() => {
@@ -103,6 +108,17 @@ const TrendingDestinations = () => {
     };
     fetchData();
   }, [dispatch]);
+
+  const data = trendingDestinationsSelector.data.map((trend: any) => (
+    <CityCard
+      key={trend.hotelId}
+      cityId={trend.hotelId}
+      cityName={trend.cityName}
+      countryName={trend.countryName}
+      description={trend.description}
+      thumbnailUrl={trend.thumbnailUrl}
+    />
+  ));
   return (
     <Container sx={{ minWidth: "80%" }}>
       <Grid container justifyContent={"space-between"} padding={"40px 0"}>
@@ -155,11 +171,17 @@ const TrendingDestinations = () => {
             sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
           />
         </Grid>
-        <Slider
-          height="400px"
-          isCarousel={true}
-          components={components}
-          slidePerPage={4}></Slider>
+
+        <Box width={"90%"} margin={"auto"}>
+          {trendingDestinationsSelector.loading ? (
+            <>loading</>
+          ) : (
+            <Slider
+              isCarousel={true}
+              components={data}
+              slidePerPage={4}></Slider>
+          )}
+        </Box>
       </Grid>
     </Container>
   );

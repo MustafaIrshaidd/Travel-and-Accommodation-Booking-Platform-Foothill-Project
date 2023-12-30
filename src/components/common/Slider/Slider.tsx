@@ -7,16 +7,13 @@ import {
   StyledDot,
   StyledDots,
   StyledNavigationWrapper,
-  StyledNumberSlide,
   StyledSlider,
 } from "./styles";
-import { Box, Stack } from "@mui/material";
-import { round } from "lodash";
+import { Box } from "@mui/material";
 
 interface SliderProps {
   components?: React.ReactNode[];
   isLoading?: boolean;
-  height?: string;
   isCarousel?: boolean;
   slidePerPage?: number;
   spacing?: number;
@@ -25,7 +22,6 @@ interface SliderProps {
 
 const Slider: React.FC<SliderProps> = ({
   components = [],
-  height = "300px",
   isCarousel = false,
   slidePerPage = 1,
   spacing = 15,
@@ -38,6 +34,8 @@ const Slider: React.FC<SliderProps> = ({
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
     },
+    loop: true,
+
     created() {
       setLoaded(true);
     },
@@ -57,74 +55,41 @@ const Slider: React.FC<SliderProps> = ({
         "(max-width: 500px)": {
           slides: {
             perView: 1,
-            spacing: 0,
+            spacing: 10,
           },
         },
       },
     }),
   });
 
-  React.useEffect(() => {
-    instanceRef.current?.update(
-      {
-        initial: 0,
-        slideChanged(slider) {
-          setCurrentSlide(slider.track.details.rel);
-        },
-        created() {
-          setLoaded(true);
-        },
-
-        selector: isCarousel ? ".keen-slider__carousel" : ".keen-slider__card",
-        slides: {
-          perView: slidePerPage,
-          spacing: 15,
-        },
-        ...(isCarousel && {
-          breakpoints: {
-            "(max-width: 1000px)": {
-              slides: {
-                perView: 2,
-                spacing: 10,
-              },
-            },
-            "(max-width: 500px)": {
-              slides: {
-                perView: 1,
-                spacing: 0,
-              },
-            },
-          },
-        }),
-      },
-      0
-    );
-  }, [components]);
+  const perView = (instanceRef.current?.options.slides as { perView?: number })
+    ?.perView;
 
   return (
     <>
       <Box position={"relative"} width={"100%"}>
         <StyledNavigationWrapper>
-          <StyledSlider height={height} ref={sliderRef}>
+          <StyledSlider ref={sliderRef}>
             {components?.map((component) => {
               return (
-                <Stack
-                  direction={"row"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  height={height}
+                <Box
+                  height={"100%"}
+                  width={"100%"}
                   className={
                     isCarousel ? "keen-slider__carousel" : "keen-slider__card"
                   }>
                   {component}
-                </Stack>
+                </Box>
               );
             })}
           </StyledSlider>
           {loaded &&
             isSliderControllersVisible &&
             instanceRef.current &&
-            instanceRef.current.track.details?.slides && (
+            instanceRef.current.track.details?.slides &&
+            instanceRef.current.track.details.slides.length / slidePerPage >
+              1 &&
+            perView && (
               <>
                 <StyledArrowLeft
                   onClick={(e: any) =>
@@ -146,27 +111,32 @@ const Slider: React.FC<SliderProps> = ({
               </>
             )}
         </StyledNavigationWrapper>
-        {loaded && isSliderControllersVisible && instanceRef.current && (
-          <StyledDots isCarousel={isCarousel}>
-            {Array.from(
-              {
-                length: Math.ceil(
-                  instanceRef.current.track.details.slides.length / slidePerPage
-                ),
-              },
-              (_, idx) => (
-                <StyledDot
-                  key={idx}
-                  onClick={() => {
-                    instanceRef.current?.moveToIdx(idx);
-                  }}
-                  className={
-                    "dot" + (currentSlide === idx ? " active" : "")
-                  }></StyledDot>
-              )
-            )}
-          </StyledDots>
-        )}
+        {loaded &&
+          isSliderControllersVisible &&
+          instanceRef.current &&
+          instanceRef.current.options.slides &&
+          instanceRef.current.track.details.slides.length / slidePerPage > 1 &&
+          perView && (
+            <StyledDots isCarousel={isCarousel}>
+              {Array.from(
+                {
+                  length: Math.ceil(
+                    instanceRef.current.track.details.slides.length / perView
+                  ),
+                },
+                (_, idx) => (
+                  <StyledDot
+                    key={idx}
+                    onClick={() => {
+                      instanceRef.current?.moveToIdx(idx);
+                    }}
+                    className={
+                      "dot" + (currentSlide === idx ? " active" : "")
+                    }></StyledDot>
+                )
+              )}
+            </StyledDots>
+          )}
       </Box>
     </>
   );

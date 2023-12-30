@@ -1,6 +1,7 @@
 import LoadingCard from "@components/common/LoadingCard/LoadingCard";
 import { Text } from "@components/common/Text";
 import {
+  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -19,23 +20,11 @@ interface CityCardProps {
 }
 
 const CityCardContent = styled(CardContent)(({ theme }) => ({
+  boxSizing: "border-box",
   position: "absolute",
   bottom: "10px",
   left: "10px",
   zIndex: 2,
-}));
-
-const CityCardMedia = styled(CardMedia)(({ theme }) => ({
-  height: 350,
-  width: "100%",
-  "&:after": {
-    content: "''",
-    position: "absolute",
-    inset: 0,
-    background:
-      "linear-gradient(180deg, transparent 0, transparent 78%, rgba(0, 0, 0, 0.65))",
-    zIndex: 1,
-  },
 }));
 
 const CityCard: React.FC<CityCardProps> = ({
@@ -51,9 +40,33 @@ const CityCard: React.FC<CityCardProps> = ({
       {isLoading ? (
         <LoadingCard width="250px" height="500px"></LoadingCard>
       ) : (
-        <Card sx={{ minWidth: 300, position: "relative" }}>
+        <Card sx={{ position: "relative" }}>
           <CardActionArea>
-            <CityCardMedia image={thumbnailUrl} title="green iguana" />
+            <Box
+              sx={{
+                "&:after": {
+                  content: "''",
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))",
+                  zIndex: 1,
+                },
+                transition: "all 0.5s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
+              }}>
+              <Box
+                component={"img"}
+                src={thumbnailUrl}
+                width={"100%"}
+                height={350}
+                sx={{
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
             <CityCardContent>
               <Text
                 type="light"

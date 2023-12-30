@@ -79,7 +79,6 @@ const FeaturedDeals = () => {
       try {
         const resultAction = await dispatch(fetchFeaturedDealsAsync());
         const originalPromiseResult = unwrapResult(resultAction);
-        console.log(originalPromiseResult);
       } catch (rejectedValueOrSerializedError: any) {
         setSnackbarProps({
           message: rejectedValueOrSerializedError,
@@ -159,17 +158,17 @@ const FeaturedDeals = () => {
 
         {featuredDealsSelector.loading ? (
           <Slider
-            height="400px"
             isCarousel={true}
             components={components}
             slidePerPage={4}></Slider>
         ) : (
           featuredDealsSelector.data.length !== 0 && (
-            <Slider
-              height="400px"
-              isCarousel={true}
-              components={data}
-              slidePerPage={4}></Slider>
+            <Box width={"90%"} margin={"auto"}>
+              <Slider
+                isCarousel={true}
+                components={data}
+                slidePerPage={4}></Slider>
+            </Box>
           )
         )}
       </Grid>

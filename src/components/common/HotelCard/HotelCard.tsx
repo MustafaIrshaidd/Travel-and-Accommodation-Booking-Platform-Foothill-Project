@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -53,7 +54,13 @@ const HotelCards: React.FC<HotelCardsProps> = ({
   const theme = useTheme();
 
   const roomsPictureArrayComponents = roomPictures.map((picture: any) => (
-    <Image key={picture.id} src={picture.url} />
+    <Box
+      component={"img"}
+      src={picture}
+      height={"250px"}
+      width={"100%"}
+      sx={{ objectFit: "cover" }}
+    />
   ));
 
   return (
@@ -65,21 +72,21 @@ const HotelCards: React.FC<HotelCardsProps> = ({
           imageHeight="300px"
           rows={3}></LoadingCard>
       ) : (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ boxShadow: theme.shadows[15] }}>
           <CardMedia>
             {roomsPictureArrayComponents && roomPictures.length !== 0 && (
               <Slider
-                height="200px"
                 components={roomsPictureArrayComponents}
                 slidePerPage={1}
+                isSliderControllersVisible={false}
               />
             )}
           </CardMedia>
           <CardActionArea onClick={onClick}>
             <CardContent
               sx={{ backgroundColor: theme.palette.background.paper }}>
-              <Stack gap={"10px"}>
-                <Text type="primary" fontSize="25px" text={title} />
+              <Stack gap={3}>
+                <Text type="primary" fontSize="20px" text={title} />
                 <Stack
                   direction={"row"}
                   alignItems={"center"}

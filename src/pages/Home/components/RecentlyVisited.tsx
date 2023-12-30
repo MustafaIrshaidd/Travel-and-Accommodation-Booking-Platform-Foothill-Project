@@ -137,12 +137,12 @@ const RecentlyVisited = () => {
             sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
           />
         </Grid>
-
-        <Slider
-          height="400px"
-          isCarousel={true}
-          components={components}
-          slidePerPage={4}></Slider>
+        <Box width={"90%"} margin={"auto"}>
+          <Slider
+            isCarousel={true}
+            components={components}
+            slidePerPage={4}></Slider>
+        </Box>
       </Grid>
     </Container>
   );
