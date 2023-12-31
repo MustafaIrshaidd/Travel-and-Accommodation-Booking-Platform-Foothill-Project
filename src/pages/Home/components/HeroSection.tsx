@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Map } from "@components/common/Map";
 import { Text } from "@components/common/Text";
 import {
@@ -10,6 +10,10 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
+import { fetchHotels } from "@store/features/hotels/thunks";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { allHotels } from "@store/features/hotels/selectors";
 
 const CustomText = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "type" && prop !== "textDecorationLine",
@@ -27,6 +31,27 @@ const CustomText = styled(Typography, {
 
 const HeroSection = () => {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
+  const allHotelsSelector = useAppSelector(allHotels);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const resultAction = await dispatch(
+        fetchHotels({ pageNumber: 1, pageSize: 10 })
+      );
+      const originalPromiseResult = unwrapResult(resultAction);
+    };
+
+    fetchData();
+  }, []);
+
+  const locations = allHotelsSelector.data.map((hotel) => {
+    return {
+      latitude: hotel.latitude,
+      longitude: hotel.longitude,
+    };
+  });
+
   return (
     <Container sx={{ minWidth: "80%" }}>
       <Grid
@@ -64,7 +89,7 @@ const HeroSection = () => {
               <Stack direction={"row"}>
                 <CustomText
                   textDecorationLine="none"
-                  type="light"
+                  type="primary"
                   variant="body1"
                   fontSize={{ xs: "25px", md: "33px" }}
                   textAlign="start"
@@ -121,7 +146,7 @@ const HeroSection = () => {
               width={{ xs: "100%", md: "100%" }}
               borderRadius={5}
               overflow={"hidden"}>
-              <Map />
+              <Map locations={locations} />
             </Box>
           </Stack>
         </Grid>

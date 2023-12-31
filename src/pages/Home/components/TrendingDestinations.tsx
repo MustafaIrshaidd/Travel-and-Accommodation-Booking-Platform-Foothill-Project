@@ -107,7 +107,7 @@ const TrendingDestinations = () => {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   const data = trendingDestinationsSelector.data.map((trend: any) => (
     <CityCard

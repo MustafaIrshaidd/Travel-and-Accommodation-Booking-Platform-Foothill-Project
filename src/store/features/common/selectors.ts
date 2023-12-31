@@ -5,3 +5,6 @@ export const selectFeaturedDeals = (state: RootState) =>
 
 export const selectTrendingDestinations = (state: RootState) =>
   state.common.common.common.trending;
+
+export const selectRecentlyVisited = (state: RootState) =>
+  state.common.common.common.recentlyVisited;

@@ -1,17 +1,15 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Link,
-  Typography,
-  styled,
-  useTheme,
-} from "@mui/material";
+import { Box, Container, Grid, Link, styled, useTheme } from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import React from "react";
 import { Text } from "@components/common/Text";
 import { Slider } from "@components/common/Slider";
 import { HotelCard } from "@components/common/HotelCard";
+import { AuthContext } from "@contexts/Auth.context";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
+import { fetchRecentlyVisited } from "@store/features/common/thunks";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { selectRecentlyVisited } from "@store/features/common/selectors";
+import dayjs from "dayjs";
 
 const HeaderContent = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isCentered",
@@ -85,6 +83,40 @@ const components = [
 
 const RecentlyVisited = () => {
   const theme = useTheme();
+
+  const { decodedToken } = React.useContext(AuthContext)!;
+  const recentlyVisitedSelector = useAppSelector(selectRecentlyVisited);
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      if (decodedToken && decodedToken.user_id) {
+        const resultAction = await dispatch(
+          fetchRecentlyVisited({ userId: decodedToken.user_id })
+        );
+        const originalPromiseResult = unwrapResult(resultAction);
+      }
+    };
+    fetchData();
+  }, [decodedToken]);
+
+  console.log(recentlyVisitedSelector.data);
+
+  const data = recentlyVisitedSelector.data.map((recentlyVisitedHotel: any) => (
+    <HotelCard
+      key={recentlyVisitedHotel.hotelId}
+      id={recentlyVisitedHotel.hotelId}
+      city={recentlyVisitedHotel.cityName}
+      discount={recentlyVisitedHotel.discount}
+      date={dayjs(recentlyVisitedHotel.date).format("MM/DD/YYYY")}
+      priceLowerBound={recentlyVisitedHotel.priceLowerBound}
+      priceUpperBound={recentlyVisitedHotel.priceUpperBound}
+      title={recentlyVisitedHotel.hotelName}
+      roomPictures={[recentlyVisitedHotel.thumbnailUrl]}
+      hotelStarRating={recentlyVisitedHotel.starRating}
+    />
+  ));
+
   return (
     <Container sx={{ minWidth: "80%" }}>
       <Grid container justifyContent={"space-between"} padding={"40px 0"}>
@@ -137,11 +169,15 @@ const RecentlyVisited = () => {
             sx={{ padding: "6px 0 0 6px", color: theme.palette.text.primary }}
           />
         </Grid>
+
         <Box width={"90%"} margin={"auto"}>
-          <Slider
-            isCarousel={true}
-            components={components}
-            slidePerPage={4}></Slider>
+          {recentlyVisitedSelector.loading ? (
+            <>loading</>
+          ) : (
+            recentlyVisitedSelector.data.length !== 0 && (
+              <Slider isCarousel={true} components={data} slidePerPage={4} />
+            )
+          )}
         </Box>
       </Grid>
     </Container>

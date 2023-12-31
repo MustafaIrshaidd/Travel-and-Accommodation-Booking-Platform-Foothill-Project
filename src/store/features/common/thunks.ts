@@ -24,3 +24,17 @@ export const fetchTrendingDestintations = createAsyncThunk(
     }
   }
 );
+
+export const fetchRecentlyVisited = createAsyncThunk(
+  "common/fetchRecentlyVisited",
+  async ({ userId }: { userId: any }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        `/home/users/${userId}/recent-hotels`
+      );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

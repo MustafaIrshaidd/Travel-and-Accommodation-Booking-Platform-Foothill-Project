@@ -1,11 +1,11 @@
 import { combineReducers, createSlice } from "@reduxjs/toolkit";
-import { fetchFeaturedDealsAsync, fetchTrendingDestintations } from "./thunks";
+import { fetchFeaturedDealsAsync, fetchRecentlyVisited, fetchTrendingDestintations } from "./thunks";
 
 const initialState = {
   common: {
     featuredDeals: { data: [], loading: false },
     trending: { data: [], loading: false },
-    // recentHotels: { data: [], loading: false },
+    recentlyVisited: { data: [], loading: false },
   },
 };
 
@@ -82,6 +82,43 @@ export const commonSlice = createSlice({
           common: {
             ...state.common,
             trending: {
+              data: [],
+              loading: false,
+              error: action.payload,
+            },
+          },
+        };
+      })
+      .addCase(fetchRecentlyVisited.pending, (state, action) => {
+        return {
+          ...state,
+          common: {
+            ...state.common,
+            recentlyVisited: {
+              ...state.common.recentlyVisited,
+              loading: true,
+            },
+          },
+        };
+      })
+      .addCase(fetchRecentlyVisited.fulfilled, (state, action) => {
+        return {
+          ...state,
+          common: {
+            ...state.common,
+            recentlyVisited: {
+              data: action.payload,
+              loading: false,
+            },
+          },
+        };
+      })
+      .addCase(fetchRecentlyVisited.rejected, (state, action) => {
+        return {
+          ...state,
+          common: {
+            ...state.common,
+            recentlyVisited: {
               data: [],
               loading: false,
               error: action.payload,
