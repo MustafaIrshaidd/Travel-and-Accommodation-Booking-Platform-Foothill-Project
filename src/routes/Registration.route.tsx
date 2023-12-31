@@ -10,7 +10,7 @@ const RegistrationRoute = () => {
 
   return (
     <Routes>
-      {user?.authorization ? (
+      {user?.authentication ? (
         <>
           <Route path="/user/*" element={<UserRoute />} />
           <Route path="/admin/*" element={<AdminRoute />} />

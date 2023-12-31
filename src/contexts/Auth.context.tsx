@@ -5,24 +5,22 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-
 import AxiosSingleton from "@utils/axiosUtil";
 import { useAppDispatch } from "@hooks/redux.hook";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { loginUserAsync } from "@store/features/user/thunks";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useJwt } from "react-jwt";
 
 // Define the types for user data
 interface UserData {
-  authorization: string;
+  authentication: string;
   userType: string;
 }
 
 // Define the types for the authentication context
 interface AuthContextProps {
-  user: UserData | null;
+  user: UserData;
   isAuthenticated: boolean;
   loginUser: (user: {
     userName: string;
@@ -54,21 +52,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["authData"]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserData | null>(
-    cookies["authData"] || null
-  );
-  const { decodedToken } = useJwt(user?.authorization ?? "");
+  const [user, setUser] = useState<UserData>(cookies["authData"]);
   const isAuthenticated = !!user;
 
   const loginUser = async (user: { userName: string; password: string }) => {
     try {
       const resultAction = await dispatch(loginUserAsync(user));
       const originalPromiseResult = unwrapResult(resultAction);
-      AxiosSingleton.setToken(originalPromiseResult);
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 1);
-      setCookie("authData", { authorization: originalPromiseResult });
 
+      const authData = {
+        authentication: originalPromiseResult.authentication,
+        userType: originalPromiseResult.userType,
+      };
+      setCookie("authData", authData, { expires: expirationDate });
+      console.log(originalPromiseResult);
+      AxiosSingleton.setToken(originalPromiseResult.authentication);
       return {
         path: `/${user.userName}`,
         message: "Logged In Successfully !",
@@ -84,18 +84,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logoutUser = () => {
-    setUser(null);
+    setUser({ authentication: "", userType: "" });
     removeCookie("authData");
     AxiosSingleton.removeToken();
     navigate("");
   };
 
   useEffect(() => {
-    setUser(cookies["authData"] || null);
-    // if (decodedToken) {
-    //   dispatch(userInformationAdded(decodedToken));
-    // }
-  }, [cookies, decodedToken, dispatch]);
+    setUser(cookies["authData"]);
+  }, [cookies]);
+
+  if (isAuthenticated) {
+    AxiosSingleton.setToken(user.authentication);
+  }
 
   const contextValue: AuthContextProps = {
     user,

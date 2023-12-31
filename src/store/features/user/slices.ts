@@ -10,7 +10,14 @@ const initialState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    userDecodedToken: (state, action) => {
+      console.log(action.payload)
+      return {
+        ...state,
+      };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(loginUserAsync.pending, (state, action) => {
@@ -30,6 +37,8 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export const { userDecodedToken } = userSlice.actions;
 
 const userSlices = combineReducers({
   user: userSlice.reducer,

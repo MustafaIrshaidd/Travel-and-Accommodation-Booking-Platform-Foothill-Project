@@ -15,11 +15,13 @@ import {
   SearchButton,
 } from "./styles";
 import { HomeSearch } from "@components/common/HomeSearch";
+import { AuthContext } from "@contexts/Auth.context";
 
 const Navbar = () => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [isAnimationActivated, setIsAnimationActivated] = React.useState(true);
+  const { logoutUser } = React.useContext(AuthContext)!;
   const [isRotating, setIsRotating] = React.useState(false);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,21 +32,14 @@ const Navbar = () => {
     setIsRotating(!isRotating);
   };
 
-  const handleClose = () => {
+  const handleClose = (id?: number) => {
     setAnchorEl(null);
+    switch (id) {
+      case 3: {
+        logoutUser();
+      }
+    }
   };
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      window.scrollY > 0
-        ? setIsAnimationActivated(false)
-        : setIsAnimationActivated(true);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <Stack direction={"column"} position={"sticky"} zIndex={999} top={0}>
@@ -106,11 +101,17 @@ const Navbar = () => {
               horizontal: "right",
             }}
             open={Boolean(anchorEl)}
-            onClose={handleClose}>
-            <NavMenuItem onClick={handleClose}>Profile</NavMenuItem>
-            <NavMenuItem onClick={handleClose}>My account</NavMenuItem>
+            onClose={(event) => handleClose()}>
+            <NavMenuItem onClick={(event) => handleClose(1)}>
+              Profile
+            </NavMenuItem>
+            <NavMenuItem onClick={(event) => handleClose(2)}>
+              My account
+            </NavMenuItem>
             <Divider sx={{ marginY: "0px" }} />
-            <NavMenuItem onClick={handleClose}>Logout</NavMenuItem>
+            <NavMenuItem onClick={(event) => handleClose(3)}>
+              Logout
+            </NavMenuItem>
           </NavMenu>
         </NavToolbar>
       </NavAppBar>
