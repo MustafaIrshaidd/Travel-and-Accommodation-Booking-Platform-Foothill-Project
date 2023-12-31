@@ -16,6 +16,7 @@ import {
 } from "./styles";
 import { HomeSearch } from "@components/common/HomeSearch";
 import { AuthContext } from "@contexts/Auth.context";
+import { ThemeSwitch } from "@components/Buttons";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -102,6 +103,12 @@ const Navbar = () => {
             }}
             open={Boolean(anchorEl)}
             onClose={(event) => handleClose()}>
+            <NavMenuItem disableRipple sx={{paddingLeft:"5px"}}>
+              <Box>
+                <ThemeSwitch />
+              </Box>
+            </NavMenuItem>
+
             <NavMenuItem onClick={(event) => handleClose(1)}>
               Profile
             </NavMenuItem>

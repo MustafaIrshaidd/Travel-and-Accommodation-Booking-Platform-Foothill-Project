@@ -55,10 +55,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData>(cookies["authData"]);
-  const { decodedToken } = useJwt(user.authentication);
+  const { decodedToken } = useJwt(user?.authentication);
   const isAuthenticated = !!user;
 
-  console.log(decodedToken);
 
   const loginUser = async (user: { userName: string; password: string }) => {
     try {
