@@ -11,6 +11,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { loginUserAsync } from "@store/features/user/thunks";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useJwt } from "react-jwt";
 
 // Define the types for user data
 interface UserData {
@@ -22,6 +23,7 @@ interface UserData {
 interface AuthContextProps {
   user: UserData;
   isAuthenticated: boolean;
+  decodedToken: any;
   loginUser: (user: {
     userName: string;
     password: string;
@@ -53,7 +55,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData>(cookies["authData"]);
+  const { decodedToken } = useJwt(user.authentication);
   const isAuthenticated = !!user;
+
+  console.log(decodedToken);
 
   const loginUser = async (user: { userName: string; password: string }) => {
     try {
@@ -61,13 +66,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const originalPromiseResult = unwrapResult(resultAction);
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 1);
-
       const authData = {
         authentication: originalPromiseResult.authentication,
         userType: originalPromiseResult.userType,
       };
       setCookie("authData", authData, { expires: expirationDate });
-      console.log(originalPromiseResult);
       AxiosSingleton.setToken(originalPromiseResult.authentication);
       return {
         path: `/${user.userName}`,
@@ -101,6 +104,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const contextValue: AuthContextProps = {
     user,
     isAuthenticated,
+    decodedToken,
     loginUser,
     logoutUser,
   };
