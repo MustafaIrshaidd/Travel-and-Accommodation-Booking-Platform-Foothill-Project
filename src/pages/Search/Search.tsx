@@ -4,7 +4,7 @@ import Filter from "./components/Filter";
 import CloseIcon from "@mui/icons-material/Close";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { Text } from "@components/common/Text";
-import { DrawerHeader, FilterDrawer } from "./styles";
+import { DrawerHeader, FilterDrawer, SearchDrawer } from "./styles";
 import { useAppSelector } from "@hooks/redux.hook";
 import { searchHotels } from "@store/features/hotels/selectors";
 import { HotelCard } from "@components/common/HotelCard";
@@ -23,83 +23,94 @@ const Search = () => {
   const handleClick = (id: number) => {
     navigate(`/user/search/hotel/${id}`);
   };
+
+  const hotels = hotelsSearchResult.data.map((hotel) => {
+    return (
+      <Grid item>
+        <HotelCard
+          onClick={() => handleClick(hotel.hotelId)}
+          id={hotel.hotelId}
+          city={hotel.cityName}
+          discount={hotel.discount}
+          hotelStarRating={hotel.starRating}
+          price={hotel.roomPrice}
+          title={hotel.hotelName}
+          roomPictures={[hotel.roomPhotoUrl]}
+        />
+      </Grid>
+    );
+  });
+
   return (
-    <Grid
-      container
-      height={"calc(100vh - 58px)"}
-      overflow={"scroll"}
-      position={"relative"}>
-      <Grid item xs={1}>
-        <DrawerHeader />
-        <IconButton
-          sx={{
-            marginLeft: 2,
-            position: "absolute",
-            top: { xs: "20px", lg: "55px" },
-            left: { xs: "20px", lg: 0 },
-          }}
-          onClick={(event) => handleDrawer(true)}>
-          <FilterListIcon />
-        </IconButton>
-      </Grid>
-      <Grid
-        item
-        xs={11}
-        sx={{ backgroundColor: theme.palette.background.default }}>
-        <DrawerHeader />
-        <Text
-          type="primary"
-          variant="h1"
-          text="Results"
-          width="100%"
-          fontSize="30px"
-          fontWeight={700}
-          textAlign="start"
-          padding="0 0 30px 0"></Text>
-        <Stack
-          direction={"row"}
-          flexWrap={"wrap"}
-          justifyContent={"start"}
-          gap={3}>
-          {hotelsSearchResult.data.map((hotel) => {
-            return (
-              <HotelCard
-                onClick={() => handleClick(hotel.hotelId)}
-                id={hotel.hotelId}
-                city={hotel.cityName}
-                discount={hotel.discount}
-                hotelStarRating={hotel.starRating}
-                price={hotel.roomPrice}
-                title={hotel.hotelName}></HotelCard>
-            );
-          })}
-        </Stack>
-      </Grid>
-      <FilterDrawer
-        isOpen={isDrawerOpen}
-        sx={{ backgroundColor: theme.palette.background.paper }}>
-        <DrawerHeader />
-        <IconButton
-          sx={{
-            margin: 2,
-            position: "absolute",
-            top: { xs: "20px", lg: "40px" },
-            left: { xs: "20px", lg: 0 },
-          }}
-          onClick={(event) => handleDrawer(false)}>
-          <CloseIcon />
-        </IconButton>
-        <Text
-          type="primary"
-          variant="h1"
-          text="Filteration"
-          width="100%"
-          fontSize="30px"
-          fontWeight={700}
-          textAlign="center"
-          padding="0 0 30px 0"></Text>
-        <Filter />
-      </FilterDrawer>
+    <Grid container height={"calc(100vh - 70px)"} position={"relative"}>
+      <IconButton
+        sx={{
+          marginLeft: 2,
+          position: "absolute",
+          top: "55px",
+          left: "0",
+        }}
+        onClick={(event) => handleDrawer(true)}>
+        <FilterListIcon />
+      </IconButton>
+      <Stack direction={"row"} width={"100%"}>
+        <FilterDrawer
+          isOpen={isDrawerOpen}
+          sx={{ backgroundColor: theme.palette.background.paper }}>
+          <DrawerHeader />
+          <IconButton
+            sx={{
+              margin: 2,
+              position: "absolute",
+              top: "40px",
+              left: "0",
+            }}
+            onClick={(event) => handleDrawer(false)}>
+            <CloseIcon />
+          </IconButton>
+          <Text
+            type="primary"
+            variant="h1"
+            text="Filteration"
+            width="100%"
+            fontSize="30px"
+            fontWeight={700}
+            textAlign="center"
+            padding="0 0 30px 0"
+          />
+          <Filter />
+        </FilterDrawer>
+        <SearchDrawer >
+          <Grid
+            item
+            width={"80%"}
+            margin={"auto"}
+            
+            sx={{ backgroundColor: theme.palette.background.default }}>
+            <DrawerHeader />
+            <Text
+              type="primary"
+              variant="h1"
+              text="Results"
+              width="100%"
+              fontSize="30px"
+              fontWeight={700}
+              textAlign={{ xs: "center", lg: "start" }}
+              padding="0 0 30px 0"
+            />
+            <Grid
+              container
+              justifyContent={{
+                xs: "center",
+                lg: "start",
+              }}
+              alignItems={"center"}
+              gap={3}>
+              {hotels}
+            </Grid>
+          </Grid>
+        </SearchDrawer>
+      </Stack>
     </Grid>
   );
 };

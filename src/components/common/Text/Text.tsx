@@ -11,7 +11,7 @@ interface TextProps {
   text?: string;
   fontWeight?: number;
   padding?: string;
-  textAlign?: "center" | "end" | "start" | "justify";
+  textAlign?: "center" | "end" | "start" | "justify" | any;
   width?: string;
   textWrap?: boolean;
   textDecorationLine?: string;

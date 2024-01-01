@@ -1,28 +1,30 @@
 import { Box, styled } from "@mui/material";
 
-export const FilterDrawer = styled("aside", {
+export const FilterDrawer = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isOpen",
 })<{ isOpen?: boolean }>(({ theme, isOpen }) => ({
   transition: "width 0.3s ease ,height 0.3s ease",
-  position: "absolute",
   backgroundColor: theme.palette.background.default,
-  bottom: 0,
+  width: isOpen ? "100%" : "0",
+  position: "absolute",
   zIndex: 9,
+  left: 0,
+  top: 0,
   overflow: "hidden",
-  [theme.breakpoints.up("lg")]: {
-    width: isOpen ? "30%" : "0%",
-    left: 0,
-    top: 0,
+  height: "100vh",
+  [theme.breakpoints.up("md")]: {
+    position: "relative",
+    width: isOpen ? "50%" : "0%",
   },
-  [theme.breakpoints.down("lg")]: {
-    width: "88vw",
-    inset: 0,
-    height: isOpen ? "calc(100vh - 64px)" : "0",
-    padding: theme.spacing(0, 3),
-  },
-  boxShadow: theme.shadows[5],
 }));
 
 export const DrawerHeader = styled(Box)(({ theme }) => ({
   paddingTop: 64,
+}));
+
+export const SearchDrawer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isOpen",
+})<{ isOpen?: boolean }>(({ theme, isOpen }) => ({
+  transition: "width 0.3s ease ,height 0.3s ease",
+  width: isOpen ? "50%" : "100%",
 }));

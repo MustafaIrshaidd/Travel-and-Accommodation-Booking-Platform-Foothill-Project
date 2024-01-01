@@ -65,7 +65,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
       component={"img"}
       src={picture}
       height={"200px"}
-      width={"100%"}
+      width={"300px"}
       sx={{ objectFit: "cover" }}
     />
   ));
@@ -79,7 +79,7 @@ const HotelCards: React.FC<HotelCardsProps> = ({
           imageHeight="300px"
           rows={3}></LoadingCard>
       ) : (
-        <Card>
+        <Card sx={{ width: "100%" }}>
           <CardMedia>
             {roomsPictureArrayComponents && roomPictures.length !== 0 && (
               <Slider

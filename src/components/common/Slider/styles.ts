@@ -70,7 +70,7 @@ export const StyledArrow = styled(ChevronRightIcon)(({ theme }) => ({
   top: "50%",
   transform: "translateY(-50%)",
   WebkitTransform: "translateY(-50%)",
-  fill: theme.palette.text.primary,
+  fill: "white",
   cursor: "pointer",
   borderRadius: "50%",
   color: "white",
