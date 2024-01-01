@@ -1,68 +1,42 @@
 import React from "react";
-import { Box, Container, Grid, styled } from "@mui/material";
-import { Slider } from "@components/common/Slider";
+import { Box, Divider, Grid, styled } from "@mui/material";
 import { CityCard } from "@components/common/CityCard";
 import { Map } from "@components/common/Map";
 import HotelDetails from "./components/HotelDetails";
-import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
-
-import { selectHotelDetails } from "@store/features/hotels/selectors";
 import { useParams } from "react-router-dom";
 import AvailableRooms from "./components/AvailableRooms";
-import { fetchHotelsById } from "@store/features/hotels/thunks";
+import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
+import {
+  fetchHotelGallaryById,
+  fetchHotelsById,
+} from "@store/features/hotels/thunks";
+import {
+  selectHotelDetails,
+  selectHotelGallary,
+} from "@store/features/hotels/selectors";
+import Gallary from "./components/Gallary";
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
-  padding: theme.spacing(4),
+  width: "90%",
   borderRadius: theme.shape.borderRadius,
   boxShadow: theme.shadows[3],
+  [theme.breakpoints.down("md")]: {
+    boxShadow: "none",
+    width: "100%",
+  },
   background: theme.palette.background.default,
 }));
 
-const components = [
-  <CityCard
-    cityId={1}
-    cityName={"Nablus"}
-    countryName={"Palestine"}
-    description={"hello this is nablus"}
-    thumbnailUrl={"photo.webp"}
-  />,
-  <CityCard
-    cityId={1}
-    cityName={"Nablus"}
-    countryName={"Palestine"}
-    description={"hello this is nablus"}
-    thumbnailUrl={"photo.webp"}
-  />,
-  <CityCard
-    cityId={1}
-    cityName={"Nablus"}
-    countryName={"Palestine"}
-    description={"hello this is nablus"}
-    thumbnailUrl={"photo.webp"}
-  />,
-  <CityCard
-    cityId={1}
-    cityName={"Nablus"}
-    countryName={"Palestine"}
-    description={"hello this is nablus"}
-    thumbnailUrl={"photo.webp"}
-  />,
-  <CityCard
-    cityId={1}
-    cityName={"Nablus"}
-    countryName={"Palestine"}
-    description={"hello this is nablus"}
-    thumbnailUrl={"photo.webp"}
-  />,
-];
-
 const Hotel = () => {
   const dispatch = useAppDispatch();
-  const selector = useAppSelector(selectHotelDetails);
+  const hotelDetailsSelector = useAppSelector(selectHotelDetails);
+  const gallarySelector = useAppSelector(selectHotelGallary);
+
   const { hotelId } = useParams();
 
   React.useEffect(() => {
     hotelId && dispatch(fetchHotelsById({ id: parseInt(hotelId) }));
+    hotelId && dispatch(fetchHotelGallaryById({ id: parseInt(hotelId) }));
   }, []);
 
   return (
@@ -71,54 +45,51 @@ const Hotel = () => {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}>
-      <StyledGrid
-        container
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        gap={4}>
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          padding={"20px"}
-          border={"1px solid white"}
-          borderRadius={"20px"}
-          style={{ flex: "1" }}>
-          {selector.data && <HotelDetails data={selector.data} />}
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          lg={7}
-          padding={"20px"}
-          border={"1px solid white"}
-          borderRadius={"20px"}
-          style={{ flex: "1" }}>
-          <Slider
-            isSliderControllersVisible={false}
-            spacing={0}
-            slidePerPage={5}
-            components={components}
+      <StyledGrid container>
+        <Grid item xs={12} padding={7}>
+          <Gallary
+            data={gallarySelector.data}
+            loading={gallarySelector.loading}
+            error={gallarySelector.error}
           />
         </Grid>
+        <Grid item xs={12}>
+          <Divider />
+        </Grid>
+
+        <Grid item xs={12} lg={7.9}>
+          {hotelDetailsSelector && (
+            <HotelDetails
+              data={hotelDetailsSelector.data}
+              loading={hotelDetailsSelector.loading}
+              error={hotelDetailsSelector.error}
+            />
+          )}
+        </Grid>
+
+        <Divider orientation="vertical" flexItem={true} />
 
         <Grid
           item
           xs={12}
-          lg={6}
+          lg={4}
+          padding={4}
           height={"400px"}
           borderRadius={"50px"}
           overflow={"hidden"}>
           <Map
             locations={[
               {
-                longitude: selector.data.longitude,
-                latitude: selector.data.latitude,
+                longitude: hotelDetailsSelector.data.longitude,
+                latitude: hotelDetailsSelector.data.latitude,
               },
             ]}
           />
         </Grid>
-        <Grid item xs={12} lg={5} minHeight={"400px"}>
+        <Grid item xs={12}>
+          <Divider />
+        </Grid>
+        <Grid item xs={12} lg={5} minHeight={"400px"} padding={4}>
           <AvailableRooms />
         </Grid>
       </StyledGrid>

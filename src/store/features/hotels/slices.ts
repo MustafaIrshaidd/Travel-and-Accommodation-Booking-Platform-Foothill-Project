@@ -2,9 +2,15 @@ import { combineReducers, createSlice } from "@reduxjs/toolkit";
 import {
   AllHotelsState,
   HotelDetailsState,
+  HotelGallaryState,
   SearchState,
 } from "@store/features/hotels/types";
-import { fetchHotels, fetchHotelsById, searchHotels } from "./thunks";
+import {
+  fetchHotelGallaryById,
+  fetchHotels,
+  fetchHotelsById,
+  searchHotels,
+} from "./thunks";
 import dayjs from "dayjs";
 
 const initialStates = {
@@ -27,6 +33,10 @@ const initialStates = {
     },
     loading: false,
   } as SearchState,
+  hotelGallary: {
+    data: [],
+    loading: false,
+  } as HotelGallaryState,
 };
 
 export const allHotelsSlice = createSlice({
@@ -101,10 +111,41 @@ export const searchHotelsSlice = createSlice({
   },
 });
 
+export const hotelGallary = createSlice({
+  name: "hotelGallary",
+  initialState: initialStates.hotelGallary,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(fetchHotelGallaryById.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(fetchHotelGallaryById.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          data: action.payload || [],
+          error: null,
+        };
+      })
+      .addCase(fetchHotelGallaryById.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
+      });
+  },
+});
+
 const hotelsSlices = combineReducers({
   allHotels: allHotelsSlice.reducer,
   hotelDetails: hotelDetailsSlice.reducer,
   searchHotels: searchHotelsSlice.reducer,
+  hotelGallary: hotelGallary.reducer,
 });
 
 export default hotelsSlices;

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosInstance } from "@utils/axiosUtil";
-import { HotelDetails, SearchHotelsProps, SearchResult } from "./types";
+import { HotelDetails, SearchHotelsProps } from "./types";
 
 export const fetchHotels = createAsyncThunk(
   "hotels/fetchHotels",
@@ -54,6 +54,18 @@ export const searchHotels = createAsyncThunk(
       const response = await axiosInstance.get(
         `/home/search?numberOfRooms=${numberOfRooms}&adults=${adults}&children=${children}&rating=${starRate}&sort=${sort}&rooms=${rooms}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
       );
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchHotelGallaryById = createAsyncThunk(
+  "hotelDetails/fetchHotelsGallaryById",
+  async (args: { id: number }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/hotels/${args.id}/gallery`);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message);

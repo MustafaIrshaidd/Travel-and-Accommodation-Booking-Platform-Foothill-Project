@@ -20,6 +20,11 @@ export interface HotelDetails {
   imageUrl: string;
 }
 
+export interface ImageData {
+  id: number;
+  url: string;
+}
+
 interface Amenity {
   id?: number;
   name: string;
@@ -66,4 +71,8 @@ export interface HotelDetailsState extends IResponseSchema {
 export interface SearchState extends IResponseSchema {
   data: SearchResult[];
   searchProps: SearchHotelsProps;
+}
+
+export interface HotelGallaryState extends IResponseSchema {
+  data: ImageData[];
 }
