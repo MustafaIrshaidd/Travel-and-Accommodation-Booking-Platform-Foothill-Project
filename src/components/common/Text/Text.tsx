@@ -19,18 +19,22 @@ interface TextProps {
 }
 
 const CustomText = styled(Typography, {
-  shouldForwardProp: (prop) => prop !== "type" && prop !== "textDecorationLine",
-})<{ type: "primary" | "secondary" | "light"; textDecorationLine: string }>(
-  ({ theme, type, textDecorationLine }) => ({
-    color:
-      type === "primary"
-        ? theme.palette.text.primary
-        : type === "secondary"
-        ? theme.palette.text.secondary
-        : "white",
-    textDecorationLine: textDecorationLine,
-  })
-);
+  shouldForwardProp: (prop) =>
+    prop !== "type" && prop !== "textDecorationLine" && prop !== "noWrap",
+})<{
+  type: "primary" | "secondary" | "light";
+  textDecorationLine: string;
+  noWrap: boolean;
+}>(({ theme, type, textDecorationLine, noWrap }) => ({
+  color:
+    type === "primary"
+      ? theme.palette.text.primary
+      : type === "secondary"
+      ? theme.palette.text.secondary
+      : "white",
+  textDecorationLine: textDecorationLine,
+  flexWrap: noWrap ? "nowrap" : "wrap",
+}));
 
 const Text: React.FC<TextProps> = ({
   fontSize,

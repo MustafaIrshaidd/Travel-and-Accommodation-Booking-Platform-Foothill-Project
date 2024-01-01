@@ -8,13 +8,16 @@ import AvailableRooms from "./components/AvailableRooms";
 import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import {
   fetchHotelGallaryById,
+  fetchHotelReviewsById,
   fetchHotelsById,
 } from "@store/features/hotels/thunks";
 import {
   selectHotelDetails,
   selectHotelGallary,
+  selectHotelReviews,
 } from "@store/features/hotels/selectors";
 import Gallary from "./components/Gallary";
+import Reviews from "./components/Reviews";
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   width: "90%",
@@ -31,12 +34,14 @@ const Hotel = () => {
   const dispatch = useAppDispatch();
   const hotelDetailsSelector = useAppSelector(selectHotelDetails);
   const gallarySelector = useAppSelector(selectHotelGallary);
+  const reviewsSelector = useAppSelector(selectHotelReviews);
 
   const { hotelId } = useParams();
 
   React.useEffect(() => {
     hotelId && dispatch(fetchHotelsById({ id: parseInt(hotelId) }));
     hotelId && dispatch(fetchHotelGallaryById({ id: parseInt(hotelId) }));
+    hotelId && dispatch(fetchHotelReviewsById({ id: parseInt(hotelId) }));
   }, []);
 
   return (
@@ -66,9 +71,7 @@ const Hotel = () => {
             />
           )}
         </Grid>
-
         <Divider orientation="vertical" flexItem={true} />
-
         <Grid
           item
           xs={12}
@@ -89,8 +92,15 @@ const Hotel = () => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid item xs={12} lg={5} minHeight={"400px"} padding={4}>
-          <AvailableRooms />
+        <Grid item xs={12} paddingY={4}>
+          <Reviews
+            data={reviewsSelector.data}
+            loading={reviewsSelector.loading}
+            error={reviewsSelector.error}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Divider />
         </Grid>
       </StyledGrid>
     </Box>

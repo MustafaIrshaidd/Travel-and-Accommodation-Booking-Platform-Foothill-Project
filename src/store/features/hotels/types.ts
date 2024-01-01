@@ -56,6 +56,13 @@ export interface SearchHotelsProps {
   sort?: string;
 }
 
+export interface Review {
+  reviewId: number;
+  customerName: string;
+  rating: number;
+  description: string;
+}
+
 interface IResponseSchema {
   loading: boolean;
   error?: any;
@@ -68,6 +75,7 @@ export interface AllHotelsState extends IResponseSchema {
 export interface HotelDetailsState extends IResponseSchema {
   data: HotelDetails;
 }
+
 export interface SearchState extends IResponseSchema {
   data: SearchResult[];
   searchProps: SearchHotelsProps;
@@ -75,4 +83,8 @@ export interface SearchState extends IResponseSchema {
 
 export interface HotelGallaryState extends IResponseSchema {
   data: ImageData[];
+}
+
+export interface HotelReviewsState extends IResponseSchema {
+  data: Review[];
 }

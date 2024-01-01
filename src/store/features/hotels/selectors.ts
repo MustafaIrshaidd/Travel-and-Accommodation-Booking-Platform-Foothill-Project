@@ -11,6 +11,9 @@ export const selectSearchHotelsProps = (state: RootState) =>
 export const selectHotelGallary = (state: RootState) =>
   state.hotels.hotelGallary;
 
+export const selectHotelReviews = (state: RootState) =>
+  state.hotels.hotelReviews;
+
 export const selectHotels = (state: RootState) => state.hotels.allHotels.data;
 export const selectHotelsLoading = (state: RootState) =>
   state.hotels.allHotels.loading;

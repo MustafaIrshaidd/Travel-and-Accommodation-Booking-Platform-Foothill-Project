@@ -72,3 +72,15 @@ export const fetchHotelGallaryById = createAsyncThunk(
     }
   }
 );
+
+export const fetchHotelReviewsById = createAsyncThunk(
+  "hotelDetails/fetchHotelReviewsById",
+  async (args: { id: number }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`hotels/${args.id}/reviews`);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);

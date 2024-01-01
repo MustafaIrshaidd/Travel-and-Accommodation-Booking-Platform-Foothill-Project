@@ -3,10 +3,12 @@ import {
   AllHotelsState,
   HotelDetailsState,
   HotelGallaryState,
+  HotelReviewsState,
   SearchState,
 } from "@store/features/hotels/types";
 import {
   fetchHotelGallaryById,
+  fetchHotelReviewsById,
   fetchHotels,
   fetchHotelsById,
   searchHotels,
@@ -37,6 +39,10 @@ const initialStates = {
     data: [],
     loading: false,
   } as HotelGallaryState,
+  hotelReviews: {
+    data: [],
+    loading: false,
+  } as HotelReviewsState,
 };
 
 export const allHotelsSlice = createSlice({
@@ -141,11 +147,42 @@ export const hotelGallary = createSlice({
   },
 });
 
+export const hotelReviews = createSlice({
+  name: "hotelReviews",
+  initialState: initialStates.hotelReviews,
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(fetchHotelReviewsById.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+        };
+      })
+      .addCase(fetchHotelReviewsById.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          data: action.payload || [],
+          error: null,
+        };
+      })
+      .addCase(fetchHotelReviewsById.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
+      });
+  },
+});
+
 const hotelsSlices = combineReducers({
   allHotels: allHotelsSlice.reducer,
   hotelDetails: hotelDetailsSlice.reducer,
   searchHotels: searchHotelsSlice.reducer,
   hotelGallary: hotelGallary.reducer,
+  hotelReviews: hotelReviews.reducer,
 });
 
 export default hotelsSlices;
