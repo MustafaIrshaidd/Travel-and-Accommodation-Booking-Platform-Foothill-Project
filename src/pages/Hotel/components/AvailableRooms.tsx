@@ -1,44 +1,36 @@
 import { Text } from "@components/common/Text";
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import { RoomsState } from "@store/features/rooms/types";
 import { RoomCard } from "@components/common/RoomCard";
 
 const AvailableRooms: React.FC<RoomsState> = ({ data, loading, error }) => {
-  // const hotelReviewsComponents = data.map((dataObject) => (
-  //   <ReviewCard
-  //     key={dataObject.reviewId}
-  //     customerName={dataObject.customerName}
-  //     rating={dataObject.rating}
-  //     reviewId={dataObject.reviewId}
-  //     description={dataObject.description}
-  //   />
-  // ));
+  const roomComponents = data.map((dataObject, index) => {
+    return (
+      <RoomCard
+        key={index}
+        roomAmenities={dataObject.roomAmenities}
+        availability={dataObject.availability}
+        capacityOfAdults={dataObject.capacityOfAdults}
+        capacityOfChildren={dataObject.capacityOfChildren}
+        price={dataObject.price}
+        roomPhotoUrl={dataObject.roomPhotoUrl}
+        roomNumber={dataObject.roomNumber}
+        roomType={dataObject.roomType}
+      />
+    );
+  });
+
   return (
-    <Box>
+    <Stack gap={4}>
       <Text
         type="primary"
         fontSize="20px"
         fontWeight={700}
         text="Available Rooms"
       />
-      {loading ? (
-        <></>
-      ) : (
-        data.length > 0 && (
-          <RoomCard
-            roomAmenities={data[0].roomAmenities}
-            availability={data[0].availability}
-            capacityOfAdults={data[0].capacityOfAdults}
-            capacityOfChildren={data[0].capacityOfChildren}
-            price={data[0].price}
-            roomPhotoUrl={data[0].roomPhotoUrl}
-            roomNumber={data[0].roomNumber}
-            roomType={data[0].roomType}
-          />
-        )
-      )}
-    </Box>
+      {loading ? <></> : data.length > 0 && roomComponents}
+    </Stack>
   );
 };
 
