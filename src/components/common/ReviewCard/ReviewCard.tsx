@@ -12,6 +12,7 @@ const ReviewCard: React.FC<Review> = ({
   const theme = useTheme();
   return (
     <Stack
+      overflow={"hidden"}
       gap={3}
       justifyContent={"start"}
       alignItems={"center"}

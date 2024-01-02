@@ -23,7 +23,7 @@ export const fetchHotels = createAsyncThunk(
 
 export const fetchHotelsById = createAsyncThunk(
   "hotelDetails/fetchHotelsById",
-  async (args: { id: number }, { rejectWithValue }) => {
+  async (args: { id: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
         `/hotels/${args.id}?includeRooms=true`
@@ -63,7 +63,7 @@ export const searchHotels = createAsyncThunk(
 
 export const fetchHotelGallaryById = createAsyncThunk(
   "hotelDetails/fetchHotelsGallaryById",
-  async (args: { id: number }, { rejectWithValue }) => {
+  async (args: { id: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/hotels/${args.id}/gallery`);
       return response.data;
@@ -75,7 +75,7 @@ export const fetchHotelGallaryById = createAsyncThunk(
 
 export const fetchHotelReviewsById = createAsyncThunk(
   "hotelDetails/fetchHotelReviewsById",
-  async (args: { id: number }, { rejectWithValue }) => {
+  async (args: { id: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`hotels/${args.id}/reviews`);
       return response.data;

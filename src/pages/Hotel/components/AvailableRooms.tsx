@@ -1,27 +1,19 @@
 import { Text } from "@components/common/Text";
-import { useAppDispatch, useAppSelector } from "@hooks/redux.hook";
 import { Box } from "@mui/material";
-import { fetchRoomsByHotelId } from "@store/features/rooms/thunks";
-import { selectSearchHotelsProps } from "@store/features/hotels/selectors";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { RoomsState } from "@store/features/rooms/types";
+import { RoomCard } from "@components/common/RoomCard";
 
-const AvailableRooms = ({}) => {
-  const { hotelId } = useParams();
-  const dispatch = useAppDispatch();
-  const searchProps = useAppSelector(selectSearchHotelsProps);
-
-  React.useEffect(() => {
-    hotelId &&
-      dispatch(
-        fetchRoomsByHotelId({
-          id: hotelId,
-          checkInDate: searchProps.checkInDate || "",
-          checkOutDate: searchProps.checkOutDate || "",
-        })
-      );
-  }, []);
-
+const AvailableRooms: React.FC<RoomsState> = ({ data, loading, error }) => {
+  // const hotelReviewsComponents = data.map((dataObject) => (
+  //   <ReviewCard
+  //     key={dataObject.reviewId}
+  //     customerName={dataObject.customerName}
+  //     rating={dataObject.rating}
+  //     reviewId={dataObject.reviewId}
+  //     description={dataObject.description}
+  //   />
+  // ));
   return (
     <Box>
       <Text
@@ -30,6 +22,22 @@ const AvailableRooms = ({}) => {
         fontWeight={700}
         text="Available Rooms"
       />
+      {loading ? (
+        <></>
+      ) : (
+        data.length > 0 && (
+          <RoomCard
+            roomAmenities={data[0].roomAmenities}
+            availability={data[0].availability}
+            capacityOfAdults={data[0].capacityOfAdults}
+            capacityOfChildren={data[0].capacityOfChildren}
+            price={data[0].price}
+            roomPhotoUrl={data[0].roomPhotoUrl}
+            roomNumber={data[0].roomNumber}
+            roomType={data[0].roomType}
+          />
+        )
+      )}
     </Box>
   );
 };

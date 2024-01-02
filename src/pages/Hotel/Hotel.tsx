@@ -15,9 +15,12 @@ import {
   selectHotelDetails,
   selectHotelGallary,
   selectHotelReviews,
+  selectSearchHotelsProps,
 } from "@store/features/hotels/selectors";
 import Gallary from "./components/Gallary";
 import Reviews from "./components/Reviews";
+import { fetchRoomsByHotelId } from "@store/features/rooms/thunks";
+import { selectHotelRoomsById } from "@store/features/rooms/selectors";
 
 const StyledGrid = styled(Grid)(({ theme }) => ({
   width: "90%",
@@ -32,16 +35,27 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 
 const Hotel = () => {
   const dispatch = useAppDispatch();
+
   const hotelDetailsSelector = useAppSelector(selectHotelDetails);
   const gallarySelector = useAppSelector(selectHotelGallary);
   const reviewsSelector = useAppSelector(selectHotelReviews);
+  const searchPropsSelector = useAppSelector(selectSearchHotelsProps);
+  const hotelRoomsByIdSelector = useAppSelector(selectHotelRoomsById);
 
   const { hotelId } = useParams();
 
   React.useEffect(() => {
-    hotelId && dispatch(fetchHotelsById({ id: parseInt(hotelId) }));
-    hotelId && dispatch(fetchHotelGallaryById({ id: parseInt(hotelId) }));
-    hotelId && dispatch(fetchHotelReviewsById({ id: parseInt(hotelId) }));
+    hotelId && dispatch(fetchHotelsById({ id: hotelId }));
+    hotelId && dispatch(fetchHotelGallaryById({ id: hotelId }));
+    hotelId && dispatch(fetchHotelReviewsById({ id: hotelId }));
+    hotelId &&
+      dispatch(
+        fetchRoomsByHotelId({
+          id: hotelId,
+          checkInDate: searchPropsSelector.checkInDate || "",
+          checkOutDate: searchPropsSelector.checkOutDate || "",
+        })
+      );
   }, []);
 
   return (
@@ -101,6 +115,13 @@ const Hotel = () => {
         </Grid>
         <Grid item xs={12}>
           <Divider />
+        </Grid>
+        <Grid item xs={12} padding={4}>
+          <AvailableRooms
+            data={hotelRoomsByIdSelector.data}
+            loading={hotelRoomsByIdSelector.loading}
+            error={hotelRoomsByIdSelector.error}
+          />
         </Grid>
       </StyledGrid>
     </Box>
