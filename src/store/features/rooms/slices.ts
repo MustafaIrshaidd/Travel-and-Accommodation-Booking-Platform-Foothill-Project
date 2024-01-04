@@ -1,5 +1,5 @@
 import { combineReducers, createSlice } from "@reduxjs/toolkit";
-import { RoomsState } from "./types";
+import { RoomsState, checkoutRoomsState } from "./types";
 import { fetchRoomsByHotelId } from "./thunks";
 
 const initialStates = {
@@ -8,6 +8,9 @@ const initialStates = {
     loading: false,
     error: undefined,
   } as RoomsState,
+  checkoutRoomsState: {
+    data: [],
+  } as checkoutRoomsState,
 };
 
 const hotelRoomsByIdSlice = createSlice({
@@ -39,8 +42,34 @@ const hotelRoomsByIdSlice = createSlice({
   },
 });
 
+const checkoutRoomsSlice = createSlice({
+  name: "checkoutRooms",
+  initialState: initialStates.checkoutRoomsState,
+  reducers: {
+    setCheckoutRooms: (state, action) => {
+      if (state.data.includes(action.payload)) {
+        return;
+      }
+      return {
+        ...state,
+        data: [...state.data, action.payload],
+      };
+    },
+    setRemoveRoom: (state, action) => {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    },
+  },
+});
+
+export const { reducer: checkoutRoomsReducer, actions: checkoutRoomsActions } =
+  checkoutRoomsSlice;
+
 const roomsSlices = combineReducers({
   hotelRoomsById: hotelRoomsByIdSlice.reducer,
+  checkoutRoomsSlice: checkoutRoomsSlice.reducer,
 });
 
 export default roomsSlices;

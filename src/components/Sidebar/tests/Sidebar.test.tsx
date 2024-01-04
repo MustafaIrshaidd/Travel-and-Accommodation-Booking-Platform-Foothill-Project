@@ -47,6 +47,7 @@ describe("Sidebar", () => {
       </CustomSnackbarProvider>
     );
 
+    
     await waitFor(() => {
       expect(screen.getByLabelText("open drawer")).toHaveStyle(
         "display:inline-flex"

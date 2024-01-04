@@ -9,6 +9,8 @@ export interface Room {
   availability: boolean;
 }
 
+
+
 interface RoomAmenity {
   name: string;
   description: string;
@@ -18,4 +20,14 @@ export interface RoomsState {
   data: Room[];
   loading: boolean;
   error?: string;
+}
+
+export interface RoomsState {
+  data: Room[];
+  loading: boolean;
+  error?: string;
+}
+
+export interface checkoutRoomsState {
+  data: number[];
 }

@@ -9,7 +9,11 @@ import { Room } from "@store/features/rooms/types";
 import { Chip, Divider, Grid, Stack, Tooltip } from "@mui/material";
 import { DefaultButton } from "@components/Buttons";
 
-const RoomCard: React.FC<Room> = ({
+interface RoomCardProps extends Room {
+  handleBookingRoom?: (roomNumber: number) => void;
+}
+
+const RoomCard: React.FC<RoomCardProps> = ({
   roomNumber,
   roomPhotoUrl,
   roomType,
@@ -18,6 +22,7 @@ const RoomCard: React.FC<Room> = ({
   roomAmenities,
   price,
   availability,
+  handleBookingRoom,
 }) => {
   const theme = useTheme();
 
@@ -171,10 +176,13 @@ const RoomCard: React.FC<Room> = ({
             </Grid>
             <Grid item xs={12}>
               <DefaultButton
+                handleOnClick={(event: any) =>
+                  handleBookingRoom && handleBookingRoom(roomNumber)
+                }
                 loadingPosition="center"
                 variant="contained"
                 type="submit">
-                Book The Room
+                Book Room
               </DefaultButton>
             </Grid>
           </Grid>
